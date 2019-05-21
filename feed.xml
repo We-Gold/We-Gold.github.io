@@ -3,7 +3,7 @@
     <title>WeGo</title>
     <link href="https://we-gold.github.io/feed.xml" rel="self" />
     <link href="https://we-gold.github.io" />
-    <updated>2019-05-20T20:26:34-04:00</updated>
+    <updated>2019-05-20T20:32:55-04:00</updated>
     <author>
         <name>WG</name>
     </author>
@@ -17,21 +17,17 @@
         <link href="https://we-gold.github.io/sputnik-with-lights/"/>
         <id>https://we-gold.github.io/sputnik-with-lights/</id>
 
-        <updated>2019-05-20T19:37:35-04:00</updated>
+        <updated>2019-05-20T20:32:42-04:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" alt="" />
-                    MusicI recommend listening to music while reading. It may slightly decrease your comprehention, but it does make you love the experience a lot more. I was required to create a dodecahedron, and the following was my interpretation (Mine being the left, the real one being the&hellip;
+                    Why?I was required to create a dodecahedron, and the following was my interpretation (Mine being the left, the real one being the right). I chose this mainly for the reason that Sputnik was the first satellite, which aligns with my interest in space. Because Sputnik was&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
                     <img src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" alt="" />
-                <h2 id="mcetoc_1dbbmvu7g4">Music</h2>
-<p>I recommend listening to music while reading. It may slightly decrease your comprehention, but it does make you love the experience a lot more.</p>
-<iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/49524163&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"></iframe>
-<p> </p>
-<h2 id="mcetoc_1dbblf9m20">Why?</h2>
+                <h2 id="mcetoc_1dbbmvu7g4">Why?</h2>
 <p>I was required to create a dodecahedron, and the following was my interpretation (Mine being the left, the real one being the right). I chose this mainly for the reason that Sputnik was the first satellite, which aligns with my interest in space. Because Sputnik was a satellite, that gave me room to add features, for example the lights on the top.</p>
 <p><img class="post__image--left" src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" width="314" height="285"><img class="post__image--right" src="https://we-gold.github.io/media/posts/1/sputnik.jpg" alt="" width="285" height="285"></p>
 <p> </p>
@@ -40,7 +36,20 @@
 <p> </p>
 <p> </p>
 <p> </p>
-<h2 id="mcetoc_1dbblvle91"> Electronics?</h2>
+<div class="post__toc">
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#mcetoc_1dbbmvu7g4">Why?</a></li>
+<li><a href="#mcetoc_1dbbsqdv01">Music</a></li>
+<li><a href="#mcetoc_1dbblvle91">Electronics?</a></li>
+<li><a href="#mcetoc_1dbbmr7g72">The construction of a dodecahedron</a></li>
+<li><a href="#mcetoc_1dbbp4n205">Final Steps</a></li>
+</ul>
+</div>
+<h2 id="mcetoc_1dbbsqdv01">Music</h2>
+<p>I recommend listening to music while reading. It may slightly decrease your comprehention, but it does make you love the experience a lot more.</p>
+<p><iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/49524163&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"></iframe> </p>
+<h2 id="mcetoc_1dbblvle91">Electronics?</h2>
 <p><img class="post__image" src="https://we-gold.github.io/media/posts/1/Sputnik-Circuitry.JPG" alt="" width="494" height="503"></p>
 <p>The electronics of this system are very simple. The simplest explanation is that the power from the battery is not connected to the lights until the switch is flipped. Then, when the switch is flipped, it creates a connection between the battery and the lights, causing them to turn on.</p>
 <p>The lower level explanation goes as follows:</p>
