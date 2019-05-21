@@ -3,7 +3,7 @@
     <title>WeGold</title>
     <link href="https://we-gold.github.io/feed.xml" rel="self" />
     <link href="https://we-gold.github.io" />
-    <updated>2019-05-21T09:19:07-04:00</updated>
+    <updated>2019-05-21T12:55:59-04:00</updated>
     <author>
         <name>WG</name>
     </author>
@@ -17,7 +17,7 @@
         <link href="https://we-gold.github.io/sputnik-with-lights/"/>
         <id>https://we-gold.github.io/sputnik-with-lights/</id>
 
-        <updated>2019-05-21T09:18:58-04:00</updated>
+        <updated>2019-05-21T12:55:46-04:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" alt="" />
@@ -29,9 +29,10 @@
                     <img src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" alt="" />
                 <h2 id="mcetoc_1dbbmvu7g4">Why?</h2>
 <p>I was required to create a dodecahedron, and the following was my interpretation (Mine being the top, the real one being the bottom). I chose this mainly for the reason that Sputnik was the first satellite, which aligns with my interest in space. Because Sputnik was a satellite, that gave me room to add features, for example the lights on the top.</p>
-<p> </p>
-<div><img class="post__image--center" src="https://we-gold.github.io/media/posts/1/Main-Sputnik.PNG" width="250" height="227"><img class="post__image--center" src="https://we-gold.github.io/media/posts/1/sputnik.jpg" width="227" height="227"></div>
-<h2 id="mcetoc_1dbd4ebl94"> </h2>
+<div class="gallery"   >
+<figure class="gallery__item"><a href="https://we-gold.github.io/media/posts/1/gallery/Main-Sputnik.PNG" ><img src="https://we-gold.github.io/media/posts/1/gallery/Main-Sputnik-thumbnail.PNG" alt="" width="720" height="652"></a></figure>
+<figure class="gallery__item"><a href="https://we-gold.github.io/media/posts/1/gallery/sputnik.jpg" ><img src="https://we-gold.github.io/media/posts/1/gallery/sputnik-thumbnail.jpg" alt="" width="720" height="720"></a></figure>
+</div>
 <h2 id="mcetoc_1dbd4dmlb1">Music</h2>
 <p>I recommend listening to music while reading. It may slightly decrease your comprehention, but it does make you love the experience a lot more.</p>
 <p><iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/49524163&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"></iframe> </p>
