@@ -16,7 +16,7 @@ Identity is an app that allows you to configure a custom clock screen with uniqu
 
 <details class="mb-3">
 <summary><strong>Click here to see a preview of Identity</strong></summary>
-<iframe src="https://wegold.me/identity/" width="100%" style="aspect-ratio: 4/3;"></iframe>
+<iframe src="https://wegold.me/identity/" width="100%" style="aspect-ratio: 4/3;" loading="lazy"></iframe>
 </details>
 
 During the brainstorming phase, I decided that it would be absolutely crucial for the central clock animation to be synchronized across all devices.
