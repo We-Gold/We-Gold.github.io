@@ -14,6 +14,11 @@ In my recent project, [Identity](https://github.com/We-Gold/identity), I created
 
 Identity is an app that allows you to configure a custom clock screen with unique animations (but with bigger long-term goals for more personalized graphics).
 
+<details class="mb-3">
+<summary><strong>Click here to see a preview of Identity</strong></summary>
+<iframe src="https://wegold.me/identity/" width="100%" style="aspect-ratio: 4/3;"></iframe>
+</details>
+
 During the brainstorming phase, I decided that it would be absolutely crucial for the central clock animation to be synchronized across all devices.
 
 That led me down a long rabbit-hole of math, time, and incomplete solutions. In the end, the solution I came up with is sufficient for small projects, but not professional level applications. Still, the ideas are interesting, so I'll present the algorithm here.
