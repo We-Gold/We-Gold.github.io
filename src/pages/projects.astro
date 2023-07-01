@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+---
+
+<BaseLayout title = "Projects" sideBarActiveItemID="projects">
+  <div>
+    <div class="text-3xl w-full font-bold mb-5">Recent Projects</div>
+  </div>
+
+  <HorizontalCard
+    title="GPX.JS"
+    img="/content/projects/gpxjs.jpg"
+    desc="🗺️ GPX.js is a modern library for parsing GPX files and converting them to GeoJSON."
+    url="https://github.com/We-Gold/gpxjs"
+    badge="FOSS"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Paris Housing Analysis"
+    img="/content/projects/paris-housing.jpeg"
+    desc="🏠 A visual analysis of a kaggle paris housing dataset, using React and d3."
+    url="https://github.com/We-Gold/paris-housing-analysis"
+    badge="NEW"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Team 2539 - Robot Code 2023"
+    img="/content/projects/robotcode2023.jpg"
+    desc="The official codebase for team 2539's 2023 robot, Black Pearl."
+    url="https://github.com/FRC2539/javabot-2023"
+  />
+
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Past Projects</div>
+  </div>
+
+  <HorizontalCard
+    title="Crop Locator Tool"
+    img="/content/projects/crop-locator.png"
+    desc="Locate crops taken from micro-CT scans using JavaScript and GPU acceleration."
+    url="https://github.com/We-Gold/Crop-Locator-Tool"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Educational Disease Simulator"
+    img="/content/projects/disease-simulator.png"
+    desc="😷 An educational program to simulate the impact of mask wearing and quarantine on the spread of a disease."
+    url="https://github.com/We-Gold/Disease-Simulator"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Identity"
+    img="/content/projects/identity.png"
+    desc="An experimental website, with random and beautiful animations 🤩, synchronized across all devices without a central server."
+    url="https://github.com/We-Gold/identity"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Cougar Dashboard"
+    img="/content/projects/cougar-dashboard.jpg"
+    desc="A custom dashboard application developed for 2539 that interfaces with video feeds, live telemetry, and more (using electron and react)."
+    url="https://github.com/FRC2539/Cougar-Dashboard"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="AI Racing"
+    img="/content/projects/ai-racing.png"
+    desc="Train and test AI racecar drivers using Tensorflow.js and p5.js."
+    url="https://github.com/We-Gold/AI-Racing"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Recursive Graphics"
+    img="/content/projects/recursion.gif"
+    desc="Processing based animations of Fractal Trees, Sierpinski Carpets, and Tower of Hanoi."
+    url="https://github.com/We-Gold/Recursion"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Race A* in a Maze"
+    img="/content/projects/a-star.png"
+    desc="A p5.js based game, where you can race the A* algorithm live!"
+    url="https://github.com/We-Gold/A-STAR-Maze-Race"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Kingdom Animalia"
+    img="/content/projects/animalia.jpg"
+    desc="Animal sighting reporting app, complete with user levels, mapping, and forums (UNMAINTAINED, built in middle school)."
+    url="https://github.com/We-Gold/Kingdom-Animalia"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Secret Middle School GitHub Account"
+    img="/content/projects/middle-school-github.png"
+    desc="Actually some cool projects on the github pages, like DNA Converter, 10 Hour Clock. Also various Arduino and EV3 projects."
+    url="https://github.com/WLGBlog"
+  />
+  </BaseLayout>
