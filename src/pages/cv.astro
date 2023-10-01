@@ -6,13 +6,7 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 <BaseLayout title="Resume" sideBarActiveItemID="cv">
   <div class="mb-5">
     <div class="text-3xl w-full font-bold">Weaver Goldman</div>
-    <div class="text-xl w-full">Computer Science Student</div>
-  </div>
-
-  <div class="mb-10 text-justify">
-    A Computer Science, Data Science, and Robotics student at Worcester Polytechnic Institute, 
-    Weaver is focused on appling technology to create solutions to problems relating to Urban Planning, Robotics,
-    Environmental Issues, Biology, and more. 
+    <div class="text-xl w-full">Computer Science BS/MS Student</div>
   </div>
 
   <div class="mb-5">
@@ -36,43 +30,112 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 
   <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Lead Programmer for FRC Robotics Team"
-      subtitle="From July 2021 to July 2023 at FRC Team 2539"
+      title="Freelance Web Developer"
+      subtitle="From March 2021 to June 2021"
     >
-    <ul class="list-disc">
-      <li>Developed training pipeline and curriculum for team sustainability</li>
-      <li>Built first iteration of the team scouting app</li>
-      <li>Created telemetry dashboard application with live data and video streams</li>
-      <li>Led development of robot code for two seasons</li>
-      <li>Advocated for the formation of media, scouting, and strategy subteams</li>
-      <li>Switched robot code from Python to Java after a full rewrite test</li>
-      <li>Iterated through many autonomous and vision strategies</li>
-    </ul>
+      <ul class="list-disc">
+        <li>Crafted data visualization widgets and teaching tools for clients, utilizing technologies such as p5.js and Mathjax</li>
+        <li>Engaged in project planning and negotiation with 15 clients to align with their specific requirements</li>
+        <li>Developed robust codebases while adapting to varying project scopes</li>
+      </ul>
     </TimeLineElement>
     <TimeLineElement
       title="Research Assistant at Cheng Lab"
       subtitle="From June 2021 to August 2021, at Penn State College of Medicine, Hershey, PA"
     >
     <ul class="list-disc">
-      <li>Built search tools for micro-CT scans of zebrafish</li>
-      <li>Analyzed and compared semi-automated and automated systems for segmenting zebrafish imaging</li>
-      <li>Used Test-Driven Development for improved software architecture</li>
-      <li>Developed algorithms for the GPU to accelerate hardware performance</li>
-      <li>Created 3D renderings of segmented zebrafish using 3DS MAX</li>
-      <li>Discussed security vulerabilities with Cyber Security Professional</li>
-      <li>Met with lab members and presented new tools and segmentation methods</li>
+      <li>Developed key-point scanning tool for micro-CT zebrafish scans utilizing GPU kernels for improved performance (full 3D searches taking under 5 seconds)</li>
+      <li>Designed 9 functional tests through a collaboration with a cybersecurity professional</li>
+      <li>Presented the application at a lab meeting along with novel segmentation techniques, leading to an 80\% reduction in workload</li>
+    </ul>
+    </TimeLineElement>
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Projects</div>
+  </div>
+
+  <div class="time-line-container mb-10">
+    <TimeLineElement
+      title="FRC Robot Code | Java, Gradle, Git"
+      subtitle="From January 2023 to July 2023"
+    >
+      <ul class="list-disc">
+        <li>Led and supervised development of competition robot code (4-person team, 6-week time limit)</li>
+        <li>Implemented multi-threaded logging and telemetry, autonomous navigation, and localization with AprilTags</li>
+        <li>Collaborated on three-joint arm control algorithm using system dynamics and physical characteristics</li>
+        <li>Enabled the robot to rank among the top 1% globally for overall performance (through these features)</li>
+      </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Real-time FRC Robot Dashboard | JavaScript, React, Electron"
+      subtitle="From January 2023 to July 2023"
+    >
+      <ul class="list-disc">
+        <li>Developed a real-time robot dashboard with live camera feeds and data-driven widgets for monitoring and
+          controlling the robot during competitions</li>
+        <li>Implemented a WebSocket server for seamless communication with the robot, ensuring low-latency data exchange
+          and real-time updates</li>
+        <li>Automated the build and release process with GitHub Actions</li>
+        <li>Supported simultaneous tracking of hundreds of data points, enhancing situational awareness and contributing to
+          improved team performance</li>
+      </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="MathWorks Math Modeling Challenge (Hackathon) | Python, Matplotlib, NumPy"
+      subtitle="March 2023"
+    >
+    <ul class="list-disc">
+      <li>Collected data, built custom mathematical models (regressions), and analyzed methodologies</li>
+      <li>Created graphs and comprehensive write-up of findings (with 3-person team, 14-hour time limit)</li>
     </ul>
     </TimeLineElement>
     <TimeLineElement
-      title="Freelance Web Developer"
-      subtitle="From March 2021 to June 2021"
+      title="Paris Housing Analysis | D3.js, React, TypeScript, Vite"
+      subtitle="June 2023"
     >
-      <ul class="list-disc">
-        <li>Developed web applications and teaching tools for clients</li>
-        <li>Worked with clients on planning and negotiation</li>
-        <li>Created sustainable codebases within short timeframes</li>
-        <li>Designed data visualization widgets</li>
-      </ul>
+    <ul class="list-disc">
+      <li>Analyzed a Paris housing dataset sourced from Kaggle</li>
+      <li>Created a data-driven website showcasing key insights, a correlation matrix, and an interactive decision tree in
+        JavaScript, reaching 100% accuracy on the dataset</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Algernon.js | TypeScript, Vite, Vitest, Canvas API"
+      subtitle="July 2023"
+    >
+    <ul class="list-disc">
+      <li>Created a general-purpose web-based maze generation and solving library (reaching times under 1 ms for both)</li>
+      <li>Incorporated popular algorithms such as backtracking, Kruskal's, A*, D* Lite, among others</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="TinyNEAT | TypeScript, Vite, TypeDoc, GitHub Actions"
+      subtitle="From July 2023 to August 2023"
+    >
+    <ul class="list-disc">
+      <li>Designed and built a lightweight, efficient, and extensible NEAT (NeuroEvolution of Augmenting Topologies)
+        implementation for the web</li>
+      <li>Integrated the library with simulations, providing real-time (greater than 60 fps) neural network and evolution
+        processing</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Ground Station Dashboard | C++, QT, WebSockets"
+      subtitle="From September 2023 to Present"
+    >
+    <ul class="list-disc">
+      <li>Implemented a 3D rocket viewer that responds to live updates from onboard telemetry</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="CS Compass (Hackathon) | Python, Streamlit, Pandas"
+      subtitle="September 2023"
+    >
+    <ul class="list-disc">
+      <li>Created a web-based CS program comparison tool based on parsed CSV data (with a 2 hour time limit)</li>
+      <li>Incorporated data visualization widgets like bar charts and radar charts</li>
+    </ul>
     </TimeLineElement>
   </div>
 
@@ -99,9 +162,14 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
     <li>Electron</li>
     <li>Python</li>
     <li>Figma</li>
+    <li>C++</li>
     <li>Java</li>
     <li>Rust</li>
+    <li>LATEX</li>
     <li>Flutter</li>
+    <li>Racket</li>
+    <li>MATLAB</li>
+    <li>ROS2</li>
     <li>React Native</li>
     <li>TensorFlow</li>
     <li>D3.js</li>
@@ -109,6 +177,8 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
     <li>Node.js</li>
     <li>TDD</li>
     <li>Arduino</li>
-    <li>GPU</li>
+    <li>Git/GitHub</li>
+    <li>Docker</li>
+    <li>Linux</li>
   </ul>
 </BaseLayout>
