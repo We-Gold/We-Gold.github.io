@@ -12,7 +12,7 @@ I set two primary goals for studying:
 -   Achieve high grades
 -   Increase free time (make studying more efficient)
 
-The first is fairly obvious, but the second goal was more impactful on the strategies I tested since increasing efficiency is less straighforward.
+The first is fairly obvious, but the second goal was more impactful on the strategies I tested since increasing efficiency is less straightforward.
 
 Let's first look at one of the problems I found with some common ways to study.
 
@@ -36,7 +36,7 @@ This means that you need data on how well you know relevant information to make 
 
 This strategy is based on combining spaced repetition flashcards with retrospective revision timetables.
 
-#### What Is Spaced Repetition?
+### What Is Spaced Repetition?
 
 Spaced repetition commonly involves creating flashcards for individual concepts.
 
@@ -44,11 +44,11 @@ The **spaced** part comes from something called the forgetting curve, which sugg
 
 Common spaced repetition systems like Anki use some relatively simple math to determine when you should review your flashcards.
 
-#### What Are retrospective revision timetables?
+### What Are Retrospective Revision Timetables?
 
 This idea first came to me from [Ali Abdaal on YouTube](https://www.youtube.com/watch?v=b7o09a7t4RA).
 
-He explains that for each course, you create a table listing each main topic in the course, where you keep track of how recently you reviewed each topic.
+He explains that for each course, you create a table listing each main topic in the course, where you track how recently you reviewed each topic.
 
 Here's an example from a recent course of mine:
 
@@ -69,7 +69,7 @@ These study sessions can fit in at an time, and you decide what to study each ti
 
 In this way, retrospective revision timetables become a high-level spaced repetition technique.
 
-#### How Can These Systems Be Combined?
+### How Can These Systems Be Combined?
 
 I primarily follow the retrospective revision timetable system to determine what I need to study at a high level.
 
@@ -89,11 +89,11 @@ By combining these systems together, I have a macro and micro view into my own k
 
 I recently started college, so I have only completed a handful of courses.
 
-The system has worked so far, giving me time for personal projects and clubs in addition to my classes.
+The system has worked so far, freeing time for personal projects and clubs in addition to my classes.
 
-My grades have been consistent as well, with any dropped points being a personal mistake, rather than a lack of knowledge (a good sign for this system, not for me).
+My grades have been consistent as well, with any dropped points being a personal mistake rather than a lack of knowledge (a good sign for this system, not for me).
 
-I will continue to use this system unless I determine that there is a better alternative for me. In that case, I will update this article with my new findings.
+I will continue to use this system unless I determine that there is a better alternative. In that case, I will update this article with my new findings.
 
 Feel free to reach out with any questions, or with feedback on this system!
 
