@@ -199,6 +199,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"data-studying.md": {
+	id: "data-studying.md";
+  slug: "data-studying";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "publishing-maven.md": {
 	id: "publishing-maven.md";
   slug: "publishing-maven";

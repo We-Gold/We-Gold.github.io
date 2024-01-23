@@ -1,7 +1,7 @@
 ---
-title: "The Data Advantage: How Spaced Repetition Techniques Elevate College Studying"
+title: "Using Spaced Repetition Techniques to Elevate College Studying"
 pubDate: "Oct 23 2023"
-description: "A general guide on college studying from personal experimentation with spaced repetition and retrospective revision timetables."
+description: "A personal guide on college studying from personal experimentation with spaced repetition and retrospective revision timetables."
 heroImage: "/content/blog/data-studying/data-studying-hero.png"
 ---
 

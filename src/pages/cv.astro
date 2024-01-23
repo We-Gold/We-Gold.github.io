@@ -30,16 +30,6 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 
   <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Freelance Web Developer"
-      subtitle="From March 2021 to June 2021"
-    >
-      <ul class="list-disc">
-        <li>Crafted data visualization widgets and teaching tools for clients, utilizing technologies such as p5.js and Mathjax</li>
-        <li>Engaged in project planning and negotiation with 15 clients to align with their specific requirements</li>
-        <li>Developed robust codebases while adapting to varying project scopes</li>
-      </ul>
-    </TimeLineElement>
-    <TimeLineElement
       title="Research Assistant at Cheng Lab"
       subtitle="From June 2021 to August 2021, at Penn State College of Medicine, Hershey, PA"
     >
@@ -49,6 +39,16 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
       <li>Presented the application at a lab meeting along with novel segmentation techniques, leading to an 80\% reduction in workload</li>
     </ul>
     </TimeLineElement>
+    <TimeLineElement
+      title="Freelance Web Developer"
+      subtitle="From March 2021 to June 2021"
+    >
+      <ul class="list-disc">
+        <li>Crafted data visualization widgets and teaching tools for clients, utilizing technologies such as p5.js and Mathjax</li>
+        <li>Engaged in project planning and negotiation with 15 clients to align with their specific requirements</li>
+        <li>Developed robust codebases while adapting to varying project scopes</li>
+      </ul>
+    </TimeLineElement>
   </div>
 
   <div class="mb-5">
@@ -56,70 +56,6 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <div class="time-line-container mb-10">
-    <TimeLineElement
-      title="FRC Robot Code | Java, Gradle, Git"
-      subtitle="From January 2023 to July 2023"
-    >
-      <ul class="list-disc">
-        <li>Led and supervised development of competition robot code (4-person team, 6-week time limit)</li>
-        <li>Implemented multi-threaded logging and telemetry, autonomous navigation, and localization with AprilTags</li>
-        <li>Collaborated on three-joint arm control algorithm using system dynamics and physical characteristics</li>
-        <li>Enabled the robot to rank among the top 1% globally for overall performance (through these features)</li>
-      </ul>
-    </TimeLineElement>
-    <TimeLineElement
-      title="Real-time FRC Robot Dashboard | JavaScript, React, Electron"
-      subtitle="From January 2023 to July 2023"
-    >
-      <ul class="list-disc">
-        <li>Developed a real-time robot dashboard with live camera feeds and data-driven widgets for monitoring and
-          controlling the robot during competitions</li>
-        <li>Implemented a WebSocket server for seamless communication with the robot, ensuring low-latency data exchange
-          and real-time updates</li>
-        <li>Automated the build and release process with GitHub Actions</li>
-        <li>Supported simultaneous tracking of hundreds of data points, enhancing situational awareness and contributing to
-          improved team performance</li>
-      </ul>
-    </TimeLineElement>
-    <TimeLineElement
-      title="MathWorks Math Modeling Challenge (Hackathon) | Python, Matplotlib, NumPy"
-      subtitle="March 2023"
-    >
-    <ul class="list-disc">
-      <li>Collected data, built custom mathematical models (regressions), and analyzed methodologies</li>
-      <li>Created graphs and comprehensive write-up of findings (with 3-person team, 14-hour time limit)</li>
-    </ul>
-    </TimeLineElement>
-    <TimeLineElement
-      title="Paris Housing Analysis | D3.js, React, TypeScript, Vite"
-      subtitle="June 2023"
-    >
-    <ul class="list-disc">
-      <li>Analyzed a Paris housing dataset sourced from Kaggle</li>
-      <li>Created a data-driven website showcasing key insights, a correlation matrix, and an interactive decision tree in
-        JavaScript, reaching 100% accuracy on the dataset</li>
-    </ul>
-    </TimeLineElement>
-    <TimeLineElement
-      title="Algernon.js | TypeScript, Vite, Vitest, Canvas API"
-      subtitle="July 2023"
-    >
-    <ul class="list-disc">
-      <li>Created a general-purpose web-based maze generation and solving library (reaching times under 1 ms for both)</li>
-      <li>Incorporated popular algorithms such as backtracking, Kruskal's, A*, D* Lite, among others</li>
-    </ul>
-    </TimeLineElement>
-    <TimeLineElement
-      title="TinyNEAT | TypeScript, Vite, TypeDoc, GitHub Actions"
-      subtitle="From July 2023 to August 2023"
-    >
-    <ul class="list-disc">
-      <li>Designed and built a lightweight, efficient, and extensible NEAT (NeuroEvolution of Augmenting Topologies)
-        implementation for the web</li>
-      <li>Integrated the library with simulations, providing real-time (greater than 60 fps) neural network and evolution
-        processing</li>
-    </ul>
-    </TimeLineElement>
     <TimeLineElement
       title="Ground Station Dashboard | C++, QT, WebSockets"
       subtitle="From September 2023 to Present"
@@ -136,6 +72,70 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
       <li>Created a web-based CS program comparison tool based on parsed CSV data (with a 2 hour time limit)</li>
       <li>Incorporated data visualization widgets like bar charts and radar charts</li>
     </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="TinyNEAT | TypeScript, Vite, TypeDoc, GitHub Actions"
+      subtitle="From July 2023 to August 2023"
+    >
+    <ul class="list-disc">
+      <li>Designed and built a lightweight, efficient, and extensible NEAT (NeuroEvolution of Augmenting Topologies)
+        implementation for the web</li>
+      <li>Integrated the library with simulations, providing real-time (greater than 60 fps) neural network and evolution
+        processing</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Algernon.js | TypeScript, Vite, Vitest, Canvas API"
+      subtitle="July 2023"
+    >
+    <ul class="list-disc">
+      <li>Created a general-purpose web-based maze generation and solving library (reaching times under 1 ms for both)</li>
+      <li>Incorporated popular algorithms such as backtracking, Kruskal's, A*, D* Lite, among others</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Paris Housing Analysis | D3.js, React, TypeScript, Vite"
+      subtitle="June 2023"
+    >
+    <ul class="list-disc">
+      <li>Analyzed a Paris housing dataset sourced from Kaggle</li>
+      <li>Created a data-driven website showcasing key insights, a correlation matrix, and an interactive decision tree in
+        JavaScript, reaching 100% accuracy on the dataset</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="MathWorks Math Modeling Challenge (Hackathon) | Python, Matplotlib, NumPy"
+      subtitle="March 2023"
+    >
+    <ul class="list-disc">
+      <li>Collected data, built custom mathematical models (regressions), and analyzed methodologies</li>
+      <li>Created graphs and comprehensive write-up of findings (with 3-person team, 14-hour time limit)</li>
+    </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Real-time FRC Robot Dashboard | JavaScript, React, Electron"
+      subtitle="From January 2023 to July 2023"
+    >
+      <ul class="list-disc">
+        <li>Developed a real-time robot dashboard with live camera feeds and data-driven widgets for monitoring and
+          controlling the robot during competitions</li>
+        <li>Implemented a WebSocket server for seamless communication with the robot, ensuring low-latency data exchange
+          and real-time updates</li>
+        <li>Automated the build and release process with GitHub Actions</li>
+        <li>Supported simultaneous tracking of hundreds of data points, enhancing situational awareness and contributing to
+          improved team performance</li>
+      </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="FRC Robot Code | Java, Gradle, Git"
+      subtitle="From January 2023 to July 2023"
+    >
+      <ul class="list-disc">
+        <li>Led and supervised development of competition robot code (4-person team, 6-week time limit)</li>
+        <li>Implemented multi-threaded logging and telemetry, autonomous navigation, and localization with AprilTags</li>
+        <li>Collaborated on three-joint arm control algorithm using system dynamics and physical characteristics</li>
+        <li>Enabled the robot to rank among the top 1% globally for overall performance (through these features)</li>
+      </ul>
     </TimeLineElement>
   </div>
 

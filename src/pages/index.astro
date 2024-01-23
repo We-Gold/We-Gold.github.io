@@ -11,10 +11,10 @@ const last_posts = posts.slice(0, 3);
 <BaseLayout sideBarActiveItemID="home">
   <div class="pb-12 mt-5">
     <div class="text-5xl font-bold">Weaver Goldman</div>
-    <div class="text-3xl py-3 font-bold">CS BS + MS Student</div>
+    <div class="text-3xl py-3 font-bold">CS BS/MS Student</div>
     <div class="py-2">
       <text class="text-lg">
-        Weaver is a student at WPI who is also passionate about Robotics, Urban Planning and Data Science.
+        Weaver is a first-year student at WPI who is passionate about Swarm Robotics, Urban Planning and Data Science.
       </text>
     </div>
     <div class="mt-8">
@@ -23,36 +23,29 @@ const last_posts = posts.slice(0, 3);
   </div>
 
   <div>
-    <div class="text-3xl w-full font-bold mb-2">Latest Projects {"</>"}</div>
+    <div class="text-3xl w-full font-bold mb-2">Latest Projects</div>
   </div>
 
+  <HorizontalCard
+    title="SLAM Maze Explorers"
+    img="/content/projects/slam-maze-explorers.png"
+    desc="Autonomous agents collaboratively explore and escape a maze-like environment."
+    url="https://github.com/We-Gold/slam-maze-explorer"
+    badge="NEW"
+  />
+  <div class="divider my-0"></div>
   <HorizontalCard
     title="TinyNEAT"
     img="/content/projects/tinyneat.png"
     desc="TinyNEAT is a simple and extensible NEAT (NeuroEvolution of Augmenting Topologies) implementation in TypeScript."
     url="https://github.com/We-Gold/tinyneat"
-    badge="NEW"
   />
+  <div class="divider my-0"></div>
   <HorizontalCard
     title="Algernon-js"
     img="/content/projects/algernon-js.png"
     desc="Algernon is a JS library for efficiently generating, solving, and rendering mazes."
     url="https://github.com/We-Gold/algernon-js"
-    badge="NEW"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="GPX.JS"
-    img="/content/projects/gpxjs.jpg"
-    desc="🗺️ GPX.js is a modern library for parsing GPX files and converting them to GeoJSON."
-    url="https://github.com/We-Gold/gpxjs"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Paris Housing Analysis"
-    img="/content/projects/paris-housing.jpeg"
-    desc="🏠 A visual analysis of a kaggle paris housing dataset, using React and d3."
-    url="https://github.com/We-Gold/paris-housing-analysis"
   />
 
   <div>

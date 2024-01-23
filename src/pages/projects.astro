@@ -5,42 +5,49 @@ import HorizontalCard from "../components/HorizontalCard.astro";
 
 <BaseLayout title = "Projects" sideBarActiveItemID="projects">
   <div>
-    <div class="text-3xl w-full font-bold mb-5">Recent Projects</div>
+    <div class="text-3xl w-full font-bold mb-5">Latest Projects</div>
   </div>
 
+  <HorizontalCard
+    title="SLAM Maze Explorers"
+    img="/content/projects/slam-maze-explorers.png"
+    desc="Autonomous agents collaboratively explore and escape a maze-like environment."
+    url="https://github.com/We-Gold/slam-maze-explorer"
+    badge="NEW"
+  />
+  <div class="divider my-0"></div>
   <HorizontalCard
     title="TinyNEAT"
     img="/content/projects/tinyneat.png"
     desc="TinyNEAT is a simple and extensible NEAT (NeuroEvolution of Augmenting Topologies) implementation in TypeScript."
     url="https://github.com/We-Gold/tinyneat"
-    badge="NEW"
   />
+  <div class="divider my-0"></div>
   <HorizontalCard
     title="Algernon-js"
     img="/content/projects/algernon-js.png"
     desc="Algernon is a JS library for efficiently generating, solving, and rendering mazes."
     url="https://github.com/We-Gold/algernon-js"
-    badge="NEW"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="GPX.JS"
-    img="/content/projects/gpxjs.jpg"
-    desc="🗺️ GPX.js is a modern library for parsing GPX files and converting them to GeoJSON."
-    url="https://github.com/We-Gold/gpxjs"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Paris Housing Analysis"
-    img="/content/projects/paris-housing.jpeg"
-    desc="🏠 A visual analysis of a kaggle paris housing dataset, using React and d3."
-    url="https://github.com/We-Gold/paris-housing-analysis"
   />
   
   <div>
     <div class="text-3xl w-full font-bold mb-5 mt-10">Past Projects</div>
   </div>
 
+  <HorizontalCard
+    title="GPX.JS"
+    img="/content/projects/gpxjs.jpg"
+    desc="GPX.js is a modern library for parsing GPX files and converting them to GeoJSON."
+    url="https://github.com/We-Gold/gpxjs"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Paris Housing Analysis"
+    img="/content/projects/paris-housing.jpeg"
+    desc="A visual analysis of a kaggle paris housing dataset, using React and d3."
+    url="https://github.com/We-Gold/paris-housing-analysis"
+  />
+  <div class="divider my-0"></div>
   <HorizontalCard
     title="Team 2539 - Robot Code 2023"
     img="/content/projects/robotcode2023.jpg"
