@@ -213,6 +213,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"reading-19-books.md": {
+	id: "reading-19-books.md";
+  slug: "reading-19-books";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "synchronized-randomness.md": {
 	id: "synchronized-randomness.md";
   slug: "synchronized-randomness";
