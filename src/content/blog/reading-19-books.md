@@ -5,7 +5,7 @@ description: "A breakdown of my motivation, process, and future plans."
 heroImage: "/content/blog/reading-19-books/hero.png"
 ---
 
-I completed my freshman year as a computer science college student in May. Despite being a tour guide, a club executive, and a full-time student, I had much more free time in college than I expected. My high school started at 7:30 each morning, and I spent the rest of my time on homework and a couple of clubs, so my expectations were low. However, with more freedom in my schedule in college, I started reading during breakfast.
+I completed my freshman year as a computer science college student in May. Despite being a tour guide, a club executive, and a full-time student, I had much more free time in college than I expected. So, I started reading during breakfast.
 
 It took me a week or so to find my groove. I tried reading some paperback books I brought and a few Kindle books. After more searching, I finally found an online copy of Chaos, by James Gleick. It fascinated me right from the start, and that was what I needed to start dedicating more time to reading.
 
