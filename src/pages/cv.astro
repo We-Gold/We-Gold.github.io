@@ -30,8 +30,24 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 
   <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Research Assistant at Cheng Lab"
-      subtitle="From June 2021 to August 2021, at Penn State College of Medicine, Hershey, PA"
+      title="Software Development and Research Intern"
+      subtitle="Gittlen Cancer Research Labs - May 2024 to August 2024"
+    >
+      <ul class="list-disc">
+        <li>Developed a Python package for extracting ROIs (e.g., nerves, blood vessels) from multi-terabyte, cloud-hosted 3D scans.</li>
+        <li>Designed and implemented algorithms to:
+          <ul class="list-disc pl-6">
+            <li>Bound 3D regions with axis-aligned boxes.</li>
+            <li>Slice arbitrarily oriented rectangles from 3D arrays.</li>
+            <li>Back-project the slices into 3D space.</li>
+          </ul>
+        </li>
+        <li>Enhanced computational efficiency using multithreading, multiprocessing, and GPU acceleration, resulting in a &gt; 400% speed improvement.</li>
+      </ul>
+    </TimeLineElement>
+    <TimeLineElement
+      title="Software Development Intern at Cheng Lab"
+      subtitle="Penn State College of Medicine - June 2021 to August 2021"
     >
     <ul class="list-disc">
       <li>Developed key-point scanning tool for micro-CT zebrafish scans utilizing GPU kernels for improved performance (full 3D searches taking under 5 seconds)</li>
@@ -41,7 +57,7 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
     </TimeLineElement>
     <TimeLineElement
       title="Freelance Web Developer"
-      subtitle="From March 2021 to June 2021"
+      subtitle="March 2021 to June 2021"
     >
       <ul class="list-disc">
         <li>Crafted data visualization widgets and teaching tools for clients, utilizing technologies such as p5.js and Mathjax</li>
@@ -58,10 +74,20 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   <div class="time-line-container mb-10">
     <TimeLineElement
       title="Ground Station Dashboard | C++, QT, WebSockets"
-      subtitle="From September 2023 to Present"
+      subtitle="From September 2023 to April 2024"
     >
     <ul class="list-disc">
       <li>Implemented a 3D rocket viewer that responds to live updates from onboard telemetry</li>
+    </ul>
+    </TimeLineElement>
+  <div class="time-line-container mb-10">
+    <TimeLineElement
+      title="SLAM Maze Explorers | p5.js, Algernon.js, Vite"
+      subtitle="From July 2023 to December 2023"
+    >
+    <ul class="list-disc">
+      <li>Created an environment where agents collaboratively solve an unknown maze with memory and search algorithms.</li>
+      <li>Designed and built a thematic website for configuring and visualizing the simulation.</li>
     </ul>
     </TimeLineElement>
     <TimeLineElement
