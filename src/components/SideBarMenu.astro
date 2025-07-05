@@ -1,17 +1,17 @@
 ---
 const { sideBarActiveItemID } = Astro.props;
-const activeClass = "bg-base-300"; // For primary color replace with `active` class
+const activeClasses = ["bg-base-300", "text-teal-700"]; // For primary color replace with `active` class
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="home" href="/">Home</a></li>
-    <li><a class="py-3 text-base" id="projects" href="/projects">Projects</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="home" href="/">Home</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="projects" href="/projects">Projects</a></li>
     <!--<li><a class="py-3 text-base" id="services" href="/services">Services</a></li>-->
-    <li><a class="py-3 text-base" id="blog" href="/blog/">Blog</a></li>
-    <li><a class="py-3 text-base" id="cv" href="/cv">CV</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="blog" href="/blog/">Blog</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="cv" href="/cv">Resume</a></li>
     <li>
         <a
-            class="py-3 text-base"
+            class="py-3 text-base hover:text-teal-500"
             href="mailto:we.goldm@gmail.com"
             target="_blank"
             referrerpolicy="no-referrer-when-downgrade">Email</a
@@ -19,7 +19,7 @@ const activeClass = "bg-base-300"; // For primary color replace with `active` cl
     </li>
 </ul>
 
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
+<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClasses: activeClasses }}>
 const activeItemElem = document.getElementById(sideBarActiveItemID);
-activeItemElem.classList.add(activeClass);
+activeClasses.forEach(className => activeItemElem.classList.add(className));
 </script>
