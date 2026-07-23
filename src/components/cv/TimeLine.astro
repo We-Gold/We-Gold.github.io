@@ -1,17 +1,111 @@
 ---
-const { title, subtitle } = Astro.props;
+const { title, subtitle, type, skills, compact = false, url, card = false } = Astro.props;
+
+const isProject = type === "project";
+
+// Type-driven tokens (only used in card mode). Literal class strings so
+// Tailwind keeps them through purge.
+const cardPad = isProject ? "px-4 py-3" : "px-5 py-4";
+const titleSize = isProject ? "text-sm" : "text-base";
+const barClass = isProject ? "border-slate-400" : "border-teal-600";
+const chipClass = isProject ? "bg-slate-200 text-slate-700" : "bg-teal-100 text-teal-800";
+const chipLabel = isProject ? "Project" : "Work";
+const dotColorCard = isProject ? "bg-slate-400" : "bg-teal-600";
 ---
 
-<div class="flex">
-  <div class="education__time">
-    <span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
-    <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]"></span>
-  </div>
-  <div class="experience__data bd-grid px-5">
-    <h3 class="font-semibold mb-1">{title}</h3>
+<div
+  class={card ? "flex gap-5" : "flex"}
+  data-type={type}
+  data-skills={skills?.join(",")}
+>
+  {
+    card ? (
+      <div class="education__time relative w-4 flex-shrink-0">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300" />
+        <span
+          class={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 ${dotColorCard}`}
+        />
+      </div>
+    ) : (
+      <div class="education__time">
+        <span class={`${compact ? "w-3 h-3" : "w-4 h-4"} bg-primary block rounded-full mt-1`} />
+        <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]" />
+      </div>
+    )
+  }
+  <div
+    class={
+      card
+        ? `experience__data bd-grid ${cardPad} mb-3 rounded-r-lg bg-base-200 border-l-4 ${barClass} transition-all flex-1 min-w-0`
+        : `experience__data bd-grid px-5 ${compact ? "pb-2" : ""}`
+    }
+  >
+    {
+      card ? (
+        <div class="flex items-center gap-2 mb-1 flex-wrap">
+          <h3 class={`${titleSize} font-semibold`}>
+            {url ? (
+              <a href={url} target="_blank" class="hover:text-teal-700">
+                {title}
+              </a>
+            ) : (
+              title
+            )}
+          </h3>
+          <span
+            class={`text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded ${chipClass}`}
+          >
+            {chipLabel}
+          </span>
+        </div>
+      ) : (
+        <h3 class={compact ? "font-semibold mb-1 text-sm" : "font-semibold mb-1"}>
+          {url ? (
+            <a href={url} target="_blank" class="hover:text-teal-700">
+              {title}
+            </a>
+          ) : (
+            title
+          )}
+        </h3>
+      )
+    }
     <span class="font-light text-sm">{subtitle}</span>
-    <p class="my-2 text-justify">
-      <slot />
-    </p>
+    {!compact && (
+      card ? (
+        <>
+          <div class="entry-detail my-2 text-left relative">
+            <slot />
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1">
+            Show more
+          </button>
+        </>
+      ) : (
+        <p class="my-2 text-left">
+          <slot />
+        </p>
+      )
+    )}
   </div>
 </div>
+
+<style>
+  .entry-detail {
+    max-height: 3.6em;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .entry-detail.expanded {
+    max-height: 40em;
+  }
+  .entry-detail:not(.expanded)::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5em;
+    background: linear-gradient(to bottom, transparent, hsl(var(--b2)));
+  }
+</style>

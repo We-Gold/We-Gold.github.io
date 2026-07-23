@@ -1,0 +1,215 @@
+---
+import {
+  forceSimulation,
+  forceLink,
+  forceManyBody,
+  forceCollide,
+  forceX,
+  forceY,
+} from "d3-force";
+import {
+  aggregateSkillTotals,
+  aggregateAreaTotals,
+  skillAreas,
+  type ExperienceEntry,
+} from "../../data/experience";
+
+interface Props {
+  entries: ExperienceEntry[];
+  width?: number;
+  height?: number;
+}
+
+const { entries, width = 440, height = 660 } = Astro.props;
+
+// Shorter display labels for granular skills whose full name won't fit a bubble.
+const skillShort: Record<string, string> = {
+  "Multithreading/Perf": "Perf",
+  "LangChain/LangGraph": "LangChain",
+  "Async/SDK Design": "Async",
+  "Canvas/Web Audio": "Canvas",
+  "ML/scikit-learn": "scikit",
+  "Unsupervised ML": "Unsup ML",
+  "PostgreSQL": "Postgres",
+  "DuckDB/Parquet": "DuckDB",
+  "Vector Search/Embeddings": "Vec DB",
+  "PHP/WordPress Plugins": "WordPress",
+  "Data Visualization": "Viz",
+  "Client Communication": "Comm",
+  "Computer Vision": "CV",
+  "CLI/Packaging": "CLI",
+  "LLM Evaluation": "LLM Eval",
+  "Agentic AI": "Agents",
+  "PyTorch/ML": "PyTorch",
+  "LLM/AI": "LLM",
+  "Agile/Scrum": "Agile",
+};
+
+const skillTotals = aggregateSkillTotals(entries);
+const areaTotals = aggregateAreaTotals(skillTotals);
+const areaColor = Object.fromEntries(skillAreas.map((a) => [a.id, a.color]));
+
+// Bubble area encodes the value, so radius scales with sqrt(total).
+const maxSkill = Math.max(...skillTotals.map((s) => s.total));
+const skillR = (t: number) => 12 + (Math.sqrt(t) / Math.sqrt(maxSkill)) * 16;
+const maxArea = Math.max(...areaTotals.map((a) => a.total));
+const hubR = (t: number) => 28 + (Math.sqrt(t) / Math.sqrt(maxArea)) * 22;
+
+interface Node {
+  id: string;
+  kind: "hub" | "skill";
+  short: string;
+  full: string;
+  areaId: string;
+  color: string;
+  r: number;
+  ax?: number;
+  ay?: number;
+  x?: number;
+  y?: number;
+}
+
+// Spread the 6 hubs across a 2-col x 3-row anchor grid so the tall panel fills.
+const anchorX = [0.3, 0.7];
+const anchorY = [0.2, 0.5, 0.8];
+
+const hubNodes: Node[] = areaTotals.map((a, i) => ({
+  id: `hub:${a.id}`,
+  kind: "hub",
+  short: a.short,
+  full: a.name,
+  areaId: a.id,
+  color: a.color,
+  r: hubR(a.total),
+  ax: anchorX[i % 2] * width,
+  ay: anchorY[Math.floor(i / 2)] * height,
+}));
+
+const skillNodes: Node[] = skillTotals.map((s) => ({
+  id: `skill:${s.skill}`,
+  kind: "skill",
+  short: skillShort[s.skill] ?? s.skill,
+  full: s.skill,
+  areaId: s.areaId,
+  color: areaColor[s.areaId],
+  r: skillR(s.total),
+}));
+
+const nodes: Node[] = [...hubNodes, ...skillNodes];
+const links = skillNodes.map((s) => ({ source: s.id, target: `hub:${s.areaId}` }));
+
+const sim = forceSimulation(nodes as any)
+  .force(
+    "link",
+    forceLink(links as any)
+      .id((d: any) => d.id)
+      .distance((l: any) => l.source.r + l.target.r + 8)
+      .strength(0.85)
+  )
+  .force("charge", forceManyBody().strength(-42))
+  .force("collide", forceCollide((d: any) => d.r + 3).strength(1))
+  .force(
+    "x",
+    forceX((d: any) => (d.kind === "hub" ? d.ax : width / 2)).strength((d: any) =>
+      d.kind === "hub" ? 0.38 : 0.012
+    )
+  )
+  .force(
+    "y",
+    forceY((d: any) => (d.kind === "hub" ? d.ay : height / 2)).strength((d: any) =>
+      d.kind === "hub" ? 0.38 : 0.012
+    )
+  )
+  .stop();
+
+for (let i = 0; i < 450; i++) sim.tick();
+
+// Keep every node fully inside the viewBox.
+for (const n of nodes) {
+  n.x = Math.max(n.r + 1, Math.min(width - n.r - 1, n.x ?? width / 2));
+  n.y = Math.max(n.r + 1, Math.min(height - n.r - 1, n.y ?? height / 2));
+}
+
+const textStyle =
+  "paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600;";
+---
+
+<div class="skill-graph">
+  <svg
+    viewBox={`0 0 ${width} ${height}`}
+    class="w-full h-auto select-none overflow-visible"
+    role="img"
+    aria-label="Skill areas and the specific skills within them, sized by amount of experience"
+  >
+    <g class="spokes">
+      {
+        (links as any[]).map((l) => (
+          <line
+            class="spoke"
+            data-skill={l.source.full}
+            data-area={l.source.areaId}
+            x1={l.source.x}
+            y1={l.source.y}
+            x2={l.target.x}
+            y2={l.target.y}
+            stroke={l.source.color}
+            stroke-width="1"
+            stroke-opacity="0.28"
+          />
+        ))
+      }
+    </g>
+
+    <g class="hubs">
+      {
+        hubNodes.map((n) => (
+          <g class="area-hub" data-area={n.areaId}>
+            <title>{n.full}</title>
+            <circle cx={n.x} cy={n.y} r={n.r} fill={n.color} fill-opacity="0.9" />
+            <text
+              x={n.x}
+              y={n.y}
+              text-anchor="middle"
+              dominant-baseline="central"
+              style={`${textStyle} font-size: ${Math.max(10, Math.min(14, n.r / 2.4))}px`}
+            >
+              {n.short}
+            </text>
+          </g>
+        ))
+      }
+    </g>
+
+    <g class="skills">
+      {
+        skillNodes.map((n) => (
+          <g class="skill-bubble" data-skill={n.full} data-area={n.areaId} tabindex="0">
+            <title>{n.full}</title>
+            <circle cx={n.x} cy={n.y} r={n.r} fill={n.color} fill-opacity="0.6" />
+            <text
+              x={n.x}
+              y={n.y}
+              text-anchor="middle"
+              dominant-baseline="central"
+              class="pointer-events-none"
+              style={`${textStyle} font-weight: 500; font-size: ${Math.max(8, Math.min(11, n.r / 2.3))}px`}
+            >
+              {n.short}
+            </text>
+          </g>
+        ))
+      }
+    </g>
+  </svg>
+
+  <div class="flex flex-wrap gap-x-3 gap-y-1 mt-3 text-xs">
+    {
+      skillAreas.map((a) => (
+        <span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style={`background:${a.color}`} />
+          {a.name}
+        </span>
+      ))
+    }
+  </div>
+</div>

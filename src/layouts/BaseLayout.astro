@@ -6,7 +6,7 @@ import SideBar from "../components/SideBar.astro";
 
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 
-const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSidebar = true, sideBarActiveItemID } = Astro.props;
+const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSidebar = true, sideBarActiveItemID, wide = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSideba
       <div class="drawer-content bg-base-100">
         <Header title={SITE_TITLE} />
         <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 max-w-[900px]">
+          <main class={`p-6 pt-10 ${wide ? "max-w-[1200px]" : "max-w-[900px]"}`}>
             <slot />
           </main>
         </div>

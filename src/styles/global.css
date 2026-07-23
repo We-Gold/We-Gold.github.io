@@ -1,3 +1,10 @@
 .time-line-container>div:last-child .education__time>.education__line {
     display: none;
 }
+
+/* In the card timeline, the connector line is absolutely positioned and runs
+   the full height of each row. Start the first item's line at its centered dot
+   so there's no stub above the top node. */
+.time-line-container>div:first-child .education__time>.education__line {
+    top: 50%;
+}

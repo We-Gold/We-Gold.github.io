@@ -1,0 +1,38 @@
+---
+import dayjs from "dayjs";
+import TimeLineElement from "../cv/TimeLine.astro";
+import type { ExperienceEntry } from "../../data/experience";
+
+interface Props {
+  entries: ExperienceEntry[];
+  compact?: boolean;
+  card?: boolean;
+}
+
+const { entries, compact = false, card = false } = Astro.props;
+
+const formatDate = (d: string) => dayjs(`${d}-01`).format("MMM YYYY");
+
+const dateRange = (entry: ExperienceEntry) =>
+  `${formatDate(entry.startDate)} – ${entry.endDate === "present" ? "Present" : formatDate(entry.endDate)}`;
+---
+
+{
+  entries.map((entry) => (
+    <TimeLineElement
+      title={entry.title}
+      subtitle={`${entry.org ? entry.org + " · " : ""}${dateRange(entry)}`}
+      type={entry.type}
+      skills={entry.skills.map((s) => s.skill)}
+      compact={compact}
+      card={card}
+      url={entry.url}
+    >
+      <ul class="list-disc pl-4">
+        {entry.bullets.map((bullet) => (
+          <li>{bullet}</li>
+        ))}
+      </ul>
+    </TimeLineElement>
+  ))
+}

@@ -1,0 +1,282 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ExperienceTimeLine from "../components/experience/ExperienceTimeLine.astro";
+import SkillGraph from "../components/experience/SkillGraph.astro";
+import { experienceEntries } from "../data/experience";
+---
+
+<BaseLayout title="Experience" sideBarActiveItemID="experience" wide={true}>
+  <div class="text-3xl w-full font-bold mb-2">Experience</div>
+  <p class="mb-6 text-sm opacity-70 max-w-2xl">
+    Work history and projects, and how they connect to my main skill areas. Scroll to (or hover) an entry to
+    see which skills it used; hover a skill to see everywhere it shows up.
+  </p>
+
+  <div class="filter-bar flex gap-2 mb-6">
+    <button type="button" data-filter="all" class="btn btn-sm btn-active">All</button>
+    <button type="button" data-filter="work" class="btn btn-sm">Work</button>
+    <button type="button" data-filter="project" class="btn btn-sm">Projects</button>
+  </div>
+
+  <div class="experience-layout grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start relative">
+    <svg id="tendril-overlay" class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" style="z-index:0;"></svg>
+
+    <div class="time-line-container relative z-10 grid gap-0 min-w-0" id="experience-timeline">
+      <ExperienceTimeLine entries={experienceEntries} card={true} />
+    </div>
+
+    <div class="skill-graph-section relative z-10 lg:sticky lg:top-8 self-start">
+      <div class="text-lg font-semibold mb-2">Skill Areas</div>
+      <SkillGraph entries={experienceEntries} />
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const timeline = document.getElementById("experience-timeline");
+  const overlay = document.getElementById("tendril-overlay");
+  const layout = document.querySelector<HTMLElement>(".experience-layout");
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>(".filter-bar button[data-filter]");
+  const cards = timeline ? Array.from(timeline.querySelectorAll<HTMLElement>("[data-type]")) : [];
+  const bubbles = Array.from(document.querySelectorAll<SVGGElement>(".skill-bubble"));
+  const hubs = Array.from(document.querySelectorAll<SVGGElement>(".area-hub"));
+  const spokes = Array.from(document.querySelectorAll<SVGLineElement>(".spoke"));
+  const showsTendrils = () => overlay !== null && window.matchMedia("(min-width: 1024px)").matches;
+
+  let hoverCard: HTMLElement | null = null;
+  let spyCard: HTMLElement | null = null;
+  let hoverBubble: string | null = null;
+
+  const cardOf = () => hoverCard || spyCard;
+  const skillsOfCard = (el: HTMLElement | null) =>
+    el ? (el.dataset.skills || "").split(",").filter(Boolean) : [];
+
+  function clearAll() {
+    bubbles.forEach((b) => b.classList.remove("g-dim", "g-on"));
+    hubs.forEach((h) => h.classList.remove("g-dim", "g-on"));
+    spokes.forEach((s) => s.classList.remove("g-dim", "g-on"));
+    cards.forEach((c) => c.classList.remove("skill-active", "opacity-40"));
+    if (overlay) overlay.innerHTML = "";
+  }
+
+  // Highlight a set of skills across the graph: bubbles, their parent hubs
+  // (cascade), and the spokes. Cards are handled separately by render().
+  function graphHighlight(skills: string[]) {
+    const skillSet = new Set(skills);
+    const areaSet = new Set<string>();
+    bubbles.forEach((b) => {
+      if (b.dataset.skill && skillSet.has(b.dataset.skill)) areaSet.add(b.dataset.area || "");
+    });
+
+    bubbles.forEach((b) => {
+      const on = !!b.dataset.skill && skillSet.has(b.dataset.skill);
+      b.classList.toggle("g-on", on);
+      b.classList.toggle("g-dim", !on);
+    });
+    hubs.forEach((h) => {
+      const on = !!h.dataset.area && areaSet.has(h.dataset.area);
+      h.classList.toggle("g-on", on);
+      h.classList.toggle("g-dim", !on);
+    });
+    spokes.forEach((s) => {
+      const on = !!s.dataset.skill && skillSet.has(s.dataset.skill);
+      s.classList.toggle("g-on", on);
+      s.classList.toggle("g-dim", !on);
+    });
+  }
+
+  function bezier(x1: number, y1: number, x2: number, y2: number) {
+    const dx = Math.max(Math.abs(x2 - x1) * 0.45, 60);
+    return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+  }
+
+  // Tendrils live in a layer behind the columns, so coordinates are relative
+  // to the .experience-layout container rather than the viewport.
+  function drawTendrils(card: HTMLElement | null, skills: string[]) {
+    if (!overlay || !layout) return;
+    if (!showsTendrils() || !card) {
+      overlay.innerHTML = "";
+      return;
+    }
+    const base = layout.getBoundingClientRect();
+    const rect = card.getBoundingClientRect();
+    const x1 = rect.right - base.left - 6;
+    const y1 = rect.top - base.top + rect.height / 2;
+    const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
+    const skillSet = new Set(skills);
+    const paths = bubbles
+      .filter((b) => !!b.dataset.skill && skillSet.has(b.dataset.skill))
+      .map((b) => {
+        const r = b.getBoundingClientRect();
+        const x2 = r.left - base.left + r.width / 2;
+        const y2 = r.top - base.top + r.height / 2;
+        return `<path d="${bezier(x1, y1, x2, y2)}" fill="none" stroke="${color}" stroke-width="1.75" stroke-opacity="0.7" />`;
+      });
+    overlay.innerHTML = paths.join("");
+  }
+
+  // Resolve the current highlight state from hover/scroll/bubble inputs.
+  function render() {
+    // Hovering a bubble: isolate that skill; fade cards that don't use it.
+    if (hoverBubble) {
+      graphHighlight([hoverBubble]);
+      cards.forEach((c) => {
+        const uses = skillsOfCard(c).includes(hoverBubble!);
+        c.classList.remove("skill-active");
+        c.classList.toggle("opacity-40", !uses);
+      });
+      if (overlay) overlay.innerHTML = "";
+      return;
+    }
+    // Otherwise the focused card drives everything. Only that one card is
+    // emphasized — no co-highlighting of other cards that share a skill.
+    const card = cardOf();
+    if (!card) {
+      clearAll();
+      return;
+    }
+    const skills = skillsOfCard(card);
+    graphHighlight(skills);
+    cards.forEach((c) => {
+      c.classList.toggle("skill-active", c === card);
+      c.classList.remove("opacity-40");
+    });
+    drawTendrils(card, skills);
+  }
+
+  cards.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      hoverCard = el;
+      render();
+    });
+    el.addEventListener("mouseleave", () => {
+      if (hoverCard === el) hoverCard = null;
+      render();
+    });
+  });
+
+  bubbles.forEach((bubble) => {
+    const skill = bubble.dataset.skill;
+    if (!skill) return;
+    bubble.addEventListener("mouseenter", () => {
+      hoverBubble = skill;
+      render();
+    });
+    bubble.addEventListener("mouseleave", () => {
+      if (hoverBubble === skill) hoverBubble = null;
+      render();
+    });
+  });
+
+  // Scroll-spy: whichever card sits in the vertical middle band is "active".
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) spyCard = entry.target as HTMLElement;
+        else if (spyCard === entry.target) spyCard = null;
+      });
+      if (!hoverCard && !hoverBubble) render();
+    },
+    { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+  );
+  cards.forEach((el) => observer.observe(el));
+
+  // Tendrils are drawn in screen space, so redraw them as things move.
+  let ticking = false;
+  function redrawOnMove() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      if (!hoverBubble) {
+        const card = cardOf();
+        if (card) drawTendrils(card, skillsOfCard(card));
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener("scroll", redrawOnMove, { passive: true });
+  window.addEventListener("resize", () => render());
+
+  // Card truncate/expand.
+  timeline?.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(".toggle-expand");
+    if (!btn) return;
+    const detail = btn.previousElementSibling as HTMLElement | null;
+    if (!detail) return;
+    const expanded = detail.classList.toggle("expanded");
+    btn.textContent = expanded ? "Show less" : "Show more";
+    redrawOnMove();
+  });
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      hoverCard = null;
+      spyCard = null;
+      hoverBubble = null;
+      clearAll();
+      filterButtons.forEach((b) => b.classList.remove("btn-active"));
+      btn.classList.add("btn-active");
+      const filter = btn.dataset.filter;
+      cards.forEach((el) => {
+        el.classList.toggle("hidden", !(filter === "all" || el.dataset.type === filter));
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Graph highlight states (applied to SVG groups from the script). */
+  .spokes .spoke,
+  .hubs .area-hub,
+  .skills .skill-bubble {
+    transition: opacity 0.2s ease;
+  }
+  .g-dim {
+    opacity: 0.14;
+  }
+  .skill-bubble.g-on circle,
+  .area-hub.g-on circle {
+    stroke: #0d9488;
+    stroke-width: 3;
+  }
+  .spoke.g-on {
+    stroke-opacity: 0.85 !important;
+    stroke-width: 2 !important;
+  }
+
+  /* Active card emphasis: a type-colored ring on top of the persistent
+     left accent bar (teal for work, slate for projects). */
+  #experience-timeline [data-type="work"].skill-active .experience__data {
+    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.5);
+  }
+  #experience-timeline [data-type="project"].skill-active .experience__data {
+    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.55);
+  }
+  #experience-timeline [data-type] {
+    transition: opacity 0.2s ease;
+  }
+
+  /* Filter buttons are always tinted their category color; the active one is
+     full-strength, the others dimmed. */
+  .filter-bar .btn {
+    border-color: transparent !important;
+  }
+  .filter-bar [data-filter="all"] {
+    background-color: #d1d5db !important;
+    color: #1f2937 !important;
+  }
+  .filter-bar [data-filter="work"] {
+    background-color: #0d9488 !important;
+    color: #fff !important;
+  }
+  .filter-bar [data-filter="project"] {
+    background-color: #64748b !important;
+    color: #fff !important;
+  }
+  .filter-bar .btn:not(.btn-active) {
+    opacity: 0.45;
+  }
+  .filter-bar .btn.btn-active {
+    opacity: 1;
+  }
+</style>

@@ -1,11 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
+import ExperienceTimeLine from "../components/experience/ExperienceTimeLine.astro";
+import { experienceEntries } from "../data/experience";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const last_posts = posts.slice(0, 3);
+const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
 ---
 
 <BaseLayout sideBarActiveItemID="home">
@@ -20,7 +23,7 @@ const last_posts = posts.slice(0, 3);
 
     <div class="py-2">
       <text class="text-lg">
-        This summer I'm an AI Engineering Intern at Regeneron Pharmaceuticals, building an auditable AI/ML observability platform on AWS that monitors 30+ models and tens of thousands of model events, along with an adaptive LLM benchmarking system that cuts API costs by more than 60%.
+        This summer I'm an AI Engineering Intern at Regeneron Pharmaceuticals, building an auditable AI/ML observability platform on AWS that monitors 30+ models across 3 pilot teams, along with an adaptive LLM benchmarking system that cuts API costs by more than 60%.
       </text>
     </div>
 
@@ -32,6 +35,14 @@ const last_posts = posts.slice(0, 3);
     <div class="my-8">
       <a class="btn hover:bg-teal-600 hover:border-teal-600 hover:text-white transition-colors duration-300" href="https://www.linkedin.com/in/weaver-goldman/" target="_blank">CONNECT ON LINKEDIN</a>
     </div>
+  </div>
+
+  <div class="py-2 mb-10">
+    <div class="text-3xl w-full font-bold mb-4">Recent Experience</div>
+    <div class="time-line-container grid gap-2">
+      <ExperienceTimeLine entries={workOnly} compact={true} />
+    </div>
+    <a href="/experience" class="link link-hover text-teal-700 inline-block mt-2">View full experience &rarr;</a>
   </div>
 
   <div>
