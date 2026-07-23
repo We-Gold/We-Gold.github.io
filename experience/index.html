@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="generator" content="Astro v2.10.15">
+
+<!-- Umami Tracking (privacy friendly) -->
+<script async src="https://analytics.umami.is/script.js" data-website-id="69d73ad4-50dc-4889-b0a0-147df4526b30"></script>
+
+<!-- Primary Meta Tags -->
+<title>Experience</title>
+<meta name="title" content="Experience">
+<meta name="description" content="Data Science Master's Student @ WPI, specializing in ML and Software Engineering! See some of my projects or connect with me.">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://weavergoldman.com/experience/">
+<meta property="og:title" content="Experience">
+<meta property="og:description" content="Data Science Master's Student @ WPI, specializing in ML and Software Engineering! See some of my projects or connect with me.">
+<!-- <meta property="og:image" content={new URL(image, Astro.url)} /> -->
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://weavergoldman.com/experience/">
+<meta property="twitter:title" content="Experience">
+<meta property="twitter:description" content="Data Science Master's Student @ WPI, specializing in ML and Software Engineering! See some of my projects or connect with me.">
+<!-- <meta property="twitter:image" content={new URL(image, Astro.url)} /> -->
+  <link rel="stylesheet" href="../_astro/404.c1f06e54.css" />
+<link rel="stylesheet" href="../_astro/_slug_.0b9bacc7.css" />
+<link rel="stylesheet" href="../_astro/experience.3129e6c9.css" />
+<link rel="stylesheet" href="../_astro/experience.8f55054f.css" /><script type="module">const m=document.getElementById("experience-timeline"),a=document.getElementById("tendril-overlay"),p=document.querySelector(".experience-layout"),L=document.querySelectorAll(".filter-bar button[data-filter]"),r=m?Array.from(m.querySelectorAll("[data-type]")):[],f=Array.from(document.querySelectorAll(".skill-bubble")),k=Array.from(document.querySelectorAll(".area-hub")),y=Array.from(document.querySelectorAll(".spoke")),T=()=>a!==null&&window.matchMedia("(min-width: 1024px)").matches;let i=null,d=null,l=null;const w=()=>i||d,v=t=>t?(t.dataset.skills||"").split(",").filter(Boolean):[];function S(){f.forEach(t=>t.classList.remove("g-dim","g-on")),k.forEach(t=>t.classList.remove("g-dim","g-on")),y.forEach(t=>t.classList.remove("g-dim","g-on")),r.forEach(t=>t.classList.remove("skill-active","opacity-40")),a&&(a.innerHTML="")}function E(t){const n=new Set(t),s=new Set;f.forEach(e=>{e.dataset.skill&&n.has(e.dataset.skill)&&s.add(e.dataset.area||"")}),f.forEach(e=>{const o=!!e.dataset.skill&&n.has(e.dataset.skill);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)}),k.forEach(e=>{const o=!!e.dataset.area&&s.has(e.dataset.area);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)}),y.forEach(e=>{const o=!!e.dataset.skill&&n.has(e.dataset.skill);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)})}function H(t,n,s,e){const o=Math.max(Math.abs(s-t)*.45,60);return`M ${t} ${n} C ${t+o} ${n}, ${s-o} ${e}, ${s} ${e}`}function A(t,n){if(!a||!p)return;if(!T()||!t){a.innerHTML="";return}const s=p.getBoundingClientRect(),e=t.getBoundingClientRect(),o=e.right-s.left-6,$=e.top-s.top+e.height/2,b=t.dataset.type==="project"?"#64748b":"#0d9488",x=new Set(n),B=f.filter(u=>!!u.dataset.skill&&x.has(u.dataset.skill)).map(u=>{const g=u.getBoundingClientRect(),C=g.left-s.left+g.width/2,q=g.top-s.top+g.height/2;return`<path d="${H(o,$,C,q)}" fill="none" stroke="${b}" stroke-width="1.75" stroke-opacity="0.7" />`});a.innerHTML=B.join("")}function c(){if(l){E([l]),r.forEach(s=>{const e=v(s).includes(l);s.classList.remove("skill-active"),s.classList.toggle("opacity-40",!e)}),a&&(a.innerHTML="");return}const t=w();if(!t){S();return}const n=v(t);E(n),r.forEach(s=>{s.classList.toggle("skill-active",s===t),s.classList.remove("opacity-40")}),A(t,n)}r.forEach(t=>{t.addEventListener("mouseenter",()=>{i=t,c()}),t.addEventListener("mouseleave",()=>{i===t&&(i=null),c()})});f.forEach(t=>{const n=t.dataset.skill;n&&(t.addEventListener("mouseenter",()=>{l=n,c()}),t.addEventListener("mouseleave",()=>{l===n&&(l=null),c()}))});const I=new IntersectionObserver(t=>{t.forEach(n=>{n.isIntersecting?d=n.target:d===n.target&&(d=null)}),!i&&!l&&c()},{rootMargin:"-45% 0px -45% 0px",threshold:0});r.forEach(t=>I.observe(t));let h=!1;function M(){h||(h=!0,requestAnimationFrame(()=>{if(!l){const t=w();t&&A(t,v(t))}h=!1}))}window.addEventListener("scroll",M,{passive:!0});window.addEventListener("resize",()=>c());m?.addEventListener("click",t=>{const n=t.target.closest(".toggle-expand");if(!n)return;const s=n.previousElementSibling;if(!s)return;const e=s.classList.toggle("expanded");n.textContent=e?"Show less":"Show more",M()});L.forEach(t=>{t.addEventListener("click",()=>{i=null,d=null,l=null,S(),L.forEach(s=>s.classList.remove("btn-active")),t.classList.add("btn-active");const n=t.dataset.filter;r.forEach(s=>{s.classList.toggle("hidden",!(n==="all"||s.dataset.type===n))})})});
+</script></head>
+  <body>
+    <div class="bg-base-100 drawer lg:drawer-open">
+      <input id="my-drawer" type="checkbox" class="drawer-toggle">
+      <div class="drawer-content bg-base-100">
+        <div class="sticky lg:hidden top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm">
+  <div class="navbar">
+    <div class="navbar-start">
+      <label for="my-drawer" class="btn btn-square btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </label>
+    </div>
+    <div class="navbar-center">
+      <a class="btn btn-ghost normal-case text-xl" href="../">Weaver Goldman</a>
+    </div>
+    <div class="navbar-end"></div>
+  </div>
+</div>
+        <div class="md:flex md:justify-center">
+          <main class="p-6 pt-10 max-w-[1200px]">
+            
+  <div class="text-3xl w-full font-bold mb-2 astro-AJXCTDAQ">Experience</div>
+  <p class="mb-6 text-sm opacity-70 max-w-2xl astro-AJXCTDAQ">
+    Work history and projects, and how they connect to my main skill areas. Scroll to (or hover) an entry to
+    see which skills it used; hover a skill to see everywhere it shows up.
+  </p>
+
+  <div class="filter-bar flex gap-2 mb-6 astro-AJXCTDAQ">
+    <button type="button" data-filter="all" class="btn btn-sm btn-active astro-AJXCTDAQ">All</button>
+    <button type="button" data-filter="work" class="btn btn-sm astro-AJXCTDAQ">Work</button>
+    <button type="button" data-filter="project" class="btn btn-sm astro-AJXCTDAQ">Projects</button>
+  </div>
+
+  <div class="experience-layout grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start relative astro-AJXCTDAQ">
+    <svg id="tendril-overlay" class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block astro-AJXCTDAQ" style="z-index:0;"></svg>
+
+    <div class="time-line-container relative z-10 grid gap-0 min-w-0 astro-AJXCTDAQ" id="experience-timeline">
+      <div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="React,JS/TS,Three.js,Plotly Dash,Data Visualization,DuckDB/Parquet,SQL,SQLite,Python,CI/CD,Docker">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            Web Development Lab Assistant
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Laboratory of Spaceflight and Planetary Exploration (LSPE), WPI · Aug 2024 – Present</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Developing a data-driven space mission planning web application under contract with NASA.</li><li>Optimized the database and graphing system to render millions of data points interactively, migrating from SQLite to DuckDB over hive-partitioned Parquet with client-side OPFS caching.</li><li>Led development of an interactive, 3D Mars lander simulation with Three.js.</li><li>Built a robust CI/CD pipeline for the lab with Docker, unit testing, linting, and GitHub Actions.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="JS/TS,Testing,CI/CD">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/We-Gold/gpxjs" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                GPX.JS
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Jun 2023 – Present</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>A modern, TypeScript-first library for parsing GPX files and converting them to GeoJSON, published to npm as @we-gold/gpxjs.</li><li>A maintained successor to the unmaintained GPXParser.js, with full TypeScript support and a Vitest/Playwright browser test suite.</li><li>Runs coverage checks and an npm publish workflow through GitHub Actions CI.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="AWS,Python,MLOps,LLM Evaluation,Unsupervised ML,ML/scikit-learn,Pandas,SQL,PostgreSQL,React,JS/TS,visx,FastAPI,Docker,Figma,Async/SDK Design">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            AI Engineering Intern
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Regeneron Pharmaceuticals, Inc. · May 2026 – Aug 2026</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Built an auditable AI/ML observability platform on AWS monitoring 30+ models, adopted by 3 pilot teams and informed by 13 stakeholder interviews.</li><li>Developed an environment-agnostic Python SDK for scalable data ingestion and model analysis.</li><li>Tracked data subpopulations with an unsupervised machine learning approach (Gaussian mixture models, BIC model selection, and cost matching).</li><li>Built a React dashboard with visx and a FastAPI backend to visualize model performance, data drift, and benchmarking results.</li><li>Implemented an adaptive LLM benchmarking system with over 60% lower API costs than a naive evaluation strategy.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="Python,LLM/AI,CLI/Packaging">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://pypi.org/project/ankirai/" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                ankirai
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">May 2026 – May 2026</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>A CLI published to PyPI that transforms notes (PDFs and more) into Anki flashcards quickly using any LLM provider.</li><li>Includes a human-in-the-loop review mode to approve, edit, or reject cards before export.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="LLM/AI,RAG,FastAPI,PHP/WordPress Plugins,React,JS/TS,Docker,GCP,Figma">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/We-Gold/teamgraduateai-supporting-materials" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                #TeamGraduate AI
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Jan 2026 – May 2026</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>A cloud-hosted LLM platform (Google Cloud Run) generating curriculum-aligned educational content for secondary e-learning in Namibia.</li><li>Built a custom WordPress PHP plugin, backed by a Python service (FastAPI + Pydantic AI), that cut lesson creation time by 87.7%.</li><li>Implemented a RAG system stored in WordPress&#39;s own database tables, populated and queried by the plugin.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="PyTorch/ML,Python,Research">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://digital.wpi.edu/concern/student_works/kh04dv11x" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                Scaling Diffusion Models to Large Sparse Graphs
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">WPI Major Qualifying Project (MQP) · Aug 2025 – May 2026</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>4-person senior project introducing Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear space complexity for large graphs.</li><li>Built RedditWalk, a new benchmark dataset, and targeted molecule and protein generation for drug discovery.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="D3.js,Canvas/Web Audio,Data Visualization,JS/TS">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://weavergoldman.com/visualize-guitar/" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                Visualize How a Guitar Works
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">WPI Data Visualization (Prof. Lane Harrison) · Feb 2026 – Mar 2026</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>An interactive D3.js, Web Audio API, and Canvas visualization of how a guitar produces sound.</li><li>Includes a note editor to compose a piece and hear it played back on the guitar.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="Python,ML/scikit-learn,Pandas,Data Visualization">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/We-Gold/wpi-acl-injury-risk" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                ACL Injury Risk Prediction
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">WPI DS 502 · Aug 2025 – Dec 2025</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>5-person team project predicting ACL injury risk for college athletes from a Kaggle athlete injury/performance dataset.</li><li>Addressed extreme class imbalance with SMOTE and random oversampling, and used t-SNE to visualize class separability.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="Python,Streamlit,FastAPI,SQL,PostgreSQL,Docker">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/We-Gold/wpi-greenboard" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                WPI Greenboard
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">WPI CS 542 · Aug 2025 – Dec 2025</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>4-person team project building an unofficial carbon emissions leaderboard for WPI, estimating impact from packages delivered to the campus mailroom.</li><li>Built a Streamlit UI backed by a FastAPI service and a PostgreSQL database, with a Dockerized deployment.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="LangChain/LangGraph,Agentic AI,RAG,Vector Search/Embeddings,MCP,Python,FastAPI,Docker,SQL,SQLite,Agile/Scrum">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            Software Engineering Intern
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Medtronic (Minimally Invasive Therapies Group) · Jun 2025 – Aug 2025</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Saved 400+ hours of manual work annually by automating surgical robot log analysis tasks with AI (LLMs).</li><li>Developed an AI tool with RAG and MCP to analyze HUGO robot logs, performing expert-level analysis in minutes.</li><li>Built the RAG retrieval layer with Chroma and a custom SQLite-based vector search.</li><li>Coordinated numerous AI agents and data sources with LangChain/LangGraph to perform complex tasks.</li><li>Worked in an Agile environment (Scrum and Kanban via Jira) to manage timelines and deliverables.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="Python,ML/scikit-learn,Pandas,Data Visualization">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/We-Gold/ds-501-cs4-public" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                Identifying Transit Accessibility Gaps in NYC
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">WPI DS 501 · Mar 2025 – Apr 2025</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Identified NYC areas underserved by the subway, using distance to the nearest station (from GTFS data) as a proxy for accessibility.</li><li>Predicted weekly ridership revenue per location with a Random Forest Regressor (R² = 0.675) over 6 years of data, surfacing candidate stops projected to produce over $4 million in annual revenue.</li><li>Visualized results with interactive geospatial maps highlighting areas of opportunity.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="Python,Electron,Docker,Multithreading/Perf,React,JS/TS,Data Visualization">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/ChengLabResearch/ouroboros" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                Software Development and Research Intern
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Gittlen Cancer Research Labs · May 2024 – Aug 2024</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Built an Electron desktop application for extracting nerves and blood vessels from cloud-hosted medical scans, reducing file sizes by up to 69,355% (from 132.08 GB to 190.44 MB).</li><li>Achieved an approx. 4,000% computation speed improvement with multithreading and multiprocessing.</li><li>Used Docker to create a cross-platform Python backend and an extensible plugin system.</li><li>Built a React/TypeScript UI with Three.js and Neuroglancer for 3D visualization of segmented scans.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="project" data-skills="Python,Docker,Multithreading/Perf,React,JS/TS">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-slate-400 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-4 py-3 mb-3 rounded-r-lg bg-base-200 border-l-4 border-slate-400 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-sm font-semibold astro-6XWW5A3Q">
+            <a href="https://github.com/ChengLabResearch/ouroboros" target="_blank" class="hover:text-teal-700 astro-6XWW5A3Q">
+                Ouroboros
+              </a>
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 astro-6XWW5A3Q">
+            Project
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">May 2024 – Aug 2024</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>A platform for extracting ROIs (e.g. nerves, blood vessels) from multi-terabyte cloud-hosted medical scans.</li><li>Ships as an Electron app with a React/TypeScript UI, a plugin system, and a Neuroglancer-based 3D viewer.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="GPU,Computer Vision,JS/TS,Testing">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            Software Development Intern
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Cheng Lab, Penn State College of Medicine · Jun 2021 – Aug 2021</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Developed a key-point scanning tool for micro-CT zebrafish scans using GPU kernels for improved performance.</li><li>Designed functional tests through a collaboration with a cybersecurity professional.</li><li>Presented the application at a lab meeting alongside novel segmentation techniques.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div><div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="JS/TS,p5.js,Client Communication">
+  <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
+        <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
+        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full z-10 ring-2 ring-base-100 bg-teal-600 astro-6XWW5A3Q"></span>
+      </div>
+  <div class="experience__data bd-grid px-5 py-4 mb-3 rounded-r-lg bg-base-200 border-l-4 border-teal-600 transition-all flex-1 min-w-0 astro-6XWW5A3Q">
+    <div class="flex items-center gap-2 mb-1 flex-wrap astro-6XWW5A3Q">
+          <h3 class="text-base font-semibold astro-6XWW5A3Q">
+            Freelance Web Developer
+          </h3>
+          <span class="text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-teal-100 text-teal-800 astro-6XWW5A3Q">
+            Work
+          </span>
+        </div>
+    <span class="font-light text-sm astro-6XWW5A3Q">Mar 2021 – Jun 2021</span>
+    
+          <div class="entry-detail my-2 text-left relative astro-6XWW5A3Q">
+            
+      <ul class="list-disc pl-4">
+        <li>Built data visualization widgets and teaching tools for clients using technologies such as p5.js and MathJax.</li><li>Handled project planning and negotiation with 15 clients to align with their specific requirements.</li><li>Developed maintainable codebases while adapting to varying project scopes.</li>
+      </ul>
+    
+          </div>
+          <button type="button" class="toggle-expand text-xs font-medium text-teal-700 hover:underline mt-1 astro-6XWW5A3Q">
+            Show more
+          </button>
+        
+  </div>
+</div>
+    </div>
+
+    <div class="skill-graph-section relative z-10 lg:sticky lg:top-8 self-start astro-AJXCTDAQ">
+      <div class="text-lg font-semibold mb-2 astro-AJXCTDAQ">Skill Areas</div>
+      <div class="skill-graph">
+  <svg viewBox="0 0 440 660" class="w-full h-auto select-none overflow-visible" role="img" aria-label="Skill areas and the specific skills within them, sized by amount of experience">
+    <g class="spokes">
+      <line class="spoke" data-skill="Python" data-area="backend" x1="362.16314531196815" y1="418.27792635303695" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="JS/TS" data-area="frontend" x1="115.24408772809126" y1="619.8595169974128" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Docker" data-area="backend" x1="414.5955118072199" y1="327.4857111466334" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Data Visualization" data-area="data-viz" x1="296.98278353287765" y1="50.194221046987295" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="React" data-area="frontend" x1="68.3976566843833" y1="594.1211014634501" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="FastAPI" data-area="backend" x1="393.5984930474028" y1="373.5671264346584" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQL" data-area="backend" x1="247.15686541580135" y1="287.0662301336769" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="ML/scikit-learn" data-area="ai-ml" x1="190.824713206537" y1="94.58211555632353" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Pandas" data-area="backend" x1="267.73865621805464" y1="404.5360080915518" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Multithreading/Perf" data-area="systems" x1="61.80540748473992" y1="370.31338901471713" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM/AI" data-area="ai-ml" x1="164.0754900817406" y1="178.98803536948262" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="RAG" data-area="ai-ml" x1="82.12825636825127" y1="186.27552478145685" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CI/CD" data-area="practices" x1="377.71752304420454" y1="563.3027091585548" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Testing" data-area="practices" x1="374.8480418355672" y1="512.0103642095753" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PostgreSQL" data-area="backend" x1="322.0889018560021" y1="250.67459441440022" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQLite" data-area="backend" x1="386.08662988141486" y1="289.4040252097229" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="AWS" data-area="backend" x1="311.33808675602546" y1="409.44411492082827" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM Evaluation" data-area="ai-ml" x1="125.24888819755671" y1="45.46359978041362" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Figma" data-area="frontend" x1="82.22634165907367" y1="481.9410233417523" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PyTorch/ML" data-area="ai-ml" x1="84.8330158082579" y1="53.33150088037186" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="D3.js" data-area="data-viz" x1="375.2600843833695" y1="78.65439198216842" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LangChain/LangGraph" data-area="ai-ml" x1="123.78753844001434" y1="192.99971433595866" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agentic AI" data-area="ai-ml" x1="163.75081727992335" y1="60.056720036342355" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Three.js" data-area="frontend" x1="164.1570287757182" y1="598.7871515725371" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Plotly Dash" data-area="data-viz" x1="255.64678864375523" y1="129.5638174874903" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="DuckDB/Parquet" data-area="backend" x1="282.6429315259432" y1="262.28104692531963" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MLOps" data-area="backend" x1="245.0143482449862" y1="367.69622025029514" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Async/SDK Design" data-area="systems" x1="52.30665572474065" y1="328.89476217855605" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PHP/WordPress Plugins" data-area="frontend" x1="165.01924613698873" y1="484.5011172733969" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Research" data-area="practices" x1="254.13808620640748" y1="556.072997969875" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Canvas/Web Audio" data-area="data-viz" x1="341.97993072017397" y1="55.42573708566577" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Streamlit" data-area="frontend" x1="52.20112177865217" y1="552.144810476787" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Vector Search/Embeddings" data-area="ai-ml" x1="43.38548419002811" y1="118.61428793542794" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Unsupervised ML" data-area="ai-ml" x1="187.77473118266633" y1="137.08829138127717" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="visx" data-area="data-viz" x1="377.4789018989908" y1="154.0105887776202" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CLI/Packaging" data-area="backend" x1="238.83011031819603" y1="328.85996362364153" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GCP" data-area="backend" x1="361.9357215220813" y1="257.6239044776907" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MCP" data-area="ai-ml" x1="54.07546677125482" y1="156.45884462769376" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Electron" data-area="frontend" x1="57.351892350128914" y1="513.1580282291276" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GPU" data-area="systems" x1="69.19229189566887" y1="293.37892178853843" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Computer Vision" data-area="ai-ml" x1="56.64435583483437" y1="81.59146706061011" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="p5.js" data-area="data-viz" x1="387.4502878650949" y1="116.66277962127852" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Client Communication" data-area="practices" x1="339.23829509856324" y1="599.9496515140778" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agile/Scrum" data-area="practices" x1="295.3077281250848" y1="600.2199839273582" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line>
+    </g>
+
+    <g class="hubs">
+      <g class="area-hub" data-area="ai-ml">
+            <title>AI &amp; ML</title>
+            <circle cx="121.36693367529874" cy="121.46577010696492" r="42.93632317540029" fill="#8b5cf6" fill-opacity="0.9"></circle>
+            <text x="121.36693367529874" y="121.46577010696492" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              AI &amp; ML
+            </text>
+          </g><g class="area-hub" data-area="data-viz">
+            <title>Data Visualization</title>
+            <circle cx="318.3684426157759" cy="120.83434965754147" r="39.66726188957803" fill="#f59e0b" fill-opacity="0.9"></circle>
+            <text x="318.3684426157759" y="120.83434965754147" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              Data Viz
+            </text>
+          </g><g class="area-hub" data-area="systems">
+            <title>Systems &amp; Performance</title>
+            <circle cx="119.18585434662282" cy="332.89826890529673" r="35.77817459305202" fill="#f43f5e" fill-opacity="0.9"></circle>
+            <text x="119.18585434662282" y="332.89826890529673" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              Systems
+            </text>
+          </g><g class="area-hub" data-area="backend">
+            <title>Backend &amp; Cloud</title>
+            <circle cx="318.01192445315615" cy="332.3027904040662" r="50" fill="#0d9488" fill-opacity="0.9"></circle>
+            <text x="318.01192445315615" y="332.3027904040662" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              Backend
+            </text>
+          </g><g class="area-hub" data-area="frontend">
+            <title>Web &amp; Frontend</title>
+            <circle cx="124.74955772410814" cy="539.2330598771217" r="43.67741209511314" fill="#3b82f6" fill-opacity="0.9"></circle>
+            <text x="124.74955772410814" y="539.2330598771217" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              Frontend
+            </text>
+          </g><g class="area-hub" data-area="practices">
+            <title>Practices &amp; Collaboration</title>
+            <circle cx="314.82859754954444" cy="539.211452687768" r="36.91101846031081" fill="#64748b" fill-opacity="0.9"></circle>
+            <text x="314.82859754954444" y="539.211452687768" text-anchor="middle" dominant-baseline="central" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-size: 14px">
+              Practices
+            </text>
+          </g>
+    </g>
+
+    <g class="skills">
+      <g class="skill-bubble" data-skill="Python" data-area="backend" tabindex="0">
+            <title>Python</title>
+            <circle cx="362.16314531196815" cy="418.27792635303695" r="28" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="362.16314531196815" y="418.27792635303695" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 11px">
+              Python
+            </text>
+          </g><g class="skill-bubble" data-skill="JS/TS" data-area="frontend" tabindex="0">
+            <title>JS/TS</title>
+            <circle cx="115.24408772809126" cy="619.8595169974128" r="25.456343141125203" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="115.24408772809126" y="619.8595169974128" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 11px">
+              JS/TS
+            </text>
+          </g><g class="skill-bubble" data-skill="Docker" data-area="backend" tabindex="0">
+            <title>Docker</title>
+            <circle cx="414.5955118072199" cy="327.4857111466334" r="23.983728806075383" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="414.5955118072199" y="327.4857111466334" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 10.427708176554516px">
+              Docker
+            </text>
+          </g><g class="skill-bubble" data-skill="Data Visualization" data-area="data-viz" tabindex="0">
+            <title>Data Visualization</title>
+            <circle cx="296.98278353287765" cy="50.194221046987295" r="22.302734659468555" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="296.98278353287765" y="50.194221046987295" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 9.696841156290677px">
+              Viz
+            </text>
+          </g><g class="skill-bubble" data-skill="React" data-area="frontend" tabindex="0">
+            <title>React</title>
+            <circle cx="68.3976566843833" cy="594.1211014634501" r="21.99512076087079" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="68.3976566843833" y="594.1211014634501" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 9.563095982987301px">
+              React
+            </text>
+          </g><g class="skill-bubble" data-skill="FastAPI" data-area="backend" tabindex="0">
+            <title>FastAPI</title>
+            <circle cx="393.5984930474028" cy="373.5671264346584" r="20.65602849280735" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="393.5984930474028" y="373.5671264346584" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.980881953394501px">
+              FastAPI
+            </text>
+          </g><g class="skill-bubble" data-skill="SQL" data-area="backend" tabindex="0">
+            <title>SQL</title>
+            <circle cx="247.15686541580135" cy="287.0662301336769" r="20.287516324524994" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="247.15686541580135" y="287.0662301336769" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
+              SQL
+            </text>
+          </g><g class="skill-bubble" data-skill="ML/scikit-learn" data-area="ai-ml" tabindex="0">
+            <title>ML/scikit-learn</title>
+            <circle cx="190.824713206537" cy="94.58211555632353" r="20.287516324524994" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="190.824713206537" y="94.58211555632353" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
+              scikit
+            </text>
+          </g><g class="skill-bubble" data-skill="Pandas" data-area="backend" tabindex="0">
+            <title>Pandas</title>
+            <circle cx="267.73865621805464" cy="404.5360080915518" r="20.287516324524994" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="267.73865621805464" y="404.5360080915518" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
+              Pandas
+            </text>
+          </g><g class="skill-bubble" data-skill="Multithreading/Perf" data-area="systems" tabindex="0">
+            <title>Multithreading/Perf</title>
+            <circle cx="61.80540748473992" cy="370.31338901471713" r="19.49634057065309" fill="#f43f5e" fill-opacity="0.6"></circle>
+            <text x="61.80540748473992" y="370.31338901471713" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.476669813327431px">
+              Perf
+            </text>
+          </g><g class="skill-bubble" data-skill="LLM/AI" data-area="ai-ml" tabindex="0">
+            <title>LLM/AI</title>
+            <circle cx="164.0754900817406" cy="178.98803536948262" r="19.067617668790177" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="164.0754900817406" y="178.98803536948262" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.290268551647904px">
+              LLM
+            </text>
+          </g><g class="skill-bubble" data-skill="RAG" data-area="ai-ml" tabindex="0">
+            <title>RAG</title>
+            <circle cx="82.12825636825127" cy="186.27552478145685" r="18.611150964330697" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="82.12825636825127" y="186.27552478145685" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.091804767100303px">
+              RAG
+            </text>
+          </g><g class="skill-bubble" data-skill="CI/CD" data-area="practices" tabindex="0">
+            <title>CI/CD</title>
+            <circle cx="377.71752304420454" cy="563.3027091585548" r="18.12073644540805" fill="#64748b" fill-opacity="0.6"></circle>
+            <text x="377.71752304420454" y="563.3027091585548" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              CI/CD
+            </text>
+          </g><g class="skill-bubble" data-skill="Testing" data-area="practices" tabindex="0">
+            <title>Testing</title>
+            <circle cx="374.8480418355672" cy="512.0103642095753" r="18.12073644540805" fill="#64748b" fill-opacity="0.6"></circle>
+            <text x="374.8480418355672" y="512.0103642095753" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Testing
+            </text>
+          </g><g class="skill-bubble" data-skill="PostgreSQL" data-area="backend" tabindex="0">
+            <title>PostgreSQL</title>
+            <circle cx="322.0889018560021" cy="250.67459441440022" r="18.12073644540805" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="322.0889018560021" y="250.67459441440022" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Postgres
+            </text>
+          </g><g class="skill-bubble" data-skill="SQLite" data-area="backend" tabindex="0">
+            <title>SQLite</title>
+            <circle cx="386.08662988141486" cy="289.4040252097229" r="17.587442366156626" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="386.08662988141486" y="289.4040252097229" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              SQLite
+            </text>
+          </g><g class="skill-bubble" data-skill="AWS" data-area="backend" tabindex="0">
+            <title>AWS</title>
+            <circle cx="311.33808675602546" cy="409.44411492082827" r="17.587442366156626" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="311.33808675602546" y="409.44411492082827" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              AWS
+            </text>
+          </g><g class="skill-bubble" data-skill="LLM Evaluation" data-area="ai-ml" tabindex="0">
+            <title>LLM Evaluation</title>
+            <circle cx="125.24888819755671" cy="45.46359978041362" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="125.24888819755671" y="45.46359978041362" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              LLM Eval
+            </text>
+          </g><g class="skill-bubble" data-skill="Figma" data-area="frontend" tabindex="0">
+            <title>Figma</title>
+            <circle cx="82.22634165907367" cy="481.9410233417523" r="17.587442366156626" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="82.22634165907367" y="481.9410233417523" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Figma
+            </text>
+          </g><g class="skill-bubble" data-skill="PyTorch/ML" data-area="ai-ml" tabindex="0">
+            <title>PyTorch/ML</title>
+            <circle cx="84.8330158082579" cy="53.33150088037186" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="84.8330158082579" y="53.33150088037186" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              PyTorch
+            </text>
+          </g><g class="skill-bubble" data-skill="D3.js" data-area="data-viz" tabindex="0">
+            <title>D3.js</title>
+            <circle cx="375.2600843833695" cy="78.65439198216842" r="17.587442366156626" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="375.2600843833695" y="78.65439198216842" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              D3.js
+            </text>
+          </g><g class="skill-bubble" data-skill="LangChain/LangGraph" data-area="ai-ml" tabindex="0">
+            <title>LangChain/LangGraph</title>
+            <circle cx="123.78753844001434" cy="192.99971433595866" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="123.78753844001434" y="192.99971433595866" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              LangChain
+            </text>
+          </g><g class="skill-bubble" data-skill="Agentic AI" data-area="ai-ml" tabindex="0">
+            <title>Agentic AI</title>
+            <circle cx="163.75081727992335" cy="60.056720036342355" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="163.75081727992335" y="60.056720036342355" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Agents
+            </text>
+          </g><g class="skill-bubble" data-skill="Three.js" data-area="frontend" tabindex="0">
+            <title>Three.js</title>
+            <circle cx="164.1570287757182" cy="598.7871515725371" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="164.1570287757182" y="598.7871515725371" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Three.js
+            </text>
+          </g><g class="skill-bubble" data-skill="Plotly Dash" data-area="data-viz" tabindex="0">
+            <title>Plotly Dash</title>
+            <circle cx="255.64678864375523" cy="129.5638174874903" r="16.997560380435395" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="255.64678864375523" y="129.5638174874903" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Plotly Dash
+            </text>
+          </g><g class="skill-bubble" data-skill="DuckDB/Parquet" data-area="backend" tabindex="0">
+            <title>DuckDB/Parquet</title>
+            <circle cx="282.6429315259432" cy="262.28104692531963" r="16.997560380435395" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="282.6429315259432" y="262.28104692531963" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              DuckDB
+            </text>
+          </g><g class="skill-bubble" data-skill="MLOps" data-area="backend" tabindex="0">
+            <title>MLOps</title>
+            <circle cx="245.0143482449862" cy="367.69622025029514" r="16.997560380435395" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="245.0143482449862" y="367.69622025029514" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              MLOps
+            </text>
+          </g><g class="skill-bubble" data-skill="Async/SDK Design" data-area="systems" tabindex="0">
+            <title>Async/SDK Design</title>
+            <circle cx="52.30665572474065" cy="328.89476217855605" r="16.997560380435395" fill="#f43f5e" fill-opacity="0.6"></circle>
+            <text x="52.30665572474065" y="328.89476217855605" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Async
+            </text>
+          </g><g class="skill-bubble" data-skill="PHP/WordPress Plugins" data-area="frontend" tabindex="0">
+            <title>PHP/WordPress Plugins</title>
+            <circle cx="165.01924613698873" cy="484.5011172733969" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="165.01924613698873" y="484.5011172733969" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              WordPress
+            </text>
+          </g><g class="skill-bubble" data-skill="Research" data-area="practices" tabindex="0">
+            <title>Research</title>
+            <circle cx="254.13808620640748" cy="556.072997969875" r="16.997560380435395" fill="#64748b" fill-opacity="0.6"></circle>
+            <text x="254.13808620640748" y="556.072997969875" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Research
+            </text>
+          </g><g class="skill-bubble" data-skill="Canvas/Web Audio" data-area="data-viz" tabindex="0">
+            <title>Canvas/Web Audio</title>
+            <circle cx="341.97993072017397" cy="55.42573708566577" r="16.997560380435395" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="341.97993072017397" y="55.42573708566577" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Canvas
+            </text>
+          </g><g class="skill-bubble" data-skill="Streamlit" data-area="frontend" tabindex="0">
+            <title>Streamlit</title>
+            <circle cx="52.20112177865217" cy="552.144810476787" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="52.20112177865217" y="552.144810476787" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Streamlit
+            </text>
+          </g><g class="skill-bubble" data-skill="Vector Search/Embeddings" data-area="ai-ml" tabindex="0">
+            <title>Vector Search/Embeddings</title>
+            <circle cx="43.38548419002811" cy="118.61428793542794" r="16.997560380435395" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="43.38548419002811" y="118.61428793542794" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Vec DB
+            </text>
+          </g><g class="skill-bubble" data-skill="Unsupervised ML" data-area="ai-ml" tabindex="0">
+            <title>Unsupervised ML</title>
+            <circle cx="187.77473118266633" cy="137.08829138127717" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="187.77473118266633" y="137.08829138127717" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Unsup ML
+            </text>
+          </g><g class="skill-bubble" data-skill="visx" data-area="data-viz" tabindex="0">
+            <title>visx</title>
+            <circle cx="377.4789018989908" cy="154.0105887776202" r="16.328014246403676" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="377.4789018989908" y="154.0105887776202" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              visx
+            </text>
+          </g><g class="skill-bubble" data-skill="CLI/Packaging" data-area="backend" tabindex="0">
+            <title>CLI/Packaging</title>
+            <circle cx="238.83011031819603" cy="328.85996362364153" r="16.328014246403676" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="238.83011031819603" y="328.85996362364153" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              CLI
+            </text>
+          </g><g class="skill-bubble" data-skill="GCP" data-area="backend" tabindex="0">
+            <title>GCP</title>
+            <circle cx="361.9357215220813" cy="257.6239044776907" r="16.328014246403676" fill="#0d9488" fill-opacity="0.6"></circle>
+            <text x="361.9357215220813" y="257.6239044776907" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              GCP
+            </text>
+          </g><g class="skill-bubble" data-skill="MCP" data-area="ai-ml" tabindex="0">
+            <title>MCP</title>
+            <circle cx="54.07546677125482" cy="156.45884462769376" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="54.07546677125482" y="156.45884462769376" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              MCP
+            </text>
+          </g><g class="skill-bubble" data-skill="Electron" data-area="frontend" tabindex="0">
+            <title>Electron</title>
+            <circle cx="57.351892350128914" cy="513.1580282291276" r="16.328014246403676" fill="#3b82f6" fill-opacity="0.6"></circle>
+            <text x="57.351892350128914" y="513.1580282291276" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Electron
+            </text>
+          </g><g class="skill-bubble" data-skill="GPU" data-area="systems" tabindex="0">
+            <title>GPU</title>
+            <circle cx="69.19229189566887" cy="293.37892178853843" r="16.328014246403676" fill="#f43f5e" fill-opacity="0.6"></circle>
+            <text x="69.19229189566887" y="293.37892178853843" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              GPU
+            </text>
+          </g><g class="skill-bubble" data-skill="Computer Vision" data-area="ai-ml" tabindex="0">
+            <title>Computer Vision</title>
+            <circle cx="56.64435583483437" cy="81.59146706061011" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
+            <text x="56.64435583483437" y="81.59146706061011" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              CV
+            </text>
+          </g><g class="skill-bubble" data-skill="p5.js" data-area="data-viz" tabindex="0">
+            <title>p5.js</title>
+            <circle cx="387.4502878650949" cy="116.66277962127852" r="16.328014246403676" fill="#f59e0b" fill-opacity="0.6"></circle>
+            <text x="387.4502878650949" y="116.66277962127852" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              p5.js
+            </text>
+          </g><g class="skill-bubble" data-skill="Client Communication" data-area="practices" tabindex="0">
+            <title>Client Communication</title>
+            <circle cx="339.23829509856324" cy="599.9496515140778" r="16.328014246403676" fill="#64748b" fill-opacity="0.6"></circle>
+            <text x="339.23829509856324" y="599.9496515140778" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Comm
+            </text>
+          </g><g class="skill-bubble" data-skill="Agile/Scrum" data-area="practices" tabindex="0">
+            <title>Agile/Scrum</title>
+            <circle cx="295.3077281250848" cy="600.2199839273582" r="15.533808834395089" fill="#64748b" fill-opacity="0.6"></circle>
+            <text x="295.3077281250848" y="600.2199839273582" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
+              Agile
+            </text>
+          </g>
+    </g>
+  </svg>
+
+  <div class="flex flex-wrap gap-x-3 gap-y-1 mt-3 text-xs">
+    <span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#8b5cf6"></span>
+          AI &amp; ML
+        </span><span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#f59e0b"></span>
+          Data Visualization
+        </span><span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#f43f5e"></span>
+          Systems &amp; Performance
+        </span><span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#0d9488"></span>
+          Backend &amp; Cloud
+        </span><span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#3b82f6"></span>
+          Web &amp; Frontend
+        </span><span class="inline-flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#64748b"></span>
+          Practices &amp; Collaboration
+        </span>
+  </div>
+</div>
+    </div>
+  </div>
+
+          </main>
+        </div>
+        <footer class="footer footer-center block mb-5 pt-10">
+  <div class="pb-2">
+    &copy; 2026 Weaver Goldman
+  </div>
+</footer>
+      </div>
+      <div class="drawer-side z-40">
+  <label for="my-drawer" class="drawer-overlay"></label>
+  <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
+    <div class="w-fit mx-auto mt-5 mb-6">
+      <a href="../">
+        <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
+          <div class="w-[8.5rem] p-1 border-2 border-teal-600 rounded-full flex items-center justify-center" style="display: flex;">
+            <img class="mask mask-circle" alt="Profile image" width="350" height="350" src="../_astro/profile_2anlPl.webp" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </a>
+    </div>
+    <ul class="menu grow shrink menu-md overflow-y-auto">
+    <li><a class="py-3 text-base hover:text-teal-700" id="home" href="../">Home</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="projects" href="../projects">Projects</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="experience" href="../experience">Experience</a></li>
+    <!--<li><a class="py-3 text-base" id="services" href="../services">Services</a></li>-->
+    <li><a class="py-3 text-base hover:text-teal-700" id="blog" href="../blog/">Blog</a></li>
+    <li><a class="py-3 text-base hover:text-teal-700" id="cv" href="../cv">Resume</a></li>
+    <li>
+        <a class="py-3 text-base hover:text-teal-500" href="mailto:we.goldm@gmail.com" target="_blank" referrerpolicy="no-referrer-when-downgrade">Email</a>
+    </li>
+</ul>
+
+<script>(function(){const sideBarActiveItemID = "experience";
+const activeClasses = ["bg-base-300","text-teal-700"];
+
+const activeItemElem = document.getElementById(sideBarActiveItemID);
+activeClasses.forEach(className => activeItemElem.classList.add(className));
+})();</script>
+    <div class="block sticky pointer-events-none bottom-10 bg-base-200 justify-center h-12 [mask-image:linear-gradient(transparent,#000000)]">
+</div>
+
+<div class="social-icons px-4 pb-5 pt-1 flex self-center justify-center sticky bottom-0 bg-base-200">
+	<a href="https://github.com/We-Gold" target="_blank" class="mx-3 hover:text-teal-500 transition-colors duration-200" aria-label="Github" title="Github">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z"></path>
+		</svg>
+	</a>
+	<a href="https://www.linkedin.com/in/weaver-goldman/" target="_blank" class="mx-3 hover:text-teal-500 transition-colors duration-200" aria-label="Linkedin" title="Linkedin">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><circle cx="4.983" cy="5.009" r="2.188"></circle><path d="M9.237 8.855v12.139h3.769v-6.003c0-1.584.298-3.118 2.262-3.118 1.937 0 1.961 1.811 1.961 3.218v5.904H21v-6.657c0-3.27-.704-5.783-4.526-5.783-1.835 0-3.065 1.007-3.568 1.96h-.051v-1.66H9.237zm-6.142 0H6.87v12.139H3.095z"></path>
+		</svg>
+	</a>
+	<a href="https://x.com/GoldMonster9" target="_blank" class="mx-3 hover:text-teal-500 transition-colors duration-200" aria-label="Twitter" title="Twitter">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z"></path>
+		</svg>
+	</a>
+	<a href="../rss.xml" target="_blank" class="mx-3 hover:text-teal-500 transition-colors duration-200" aria-label="RSS Feed" title="RSS Feed">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: currentColor;transform: ;msFilter:;"><path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"></path><path d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"></path><circle cx="6" cy="18" r="2"></circle>
+		</svg>
+	</a>
+</div>
+  </aside>
+</div>
+    </div>
+  </body>
+</html>
+

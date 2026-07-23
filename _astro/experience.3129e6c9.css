@@ -1,0 +1,1 @@
+.entry-detail:where(.astro-6XWW5A3Q){max-height:3.6em;overflow:hidden;transition:max-height .3s ease}.entry-detail:where(.astro-6XWW5A3Q).expanded{max-height:40em}.entry-detail:where(.astro-6XWW5A3Q):not(.expanded):after{content:"";position:absolute;bottom:0;left:0;right:0;height:1.5em;background:linear-gradient(to bottom,transparent,hsl(var(--b2)))}
