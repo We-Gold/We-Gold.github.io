@@ -143,20 +143,32 @@ const textStyle =
   >
     <g class="spokes">
       {
-        (links as any[]).map((l) => (
-          <line
-            class="spoke"
-            data-skill={l.source.full}
-            data-area={l.source.areaId}
-            x1={l.source.x}
-            y1={l.source.y}
-            x2={l.target.x}
-            y2={l.target.y}
-            stroke={l.source.color}
-            stroke-width="1"
-            stroke-opacity="0.28"
-          />
-        ))
+        (links as any[]).map((l) => {
+          // Stop the line at the hub circle's edge rather than running it
+          // all the way to the hub's center, so it never overlaps the hub
+          // circle at all — the hub's own fill-opacity stays free to show
+          // the tendril layer behind it without also exposing the spoke
+          // underneath.
+          const dx = l.target.x - l.source.x;
+          const dy = l.target.y - l.source.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const x2 = l.target.x - (dx / dist) * l.target.r;
+          const y2 = l.target.y - (dy / dist) * l.target.r;
+          return (
+            <line
+              class="spoke"
+              data-skill={l.source.full}
+              data-area={l.source.areaId}
+              x1={l.source.x}
+              y1={l.source.y}
+              x2={x2}
+              y2={y2}
+              stroke={l.source.color}
+              stroke-width="1"
+              stroke-opacity="0.28"
+            />
+          );
+        })
       }
     </g>
 
@@ -185,6 +197,7 @@ const textStyle =
         skillNodes.map((n) => (
           <g class="skill-bubble" data-skill={n.full} data-area={n.areaId} tabindex="0">
             <title>{n.full}</title>
+            <circle cx={n.x} cy={n.y} r={n.r} fill="hsl(var(--b1))" />
             <circle cx={n.x} cy={n.y} r={n.r} fill={n.color} fill-opacity="0.6" />
             <text
               x={n.x}

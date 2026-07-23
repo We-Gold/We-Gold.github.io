@@ -8,8 +8,9 @@ import { experienceEntries } from "../data/experience";
 <BaseLayout title="Experience" sideBarActiveItemID="experience" wide={true}>
   <div class="text-3xl w-full font-bold mb-2">Experience</div>
   <p class="mb-6 text-sm opacity-70 max-w-2xl">
-    Work history and projects, and how they connect to my main skill areas. Scroll to (or hover) an entry to
-    see which skills it used; hover a skill to see everywhere it shows up.
+    Work history and projects, and how they connect to my main skill areas. Scroll to see which
+    entry's skills are highlighted, or click one to pin it until you scroll again; hover a skill
+    to see everywhere it shows up.
   </p>
 
   <div class="filter-bar flex gap-2 mb-6">
@@ -19,7 +20,8 @@ import { experienceEntries } from "../data/experience";
   </div>
 
   <div class="experience-layout grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start relative">
-    <svg id="tendril-overlay" class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" style="z-index:0;"></svg>
+    <svg id="tendril-overlay" class="tendril-overlay pointer-events-none hidden lg:block"></svg>
+    <div id="tendril-css-layer" class="tendril-css-layer pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
     <div class="time-line-container relative z-10 grid gap-0 min-w-0" id="experience-timeline">
       <ExperienceTimeLine entries={experienceEntries} card={true} />
@@ -35,28 +37,174 @@ import { experienceEntries } from "../data/experience";
 <script>
   const timeline = document.getElementById("experience-timeline");
   const overlay = document.getElementById("tendril-overlay");
-  const layout = document.querySelector<HTMLElement>(".experience-layout");
+  const cssLayer = document.getElementById("tendril-css-layer");
   const filterButtons = document.querySelectorAll<HTMLButtonElement>(".filter-bar button[data-filter]");
   const cards = timeline ? Array.from(timeline.querySelectorAll<HTMLElement>("[data-type]")) : [];
   const bubbles = Array.from(document.querySelectorAll<SVGGElement>(".skill-bubble"));
   const hubs = Array.from(document.querySelectorAll<SVGGElement>(".area-hub"));
   const spokes = Array.from(document.querySelectorAll<SVGLineElement>(".spoke"));
-  const showsTendrils = () => overlay !== null && window.matchMedia("(min-width: 1024px)").matches;
+  const graphSection = document.querySelector<HTMLElement>(".skill-graph-section");
+  const showsTendrils = () => window.matchMedia("(min-width: 1024px)").matches;
 
-  let hoverCard: HTMLElement | null = null;
-  let spyCard: HTMLElement | null = null;
+  // Prefer letting the compositor draw the connectors: CSS scroll-driven
+  // animations (animation-timeline: scroll()) plus trig functions (hypot,
+  // atan2) can position a line between a normally-scrolling card and the
+  // sticky graph with zero per-frame JS, so it can never lag behind the
+  // paint. Fall back to the old rAF-driven SVG overlay on browsers that
+  // don't support one of those features yet.
+  const supportsCssTendrils =
+    typeof CSS !== "undefined" &&
+    CSS.supports("animation-timeline: scroll()") &&
+    CSS.supports("width: hypot(1px, 1px)") &&
+    CSS.supports("transform: rotate(atan2(1px, 1px))");
+
+  if (overlay) overlay.classList.toggle("hidden", supportsCssTendrils);
+  if (cssLayer) cssLayer.classList.toggle("hidden", !supportsCssTendrils);
+
+  function updateScrollMax() {
+    document.documentElement.style.setProperty(
+      "--scroll-max",
+      `${Math.max(0, document.documentElement.scrollHeight - window.innerHeight)}px`
+    );
+  }
+
+  // The graph panel is `sticky`, so its viewport position isn't a constant:
+  // at scroll 0 it's still sitting in its natural document-flow position,
+  // and only becomes pinned at --sticky-top once you've scrolled past that
+  // natural offset. Replicate that same max() the browser does internally
+  // so the bubble endpoint tracks the sticky transition too, not just the
+  // already-pinned steady state. --graph-natural-top is measured by
+  // temporarily forcing position:static (a standard trick — no paint
+  // happens between the two synchronous reads, so no visible flicker).
+  function updateStickyMetrics() {
+    if (!graphSection) return;
+    const prevPosition = graphSection.style.position;
+    graphSection.style.position = "static";
+    const naturalTop = graphSection.getBoundingClientRect().top + window.scrollY;
+    graphSection.style.position = prevPosition;
+    document.documentElement.style.setProperty("--graph-natural-top", `${naturalTop}px`);
+    const stickyTop = parseFloat(getComputedStyle(graphSection).top);
+    document.documentElement.style.setProperty(
+      "--sticky-top",
+      `${Number.isFinite(stickyTop) ? stickyTop : 32}px`
+    );
+  }
+
+  function updateScrollMetrics() {
+    updateScrollMax();
+    updateStickyMetrics();
+  }
+  if (supportsCssTendrils) updateScrollMetrics();
+
+  // Bubble positions only move relative to the viewport when the sticky
+  // graph panel is transitioning in/out of its stuck state — cache them and
+  // only re-measure when the panel itself has actually shifted, instead of
+  // calling getBoundingClientRect() on every bubble every scroll frame.
+  // Position is kept relative to the graph panel's own top (rather than the
+  // viewport) since that relative offset is rigid regardless of whether the
+  // panel is currently stuck.
+  let bubblePointCache: { x: number; relY: number }[] | null = null;
+  let lastGraphTop: number | null = null;
+  let lastMeasuredGraphTop = 0;
+
+  function bubblePoints() {
+    const graphTop = graphSection ? graphSection.getBoundingClientRect().top : 0;
+    if (!bubblePointCache || lastGraphTop !== graphTop) {
+      lastGraphTop = graphTop;
+      lastMeasuredGraphTop = graphTop;
+      bubblePointCache = bubbles.map((b) => {
+        const r = b.getBoundingClientRect();
+        return { x: r.left + r.width / 2, relY: r.top + r.height / 2 - graphTop };
+      });
+    }
+    return bubblePointCache;
+  }
+
+  // Reuse a pool of <path>/<div> elements across redraws instead of tearing
+  // down and rebuilding the overlay every frame.
+  const tendrilPool: SVGPathElement[] = [];
+  function tendrilPath(i: number) {
+    if (!tendrilPool[i]) {
+      const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("fill", "none");
+      p.setAttribute("stroke-width", "1.75");
+      p.setAttribute("stroke-opacity", "0.35");
+      overlay?.appendChild(p);
+      tendrilPool[i] = p;
+    }
+    return tendrilPool[i];
+  }
+
+  const cssLinePool: HTMLDivElement[] = [];
+  function cssLine(i: number) {
+    if (!cssLinePool[i]) {
+      const d = document.createElement("div");
+      d.className = "tendril-line";
+      cssLayer?.appendChild(d);
+      cssLinePool[i] = d;
+    }
+    return cssLinePool[i];
+  }
+
+  // Scroll-spy drives selection by default (spyCard). Clicking a card sets
+  // an override (selectedCard) that wins until the next scroll, at which
+  // point scrolling resumes control — hovering used to fight the scroll-spy
+  // for control, which made it hard to scroll while the mouse sat over the
+  // timeline; a click-to-override model keeps both interactions available
+  // without them stepping on each other.
+  let selectedCard: HTMLElement | null = null;
   let hoverBubble: string | null = null;
 
-  const cardOf = () => hoverCard || spyCard;
+  // Which card is "active" by default is resolved live, synchronously, as
+  // whichever visible card is closest to vertical viewport-center (0 if the
+  // center line falls inside the card). This intentionally isn't an
+  // IntersectionObserver: that API is asynchronous and can be throttled by
+  // the browser, so with a narrow trigger band a card can scroll all the way
+  // through it before the observer gets around to reporting it — which
+  // looks exactly like scrolling past a card without it ever getting
+  // selected. A direct geometric check has no such latency.
+  //
+  // The first/last cards still need an explicit clamp on top of that: once
+  // the page is pinned at the very top/bottom of its scroll range, there's
+  // nowhere further to scroll for that card's center to ever line up with
+  // viewport-center, so "closest to center" would otherwise keep favoring
+  // whatever's nearer the middle instead.
+  function resolveSpyCard(): HTMLElement | null {
+    const visible = cards.filter((c) => !c.classList.contains("hidden"));
+    if (!visible.length) return null;
+    const atTop = window.scrollY <= 2;
+    const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+    if (atTop) return visible[0];
+    if (atBottom) return visible[visible.length - 1];
+    const mid = window.innerHeight / 2;
+    let best: HTMLElement | null = null;
+    let bestDist = Infinity;
+    for (const c of visible) {
+      const r = c.getBoundingClientRect();
+      const dist = mid < r.top ? r.top - mid : mid > r.bottom ? mid - r.bottom : 0;
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = c;
+      }
+    }
+    return best;
+  }
+
+  const cardOf = () => selectedCard || resolveSpyCard();
   const skillsOfCard = (el: HTMLElement | null) =>
     el ? (el.dataset.skills || "").split(",").filter(Boolean) : [];
+
+  function clearTendrils() {
+    tendrilPool.forEach((p) => p.setAttribute("d", ""));
+    cssLinePool.forEach((l) => l.classList.remove("on"));
+  }
 
   function clearAll() {
     bubbles.forEach((b) => b.classList.remove("g-dim", "g-on"));
     hubs.forEach((h) => h.classList.remove("g-dim", "g-on"));
     spokes.forEach((s) => s.classList.remove("g-dim", "g-on"));
     cards.forEach((c) => c.classList.remove("skill-active", "opacity-40"));
-    if (overlay) overlay.innerHTML = "";
+    clearTendrils();
   }
 
   // Highlight a set of skills across the graph: bubbles, their parent hubs
@@ -90,29 +238,62 @@ import { experienceEntries } from "../data/experience";
     return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
   }
 
-  // Tendrils live in a layer behind the columns, so coordinates are relative
-  // to the .experience-layout container rather than the viewport.
-  function drawTendrils(card: HTMLElement | null, skills: string[]) {
-    if (!overlay || !layout) return;
-    if (!showsTendrils() || !card) {
-      overlay.innerHTML = "";
-      return;
-    }
-    const base = layout.getBoundingClientRect();
+  // JS-measured fallback: coordinates are plain viewport pixels (the overlay
+  // is position:fixed), recomputed on scroll via the rAF loop below.
+  function drawTendrilsJs(card: HTMLElement, skills: string[]) {
+    if (!overlay) return;
     const rect = card.getBoundingClientRect();
-    const x1 = rect.right - base.left - 6;
-    const y1 = rect.top - base.top + rect.height / 2;
+    const x1 = rect.right - 6;
+    const y1 = rect.top + rect.height / 2;
     const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
     const skillSet = new Set(skills);
-    const paths = bubbles
-      .filter((b) => !!b.dataset.skill && skillSet.has(b.dataset.skill))
-      .map((b) => {
-        const r = b.getBoundingClientRect();
-        const x2 = r.left - base.left + r.width / 2;
-        const y2 = r.top - base.top + r.height / 2;
-        return `<path d="${bezier(x1, y1, x2, y2)}" fill="none" stroke="${color}" stroke-width="1.75" stroke-opacity="0.7" />`;
-      });
-    overlay.innerHTML = paths.join("");
+    const points = bubblePoints();
+    let i = 0;
+    bubbles.forEach((b, idx) => {
+      if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
+      const { x: x2, relY } = points[idx];
+      const y2 = lastMeasuredGraphTop + relY;
+      const p = tendrilPath(i++);
+      p.setAttribute("d", bezier(x1, y1, x2, y2));
+      p.setAttribute("stroke", color);
+    });
+    for (; i < tendrilPool.length; i++) tendrilPool[i].setAttribute("d", "");
+  }
+
+  // CSS-driven path: set the endpoints as custom properties once (on card
+  // switch / highlight change / resize) and let animation-timeline: scroll()
+  // interpolate the card's viewport position every frame with no JS at all,
+  // so it can never fall a frame behind the compositor's scroll.
+  function drawTendrilsCss(card: HTMLElement, skills: string[]) {
+    if (!cssLayer) return;
+    const rect = card.getBoundingClientRect();
+    const x1 = rect.right - 6;
+    const cardTop = window.scrollY + rect.top + rect.height / 2;
+    cssLayer.style.setProperty("--x1", `${x1}px`);
+    cssLayer.style.setProperty("--card-top", `${cardTop}px`);
+    const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
+    const skillSet = new Set(skills);
+    const points = bubblePoints();
+    let i = 0;
+    bubbles.forEach((b, idx) => {
+      if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
+      const { x: x2, relY } = points[idx];
+      const line = cssLine(i++);
+      line.style.setProperty("--x2", `${x2}px`);
+      line.style.setProperty("--bubble-rel-y", `${relY}px`);
+      line.style.setProperty("--tendril-color", color);
+      line.classList.add("on");
+    });
+    for (; i < cssLinePool.length; i++) cssLinePool[i].classList.remove("on");
+  }
+
+  function drawTendrils(card: HTMLElement | null, skills: string[]) {
+    if (!showsTendrils() || !card) {
+      clearTendrils();
+      return;
+    }
+    if (supportsCssTendrils) drawTendrilsCss(card, skills);
+    else drawTendrilsJs(card, skills);
   }
 
   // Resolve the current highlight state from hover/scroll/bubble inputs.
@@ -125,7 +306,7 @@ import { experienceEntries } from "../data/experience";
         c.classList.remove("skill-active");
         c.classList.toggle("opacity-40", !uses);
       });
-      if (overlay) overlay.innerHTML = "";
+      clearTendrils();
       return;
     }
     // Otherwise the focused card drives everything. Only that one card is
@@ -144,17 +325,6 @@ import { experienceEntries } from "../data/experience";
     drawTendrils(card, skills);
   }
 
-  cards.forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      hoverCard = el;
-      render();
-    });
-    el.addEventListener("mouseleave", () => {
-      if (hoverCard === el) hoverCard = null;
-      render();
-    });
-  });
-
   bubbles.forEach((bubble) => {
     const skill = bubble.dataset.skill;
     if (!skill) return;
@@ -168,50 +338,117 @@ import { experienceEntries } from "../data/experience";
     });
   });
 
-  // Scroll-spy: whichever card sits in the vertical middle band is "active".
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) spyCard = entry.target as HTMLElement;
-        else if (spyCard === entry.target) spyCard = null;
-      });
-      if (!hoverCard && !hoverBubble) render();
-    },
-    { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-  );
-  cards.forEach((el) => observer.observe(el));
-
-  // Tendrils are drawn in screen space, so redraw them as things move.
-  let ticking = false;
-  function redrawOnMove() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      if (!hoverBubble) {
-        const card = cardOf();
-        if (card) drawTendrils(card, skillsOfCard(card));
-      }
-      ticking = false;
-    });
+  // A click override only lasts until the next scroll — then control goes
+  // back to the scroll-spy (resolveSpyCard). Intentionally separate from
+  // the tendril redraw loop below: it only needs to fire on an actual
+  // selection change, not track every frame.
+  let lastResolvedCard: HTMLElement | null = null;
+  function onScrollUpdateSelection() {
+    if (selectedCard) selectedCard = null;
+    if (hoverBubble) return;
+    const resolved = cardOf();
+    if (resolved !== lastResolvedCard) {
+      lastResolvedCard = resolved;
+      render();
+    }
   }
-  window.addEventListener("scroll", redrawOnMove, { passive: true });
-  window.addEventListener("resize", () => render());
+  window.addEventListener("scroll", onScrollUpdateSelection, { passive: true });
+  onScrollUpdateSelection();
 
-  // Card truncate/expand.
+  // Connector endpoints are only re-measured on a highlight change, not
+  // continuously — so if layout shifts for reasons unrelated to a highlight
+  // change (web fonts swapping in late, images loading, initial simulation
+  // layout settling) the snapshot goes stale until something else happens to
+  // trigger a redraw. Watch the timeline's box size and force a fresh
+  // measurement whenever it changes, which also covers the very first paint
+  // being wrong before fonts finish loading.
+  const resizeObserver = new ResizeObserver(() => {
+    bubblePointCache = null;
+    if (supportsCssTendrils) updateScrollMetrics();
+    render();
+  });
+  if (timeline) resizeObserver.observe(timeline);
+  resizeObserver.observe(document.body);
+  document.fonts?.ready.then(() => {
+    bubblePointCache = null;
+    if (supportsCssTendrils) updateScrollMetrics();
+    render();
+  });
+
+  // JS-fallback only: a plain `scroll` listener isn't enough during a fast
+  // fling, since the browser coalesces/throttles scroll events far below the
+  // paint rate, so the compositor keeps scrolling every frame while our
+  // redraw only runs on the sparser events. Run a continuous rAF loop for as
+  // long as scrolling is happening so the redraw cadence tracks the paint
+  // cadence rather than however often `scroll` happens to fire. When
+  // supportsCssTendrils is true none of this runs at all — the connector
+  // position is entirely compositor-driven via animation-timeline: scroll().
+  let rafId: number | null = null;
+  let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function redrawFrame() {
+    if (!hoverBubble) {
+      const card = cardOf();
+      if (card) drawTendrils(card, skillsOfCard(card));
+    }
+    rafId = requestAnimationFrame(redrawFrame);
+  }
+
+  function startRedrawLoop() {
+    if (rafId == null) rafId = requestAnimationFrame(redrawFrame);
+    if (idleTimer != null) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      if (rafId != null) cancelAnimationFrame(rafId);
+      rafId = null;
+      idleTimer = null;
+    }, 200);
+  }
+
+  function redrawOnMove() {
+    if (supportsCssTendrils) render();
+    else startRedrawLoop();
+  }
+
+  if (!supportsCssTendrils) {
+    window.addEventListener("scroll", startRedrawLoop, { passive: true });
+    window.addEventListener("wheel", startRedrawLoop, { passive: true });
+    window.addEventListener("touchmove", startRedrawLoop, { passive: true });
+  }
+
+  window.addEventListener("resize", () => {
+    bubblePointCache = null;
+    if (supportsCssTendrils) updateScrollMetrics();
+    render();
+  });
+
   timeline?.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(".toggle-expand");
-    if (!btn) return;
-    const detail = btn.previousElementSibling as HTMLElement | null;
-    if (!detail) return;
-    const expanded = detail.classList.toggle("expanded");
-    btn.textContent = expanded ? "Show less" : "Show more";
-    redrawOnMove();
+    const target = e.target as HTMLElement;
+
+    // Card truncate/expand.
+    const btn = target.closest<HTMLButtonElement>(".toggle-expand");
+    if (btn) {
+      const detail = btn.previousElementSibling as HTMLElement | null;
+      if (!detail) return;
+      const expanded = detail.classList.toggle("expanded");
+      btn.textContent = expanded ? "Show less" : "Show more";
+      if (supportsCssTendrils) updateScrollMetrics();
+      redrawOnMove();
+      return;
+    }
+
+    // Clicking a link (e.g. the job's external URL) should just navigate,
+    // not also toggle selection underneath it.
+    if (target.closest("a")) return;
+
+    const card = target.closest<HTMLElement>("[data-type]");
+    if (!card || !cards.includes(card)) return;
+    selectedCard = card;
+    render();
   });
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      hoverCard = null;
-      spyCard = null;
+      selectedCard = null;
       hoverBubble = null;
       clearAll();
       filterButtons.forEach((b) => b.classList.remove("btn-active"));
@@ -220,11 +457,103 @@ import { experienceEntries } from "../data/experience";
       cards.forEach((el) => {
         el.classList.toggle("hidden", !(filter === "all" || el.dataset.type === filter));
       });
+      if (supportsCssTendrils) updateScrollMetrics();
+      render();
     });
   });
 </script>
 
-<style>
+<style is:global>
+  /* Drives --scroll-frac from 0 to 1 across the whole document's scroll
+     range, purely via the compositor — no JS involved. Scoped globally
+     since it targets :root/html, which Astro's per-component scoping
+     wouldn't otherwise match. */
+  @property --scroll-frac {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  :root {
+    --scroll-max: 0px;
+    --sticky-top: 32px;
+    --graph-natural-top: 0px;
+  }
+  @supports (animation-timeline: scroll()) {
+    @keyframes tendril-scroll-progress {
+      from {
+        --scroll-frac: 0;
+      }
+      to {
+        --scroll-frac: 1;
+      }
+    }
+    :root {
+      animation: tendril-scroll-progress linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0% 100%;
+    }
+  }
+
+  /* Isolate is redundant with position:relative + z-10 already establishing
+     a stacking context, but pins it down explicitly: the graph's highlight
+     states toggle `opacity` on bubbles/hubs/spokes, which independently
+     creates nested stacking contexts of their own, and this guarantees they
+     stay contained rather than ever being compared against the tendril
+     layer directly. */
+  .skill-graph-section {
+    isolation: isolate;
+  }
+
+  /* .tendril-line elements are created with document.createElement in
+     client JS, so they never receive Astro's per-component scope attribute
+     — these rules must stay global or they silently never match. */
+  .tendril-overlay,
+  .tendril-css-layer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* Must stay positive: BaseLayout wraps the page in a plain, non-
+       stacking-context div with an opaque background (.drawer-content), so
+       a negative z-index here would paint this fixed layer behind that
+       background and make it vanish entirely. 1 is still well below the
+       graph panel's z-10. */
+    z-index: 1;
+  }
+
+  /* Each connector's card-side endpoint is expressed as a document-space
+     y (--card-top) minus the live scroll offset (--scroll-px), so its
+     on-screen position tracks the compositor's scroll directly instead of
+     being recomputed by JS every frame. */
+  .tendril-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 1.75px;
+    border-radius: 1px;
+    background: var(--tendril-color, #0d9488);
+    opacity: 0;
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+  .tendril-line.on {
+    opacity: 0.35;
+    --scroll-px: calc(var(--scroll-frac) * var(--scroll-max));
+    /* The graph panel is sticky: its own viewport top is whichever is
+       larger — its natural (unstuck) document position minus how far
+       we've scrolled, or the pinned sticky offset once we've scrolled
+       past that. This mirrors position:sticky's own behavior so the
+       bubble endpoint stays correct through the stuck/unstuck transition,
+       not just once already pinned. */
+    --graph-viewport-top: max(var(--sticky-top), var(--graph-natural-top) - var(--scroll-px));
+    --y2: calc(var(--graph-viewport-top) + var(--bubble-rel-y));
+    --dx: calc(var(--x2) - var(--x1));
+    --dy: calc(var(--y2) - (var(--card-top) - var(--scroll-px)));
+    width: hypot(var(--dx), var(--dy));
+    transform: translate(var(--x1), calc(var(--card-top) - var(--scroll-px)))
+      rotate(atan2(var(--dy), var(--dx)));
+  }
+
   /* Graph highlight states (applied to SVG groups from the script). */
   .spokes .spoke,
   .hubs .area-hub,
@@ -232,16 +561,7 @@ import { experienceEntries } from "../data/experience";
     transition: opacity 0.2s ease;
   }
   .g-dim {
-    opacity: 0.14;
-  }
-  .skill-bubble.g-on circle,
-  .area-hub.g-on circle {
-    stroke: #0d9488;
-    stroke-width: 3;
-  }
-  .spoke.g-on {
-    stroke-opacity: 0.85 !important;
-    stroke-width: 2 !important;
+    opacity: 0.4;
   }
 
   /* Active card emphasis: a type-colored ring on top of the persistent
@@ -254,6 +574,9 @@ import { experienceEntries } from "../data/experience";
   }
   #experience-timeline [data-type] {
     transition: opacity 0.2s ease;
+  }
+  #experience-timeline [data-type] .experience__data {
+    cursor: pointer;
   }
 
   /* Filter buttons are always tinted their category color; the active one is
