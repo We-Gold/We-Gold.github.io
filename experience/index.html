@@ -30,11 +30,10 @@
 <meta property="twitter:title" content="Experience">
 <meta property="twitter:description" content="Data Science Master's Student @ WPI, specializing in ML and Software Engineering! See some of my projects or connect with me.">
 <!-- <meta property="twitter:image" content={new URL(image, Astro.url)} /> -->
-  <link rel="stylesheet" href="../_astro/404.c1f06e54.css" />
+  <link rel="stylesheet" href="../_astro/404.2338cdc2.css" />
 <link rel="stylesheet" href="../_astro/_slug_.0b9bacc7.css" />
 <link rel="stylesheet" href="../_astro/experience.3129e6c9.css" />
-<link rel="stylesheet" href="../_astro/experience.8f55054f.css" /><script type="module">const m=document.getElementById("experience-timeline"),a=document.getElementById("tendril-overlay"),p=document.querySelector(".experience-layout"),L=document.querySelectorAll(".filter-bar button[data-filter]"),r=m?Array.from(m.querySelectorAll("[data-type]")):[],f=Array.from(document.querySelectorAll(".skill-bubble")),k=Array.from(document.querySelectorAll(".area-hub")),y=Array.from(document.querySelectorAll(".spoke")),T=()=>a!==null&&window.matchMedia("(min-width: 1024px)").matches;let i=null,d=null,l=null;const w=()=>i||d,v=t=>t?(t.dataset.skills||"").split(",").filter(Boolean):[];function S(){f.forEach(t=>t.classList.remove("g-dim","g-on")),k.forEach(t=>t.classList.remove("g-dim","g-on")),y.forEach(t=>t.classList.remove("g-dim","g-on")),r.forEach(t=>t.classList.remove("skill-active","opacity-40")),a&&(a.innerHTML="")}function E(t){const n=new Set(t),s=new Set;f.forEach(e=>{e.dataset.skill&&n.has(e.dataset.skill)&&s.add(e.dataset.area||"")}),f.forEach(e=>{const o=!!e.dataset.skill&&n.has(e.dataset.skill);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)}),k.forEach(e=>{const o=!!e.dataset.area&&s.has(e.dataset.area);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)}),y.forEach(e=>{const o=!!e.dataset.skill&&n.has(e.dataset.skill);e.classList.toggle("g-on",o),e.classList.toggle("g-dim",!o)})}function H(t,n,s,e){const o=Math.max(Math.abs(s-t)*.45,60);return`M ${t} ${n} C ${t+o} ${n}, ${s-o} ${e}, ${s} ${e}`}function A(t,n){if(!a||!p)return;if(!T()||!t){a.innerHTML="";return}const s=p.getBoundingClientRect(),e=t.getBoundingClientRect(),o=e.right-s.left-6,$=e.top-s.top+e.height/2,b=t.dataset.type==="project"?"#64748b":"#0d9488",x=new Set(n),B=f.filter(u=>!!u.dataset.skill&&x.has(u.dataset.skill)).map(u=>{const g=u.getBoundingClientRect(),C=g.left-s.left+g.width/2,q=g.top-s.top+g.height/2;return`<path d="${H(o,$,C,q)}" fill="none" stroke="${b}" stroke-width="1.75" stroke-opacity="0.7" />`});a.innerHTML=B.join("")}function c(){if(l){E([l]),r.forEach(s=>{const e=v(s).includes(l);s.classList.remove("skill-active"),s.classList.toggle("opacity-40",!e)}),a&&(a.innerHTML="");return}const t=w();if(!t){S();return}const n=v(t);E(n),r.forEach(s=>{s.classList.toggle("skill-active",s===t),s.classList.remove("opacity-40")}),A(t,n)}r.forEach(t=>{t.addEventListener("mouseenter",()=>{i=t,c()}),t.addEventListener("mouseleave",()=>{i===t&&(i=null),c()})});f.forEach(t=>{const n=t.dataset.skill;n&&(t.addEventListener("mouseenter",()=>{l=n,c()}),t.addEventListener("mouseleave",()=>{l===n&&(l=null),c()}))});const I=new IntersectionObserver(t=>{t.forEach(n=>{n.isIntersecting?d=n.target:d===n.target&&(d=null)}),!i&&!l&&c()},{rootMargin:"-45% 0px -45% 0px",threshold:0});r.forEach(t=>I.observe(t));let h=!1;function M(){h||(h=!0,requestAnimationFrame(()=>{if(!l){const t=w();t&&A(t,v(t))}h=!1}))}window.addEventListener("scroll",M,{passive:!0});window.addEventListener("resize",()=>c());m?.addEventListener("click",t=>{const n=t.target.closest(".toggle-expand");if(!n)return;const s=n.previousElementSibling;if(!s)return;const e=s.classList.toggle("expanded");n.textContent=e?"Show less":"Show more",M()});L.forEach(t=>{t.addEventListener("click",()=>{i=null,d=null,l=null,S(),L.forEach(s=>s.classList.remove("btn-active")),t.classList.add("btn-active");const n=t.dataset.filter;r.forEach(s=>{s.classList.toggle("hidden",!(n==="all"||s.dataset.type===n))})})});
-</script></head>
+<link rel="stylesheet" href="../_astro/experience.ddf41cee.css" /><script type="module" src="../_astro/hoisted.c1fde8a0.js"></script></head>
   <body>
     <div class="bg-base-100 drawer lg:drawer-open">
       <input id="my-drawer" type="checkbox" class="drawer-toggle">
@@ -56,22 +55,24 @@
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 max-w-[1200px]">
             
-  <div class="text-3xl w-full font-bold mb-2 astro-AJXCTDAQ">Experience</div>
-  <p class="mb-6 text-sm opacity-70 max-w-2xl astro-AJXCTDAQ">
-    Work history and projects, and how they connect to my main skill areas. Scroll to (or hover) an entry to
-    see which skills it used; hover a skill to see everywhere it shows up.
+  <div class="text-3xl w-full font-bold mb-2">Experience</div>
+  <p class="mb-6 text-sm opacity-70 max-w-2xl">
+    Work history and projects, and how they connect to my main skill areas. Scroll to see which
+    entry's skills are highlighted, or click one to pin it until you scroll again; hover a skill
+    to see everywhere it shows up.
   </p>
 
-  <div class="filter-bar flex gap-2 mb-6 astro-AJXCTDAQ">
-    <button type="button" data-filter="all" class="btn btn-sm btn-active astro-AJXCTDAQ">All</button>
-    <button type="button" data-filter="work" class="btn btn-sm astro-AJXCTDAQ">Work</button>
-    <button type="button" data-filter="project" class="btn btn-sm astro-AJXCTDAQ">Projects</button>
+  <div class="filter-bar flex gap-2 mb-6">
+    <button type="button" data-filter="all" class="btn btn-sm btn-active">All</button>
+    <button type="button" data-filter="work" class="btn btn-sm">Work</button>
+    <button type="button" data-filter="project" class="btn btn-sm">Projects</button>
   </div>
 
-  <div class="experience-layout grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start relative astro-AJXCTDAQ">
-    <svg id="tendril-overlay" class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block astro-AJXCTDAQ" style="z-index:0;"></svg>
+  <div class="experience-layout grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 items-start relative">
+    <svg id="tendril-overlay" class="tendril-overlay pointer-events-none hidden lg:block"></svg>
+    <div id="tendril-css-layer" class="tendril-css-layer pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
-    <div class="time-line-container relative z-10 grid gap-0 min-w-0 astro-AJXCTDAQ" id="experience-timeline">
+    <div class="time-line-container relative z-10 grid gap-0 min-w-0" id="experience-timeline">
       <div class="flex gap-5 astro-6XWW5A3Q" data-type="work" data-skills="React,JS/TS,Three.js,Plotly Dash,Data Visualization,DuckDB/Parquet,SQL,SQLite,Python,CI/CD,Docker">
   <div class="education__time relative w-4 flex-shrink-0 astro-6XWW5A3Q">
         <span class="education__line absolute left-1/2 -translate-x-1/2 top-0 bottom-[-0.75rem] w-[2px] bg-base-300 astro-6XWW5A3Q"></span>
@@ -515,12 +516,12 @@
 </div>
     </div>
 
-    <div class="skill-graph-section relative z-10 lg:sticky lg:top-8 self-start astro-AJXCTDAQ">
-      <div class="text-lg font-semibold mb-2 astro-AJXCTDAQ">Skill Areas</div>
+    <div class="skill-graph-section relative z-10 lg:sticky lg:top-8 self-start">
+      <div class="text-lg font-semibold mb-2">Skill Areas</div>
       <div class="skill-graph">
   <svg viewBox="0 0 440 660" class="w-full h-auto select-none overflow-visible" role="img" aria-label="Skill areas and the specific skills within them, sized by amount of experience">
     <g class="spokes">
-      <line class="spoke" data-skill="Python" data-area="backend" x1="362.16314531196815" y1="418.27792635303695" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="JS/TS" data-area="frontend" x1="115.24408772809126" y1="619.8595169974128" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Docker" data-area="backend" x1="414.5955118072199" y1="327.4857111466334" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Data Visualization" data-area="data-viz" x1="296.98278353287765" y1="50.194221046987295" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="React" data-area="frontend" x1="68.3976566843833" y1="594.1211014634501" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="FastAPI" data-area="backend" x1="393.5984930474028" y1="373.5671264346584" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQL" data-area="backend" x1="247.15686541580135" y1="287.0662301336769" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="ML/scikit-learn" data-area="ai-ml" x1="190.824713206537" y1="94.58211555632353" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Pandas" data-area="backend" x1="267.73865621805464" y1="404.5360080915518" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Multithreading/Perf" data-area="systems" x1="61.80540748473992" y1="370.31338901471713" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM/AI" data-area="ai-ml" x1="164.0754900817406" y1="178.98803536948262" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="RAG" data-area="ai-ml" x1="82.12825636825127" y1="186.27552478145685" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CI/CD" data-area="practices" x1="377.71752304420454" y1="563.3027091585548" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Testing" data-area="practices" x1="374.8480418355672" y1="512.0103642095753" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PostgreSQL" data-area="backend" x1="322.0889018560021" y1="250.67459441440022" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQLite" data-area="backend" x1="386.08662988141486" y1="289.4040252097229" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="AWS" data-area="backend" x1="311.33808675602546" y1="409.44411492082827" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM Evaluation" data-area="ai-ml" x1="125.24888819755671" y1="45.46359978041362" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Figma" data-area="frontend" x1="82.22634165907367" y1="481.9410233417523" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PyTorch/ML" data-area="ai-ml" x1="84.8330158082579" y1="53.33150088037186" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="D3.js" data-area="data-viz" x1="375.2600843833695" y1="78.65439198216842" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LangChain/LangGraph" data-area="ai-ml" x1="123.78753844001434" y1="192.99971433595866" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agentic AI" data-area="ai-ml" x1="163.75081727992335" y1="60.056720036342355" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Three.js" data-area="frontend" x1="164.1570287757182" y1="598.7871515725371" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Plotly Dash" data-area="data-viz" x1="255.64678864375523" y1="129.5638174874903" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="DuckDB/Parquet" data-area="backend" x1="282.6429315259432" y1="262.28104692531963" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MLOps" data-area="backend" x1="245.0143482449862" y1="367.69622025029514" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Async/SDK Design" data-area="systems" x1="52.30665572474065" y1="328.89476217855605" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PHP/WordPress Plugins" data-area="frontend" x1="165.01924613698873" y1="484.5011172733969" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Research" data-area="practices" x1="254.13808620640748" y1="556.072997969875" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Canvas/Web Audio" data-area="data-viz" x1="341.97993072017397" y1="55.42573708566577" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Streamlit" data-area="frontend" x1="52.20112177865217" y1="552.144810476787" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Vector Search/Embeddings" data-area="ai-ml" x1="43.38548419002811" y1="118.61428793542794" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Unsupervised ML" data-area="ai-ml" x1="187.77473118266633" y1="137.08829138127717" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="visx" data-area="data-viz" x1="377.4789018989908" y1="154.0105887776202" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CLI/Packaging" data-area="backend" x1="238.83011031819603" y1="328.85996362364153" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GCP" data-area="backend" x1="361.9357215220813" y1="257.6239044776907" x2="318.01192445315615" y2="332.3027904040662" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MCP" data-area="ai-ml" x1="54.07546677125482" y1="156.45884462769376" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Electron" data-area="frontend" x1="57.351892350128914" y1="513.1580282291276" x2="124.74955772410814" y2="539.2330598771217" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GPU" data-area="systems" x1="69.19229189566887" y1="293.37892178853843" x2="119.18585434662282" y2="332.89826890529673" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Computer Vision" data-area="ai-ml" x1="56.64435583483437" y1="81.59146706061011" x2="121.36693367529874" y2="121.46577010696492" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="p5.js" data-area="data-viz" x1="387.4502878650949" y1="116.66277962127852" x2="318.3684426157759" y2="120.83434965754147" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Client Communication" data-area="practices" x1="339.23829509856324" y1="599.9496515140778" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agile/Scrum" data-area="practices" x1="295.3077281250848" y1="600.2199839273582" x2="314.82859754954444" y2="539.211452687768" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line>
+      <line class="spoke" data-skill="Python" data-area="backend" x1="362.16314531196815" y1="418.27792635303695" x2="340.85290652814683" y2="376.7807572848708" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="JS/TS" data-area="frontend" x1="115.24408772809126" y1="619.8595169974128" x2="119.63561909747474" y2="582.6100579181268" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Docker" data-area="backend" x1="414.5955118072199" y1="327.4857111466334" x2="367.949853041262" y2="329.8121502595965" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Data Visualization" data-area="data-viz" x1="296.98278353287765" y1="50.194221046987295" x2="306.87470553039685" y2="82.86876427250425" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="React" data-area="frontend" x1="68.3976566843833" y1="594.1211014634501" x2="93.46124735229432" y2="569.708590412346" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="FastAPI" data-area="backend" x1="393.5984930474028" y1="373.5671264346584" x2="361.8980846692304" y2="356.2611906321503" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQL" data-area="backend" x1="247.15686541580135" y1="287.0662301336769" x2="275.8684919239755" y2="305.39682276381205" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="ML/scikit-learn" data-area="ai-ml" x1="190.824713206537" y1="94.58211555632353" x2="161.40860534128797" y2="105.96762899212372" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Pandas" data-area="backend" x1="267.73865621805464" y1="404.5360080915518" x2="289.449483961598" y2="373.3416377705091" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Multithreading/Perf" data-area="systems" x1="61.80540748473992" y1="370.31338901471713" x2="89.21602479408006" y2="352.440200585723" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM/AI" data-area="ai-ml" x1="164.0754900817406" y1="178.98803536948262" x2="146.96229278216165" y2="155.93902698839617" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="RAG" data-area="ai-ml" x1="82.12825636825127" y1="186.27552478145685" x2="99.12952933352746" y2="158.19485525706074" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CI/CD" data-area="practices" x1="377.71752304420454" y1="563.3027091585548" x2="349.29707798389364" y2="552.4155104097068" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Testing" data-area="practices" x1="374.8480418355672" y1="512.0103642095753" x2="348.4481123555366" y2="523.9749337944288" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PostgreSQL" data-area="backend" x1="322.0889018560021" y1="250.67459441440022" x2="320.50610044768337" y2="282.36503829097717" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="SQLite" data-area="backend" x1="386.08662988141486" y1="289.4040252097229" x2="360.3132209115809" y2="305.6457028299057" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="AWS" data-area="backend" x1="311.33808675602546" y1="409.44411492082827" x2="313.7023011206725" y2="382.11671563318373" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LLM Evaluation" data-area="ai-ml" x1="125.24888819755671" y1="45.46359978041362" x2="123.55713245961316" y2="78.58534476966675" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Figma" data-area="frontend" x1="82.22634165907367" y1="481.9410233417523" x2="98.71810189227796" y2="504.1605687394536" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PyTorch/ML" data-area="ai-ml" x1="84.8330158082579" y1="53.33150088037186" x2="101.07706385087862" y2="83.6259890514342" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="D3.js" data-area="data-viz" x1="375.2600843833695" y1="78.65439198216842" x2="350.23317312802834" y2="97.20956150615486" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="LangChain/LangGraph" data-area="ai-ml" x1="123.78753844001434" y1="192.99971433595866" x2="122.8190053760418" y2="164.37753231266228" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agentic AI" data-area="ai-ml" x1="163.75081727992335" y1="60.056720036342355" x2="145.75609413070717" y2="86.12886729838877" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Three.js" data-area="frontend" x1="164.1570287757182" y1="598.7871515725371" x2="148.85226149248686" y2="575.6579963682142" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Plotly Dash" data-area="data-viz" x1="255.64678864375523" y1="129.5638174874903" x2="279.0798749876577" y2="126.3024498346736" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="DuckDB/Parquet" data-area="backend" x1="282.6429315259432" y1="262.28104692531963" x2="295.4688268209953" y2="287.6731057855652" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MLOps" data-area="backend" x1="245.0143482449862" y1="367.69622025029514" x2="273.021380141882" y2="354.1167978895163" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Async/SDK Design" data-area="systems" x1="52.30665572474065" y1="328.89476217855605" x2="83.47161228516543" y2="330.7603514170524" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="PHP/WordPress Plugins" data-area="frontend" x1="165.01924613698873" y1="484.5011172733969" x2="150.63432447228138" y2="504.05216765252055" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Research" data-area="practices" x1="254.13808620640748" y1="556.072997969875" x2="279.2646341476542" y2="549.0921303429906" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Canvas/Web Audio" data-area="data-viz" x1="341.97993072017397" y1="55.42573708566577" x2="331.8370257885233" y2="83.52364163510968" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Streamlit" data-area="frontend" x1="52.20112177865217" y1="552.144810476787" x2="81.74787178809234" y2="546.8862509753889" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Vector Search/Embeddings" data-area="ai-ml" x1="43.38548419002811" y1="118.61428793542794" x2="78.45928648329941" y2="119.89680220757117" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Unsupervised ML" data-area="ai-ml" x1="187.77473118266633" y1="137.08829138127717" x2="163.16228667153456" y2="131.29818159868233" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="visx" data-area="data-viz" x1="377.4789018989908" y1="154.0105887776202" x2="352.9597949124584" y2="140.2490351327988" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="CLI/Packaging" data-area="backend" x1="238.83011031819603" y1="328.85996362364153" x2="268.05912034661884" y2="330.1308415340622" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GCP" data-area="backend" x1="361.9357215220813" y1="257.6239044776907" x2="343.36080441085403" y2="289.204828910624" stroke="#0d9488" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="MCP" data-area="ai-ml" x1="54.07546677125482" y1="156.45884462769376" x2="83.27345666692239" y2="141.27523393703157" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Electron" data-area="frontend" x1="57.351892350128914" y1="513.1580282291276" x2="84.01446989866152" y2="523.47333439793" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="GPU" data-area="systems" x1="69.19229189566887" y1="293.37892178853843" x2="91.11804316760528" y2="310.71098081436656" stroke="#f43f5e" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Computer Vision" data-area="ai-ml" x1="56.64435583483437" y1="81.59146706061011" x2="84.81121235900909" y2="98.94451155269707" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="p5.js" data-area="data-viz" x1="387.4502878650949" y1="116.66277962127852" x2="357.9635791940856" y2="118.44336133440538" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Client Communication" data-area="practices" x1="339.23829509856324" y1="599.9496515140778" x2="328.5926060687924" y2="573.4601804489488" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line><line class="spoke" data-skill="Agile/Scrum" data-area="practices" x1="295.3077281250848" y1="600.2199839273582" x2="303.5799876034672" y2="574.3667091661158" stroke="#64748b" stroke-width="1" stroke-opacity="0.28"></line>
     </g>
 
     <g class="hubs">
@@ -566,264 +567,308 @@
     <g class="skills">
       <g class="skill-bubble" data-skill="Python" data-area="backend" tabindex="0">
             <title>Python</title>
+            <circle cx="362.16314531196815" cy="418.27792635303695" r="28" fill="hsl(var(--b1))"></circle>
             <circle cx="362.16314531196815" cy="418.27792635303695" r="28" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="362.16314531196815" y="418.27792635303695" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 11px">
               Python
             </text>
           </g><g class="skill-bubble" data-skill="JS/TS" data-area="frontend" tabindex="0">
             <title>JS/TS</title>
+            <circle cx="115.24408772809126" cy="619.8595169974128" r="25.456343141125203" fill="hsl(var(--b1))"></circle>
             <circle cx="115.24408772809126" cy="619.8595169974128" r="25.456343141125203" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="115.24408772809126" y="619.8595169974128" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 11px">
               JS/TS
             </text>
           </g><g class="skill-bubble" data-skill="Docker" data-area="backend" tabindex="0">
             <title>Docker</title>
+            <circle cx="414.5955118072199" cy="327.4857111466334" r="23.983728806075383" fill="hsl(var(--b1))"></circle>
             <circle cx="414.5955118072199" cy="327.4857111466334" r="23.983728806075383" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="414.5955118072199" y="327.4857111466334" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 10.427708176554516px">
               Docker
             </text>
           </g><g class="skill-bubble" data-skill="Data Visualization" data-area="data-viz" tabindex="0">
             <title>Data Visualization</title>
+            <circle cx="296.98278353287765" cy="50.194221046987295" r="22.302734659468555" fill="hsl(var(--b1))"></circle>
             <circle cx="296.98278353287765" cy="50.194221046987295" r="22.302734659468555" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="296.98278353287765" y="50.194221046987295" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 9.696841156290677px">
               Viz
             </text>
           </g><g class="skill-bubble" data-skill="React" data-area="frontend" tabindex="0">
             <title>React</title>
+            <circle cx="68.3976566843833" cy="594.1211014634501" r="21.99512076087079" fill="hsl(var(--b1))"></circle>
             <circle cx="68.3976566843833" cy="594.1211014634501" r="21.99512076087079" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="68.3976566843833" y="594.1211014634501" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 9.563095982987301px">
               React
             </text>
           </g><g class="skill-bubble" data-skill="FastAPI" data-area="backend" tabindex="0">
             <title>FastAPI</title>
+            <circle cx="393.5984930474028" cy="373.5671264346584" r="20.65602849280735" fill="hsl(var(--b1))"></circle>
             <circle cx="393.5984930474028" cy="373.5671264346584" r="20.65602849280735" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="393.5984930474028" y="373.5671264346584" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.980881953394501px">
               FastAPI
             </text>
           </g><g class="skill-bubble" data-skill="SQL" data-area="backend" tabindex="0">
             <title>SQL</title>
+            <circle cx="247.15686541580135" cy="287.0662301336769" r="20.287516324524994" fill="hsl(var(--b1))"></circle>
             <circle cx="247.15686541580135" cy="287.0662301336769" r="20.287516324524994" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="247.15686541580135" y="287.0662301336769" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
               SQL
             </text>
           </g><g class="skill-bubble" data-skill="ML/scikit-learn" data-area="ai-ml" tabindex="0">
             <title>ML/scikit-learn</title>
+            <circle cx="190.824713206537" cy="94.58211555632353" r="20.287516324524994" fill="hsl(var(--b1))"></circle>
             <circle cx="190.824713206537" cy="94.58211555632353" r="20.287516324524994" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="190.824713206537" y="94.58211555632353" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
               scikit
             </text>
           </g><g class="skill-bubble" data-skill="Pandas" data-area="backend" tabindex="0">
             <title>Pandas</title>
+            <circle cx="267.73865621805464" cy="404.5360080915518" r="20.287516324524994" fill="hsl(var(--b1))"></circle>
             <circle cx="267.73865621805464" cy="404.5360080915518" r="20.287516324524994" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="267.73865621805464" y="404.5360080915518" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.820659271532607px">
               Pandas
             </text>
           </g><g class="skill-bubble" data-skill="Multithreading/Perf" data-area="systems" tabindex="0">
             <title>Multithreading/Perf</title>
+            <circle cx="61.80540748473992" cy="370.31338901471713" r="19.49634057065309" fill="hsl(var(--b1))"></circle>
             <circle cx="61.80540748473992" cy="370.31338901471713" r="19.49634057065309" fill="#f43f5e" fill-opacity="0.6"></circle>
             <text x="61.80540748473992" y="370.31338901471713" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.476669813327431px">
               Perf
             </text>
           </g><g class="skill-bubble" data-skill="LLM/AI" data-area="ai-ml" tabindex="0">
             <title>LLM/AI</title>
+            <circle cx="164.0754900817406" cy="178.98803536948262" r="19.067617668790177" fill="hsl(var(--b1))"></circle>
             <circle cx="164.0754900817406" cy="178.98803536948262" r="19.067617668790177" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="164.0754900817406" y="178.98803536948262" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.290268551647904px">
               LLM
             </text>
           </g><g class="skill-bubble" data-skill="RAG" data-area="ai-ml" tabindex="0">
             <title>RAG</title>
+            <circle cx="82.12825636825127" cy="186.27552478145685" r="18.611150964330697" fill="hsl(var(--b1))"></circle>
             <circle cx="82.12825636825127" cy="186.27552478145685" r="18.611150964330697" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="82.12825636825127" y="186.27552478145685" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8.091804767100303px">
               RAG
             </text>
           </g><g class="skill-bubble" data-skill="CI/CD" data-area="practices" tabindex="0">
             <title>CI/CD</title>
+            <circle cx="377.71752304420454" cy="563.3027091585548" r="18.12073644540805" fill="hsl(var(--b1))"></circle>
             <circle cx="377.71752304420454" cy="563.3027091585548" r="18.12073644540805" fill="#64748b" fill-opacity="0.6"></circle>
             <text x="377.71752304420454" y="563.3027091585548" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               CI/CD
             </text>
           </g><g class="skill-bubble" data-skill="Testing" data-area="practices" tabindex="0">
             <title>Testing</title>
+            <circle cx="374.8480418355672" cy="512.0103642095753" r="18.12073644540805" fill="hsl(var(--b1))"></circle>
             <circle cx="374.8480418355672" cy="512.0103642095753" r="18.12073644540805" fill="#64748b" fill-opacity="0.6"></circle>
             <text x="374.8480418355672" y="512.0103642095753" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Testing
             </text>
           </g><g class="skill-bubble" data-skill="PostgreSQL" data-area="backend" tabindex="0">
             <title>PostgreSQL</title>
+            <circle cx="322.0889018560021" cy="250.67459441440022" r="18.12073644540805" fill="hsl(var(--b1))"></circle>
             <circle cx="322.0889018560021" cy="250.67459441440022" r="18.12073644540805" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="322.0889018560021" y="250.67459441440022" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Postgres
             </text>
           </g><g class="skill-bubble" data-skill="SQLite" data-area="backend" tabindex="0">
             <title>SQLite</title>
+            <circle cx="386.08662988141486" cy="289.4040252097229" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="386.08662988141486" cy="289.4040252097229" r="17.587442366156626" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="386.08662988141486" y="289.4040252097229" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               SQLite
             </text>
           </g><g class="skill-bubble" data-skill="AWS" data-area="backend" tabindex="0">
             <title>AWS</title>
+            <circle cx="311.33808675602546" cy="409.44411492082827" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="311.33808675602546" cy="409.44411492082827" r="17.587442366156626" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="311.33808675602546" y="409.44411492082827" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               AWS
             </text>
           </g><g class="skill-bubble" data-skill="LLM Evaluation" data-area="ai-ml" tabindex="0">
             <title>LLM Evaluation</title>
+            <circle cx="125.24888819755671" cy="45.46359978041362" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="125.24888819755671" cy="45.46359978041362" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="125.24888819755671" y="45.46359978041362" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               LLM Eval
             </text>
           </g><g class="skill-bubble" data-skill="Figma" data-area="frontend" tabindex="0">
             <title>Figma</title>
+            <circle cx="82.22634165907367" cy="481.9410233417523" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="82.22634165907367" cy="481.9410233417523" r="17.587442366156626" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="82.22634165907367" y="481.9410233417523" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Figma
             </text>
           </g><g class="skill-bubble" data-skill="PyTorch/ML" data-area="ai-ml" tabindex="0">
             <title>PyTorch/ML</title>
+            <circle cx="84.8330158082579" cy="53.33150088037186" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="84.8330158082579" cy="53.33150088037186" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="84.8330158082579" y="53.33150088037186" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               PyTorch
             </text>
           </g><g class="skill-bubble" data-skill="D3.js" data-area="data-viz" tabindex="0">
             <title>D3.js</title>
+            <circle cx="375.2600843833695" cy="78.65439198216842" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="375.2600843833695" cy="78.65439198216842" r="17.587442366156626" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="375.2600843833695" y="78.65439198216842" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               D3.js
             </text>
           </g><g class="skill-bubble" data-skill="LangChain/LangGraph" data-area="ai-ml" tabindex="0">
             <title>LangChain/LangGraph</title>
+            <circle cx="123.78753844001434" cy="192.99971433595866" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="123.78753844001434" cy="192.99971433595866" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="123.78753844001434" y="192.99971433595866" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               LangChain
             </text>
           </g><g class="skill-bubble" data-skill="Agentic AI" data-area="ai-ml" tabindex="0">
             <title>Agentic AI</title>
+            <circle cx="163.75081727992335" cy="60.056720036342355" r="17.587442366156626" fill="hsl(var(--b1))"></circle>
             <circle cx="163.75081727992335" cy="60.056720036342355" r="17.587442366156626" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="163.75081727992335" y="60.056720036342355" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Agents
             </text>
           </g><g class="skill-bubble" data-skill="Three.js" data-area="frontend" tabindex="0">
             <title>Three.js</title>
+            <circle cx="164.1570287757182" cy="598.7871515725371" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="164.1570287757182" cy="598.7871515725371" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="164.1570287757182" y="598.7871515725371" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Three.js
             </text>
           </g><g class="skill-bubble" data-skill="Plotly Dash" data-area="data-viz" tabindex="0">
             <title>Plotly Dash</title>
+            <circle cx="255.64678864375523" cy="129.5638174874903" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="255.64678864375523" cy="129.5638174874903" r="16.997560380435395" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="255.64678864375523" y="129.5638174874903" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Plotly Dash
             </text>
           </g><g class="skill-bubble" data-skill="DuckDB/Parquet" data-area="backend" tabindex="0">
             <title>DuckDB/Parquet</title>
+            <circle cx="282.6429315259432" cy="262.28104692531963" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="282.6429315259432" cy="262.28104692531963" r="16.997560380435395" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="282.6429315259432" y="262.28104692531963" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               DuckDB
             </text>
           </g><g class="skill-bubble" data-skill="MLOps" data-area="backend" tabindex="0">
             <title>MLOps</title>
+            <circle cx="245.0143482449862" cy="367.69622025029514" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="245.0143482449862" cy="367.69622025029514" r="16.997560380435395" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="245.0143482449862" y="367.69622025029514" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               MLOps
             </text>
           </g><g class="skill-bubble" data-skill="Async/SDK Design" data-area="systems" tabindex="0">
             <title>Async/SDK Design</title>
+            <circle cx="52.30665572474065" cy="328.89476217855605" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="52.30665572474065" cy="328.89476217855605" r="16.997560380435395" fill="#f43f5e" fill-opacity="0.6"></circle>
             <text x="52.30665572474065" y="328.89476217855605" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Async
             </text>
           </g><g class="skill-bubble" data-skill="PHP/WordPress Plugins" data-area="frontend" tabindex="0">
             <title>PHP/WordPress Plugins</title>
+            <circle cx="165.01924613698873" cy="484.5011172733969" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="165.01924613698873" cy="484.5011172733969" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="165.01924613698873" y="484.5011172733969" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               WordPress
             </text>
           </g><g class="skill-bubble" data-skill="Research" data-area="practices" tabindex="0">
             <title>Research</title>
+            <circle cx="254.13808620640748" cy="556.072997969875" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="254.13808620640748" cy="556.072997969875" r="16.997560380435395" fill="#64748b" fill-opacity="0.6"></circle>
             <text x="254.13808620640748" y="556.072997969875" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Research
             </text>
           </g><g class="skill-bubble" data-skill="Canvas/Web Audio" data-area="data-viz" tabindex="0">
             <title>Canvas/Web Audio</title>
+            <circle cx="341.97993072017397" cy="55.42573708566577" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="341.97993072017397" cy="55.42573708566577" r="16.997560380435395" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="341.97993072017397" y="55.42573708566577" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Canvas
             </text>
           </g><g class="skill-bubble" data-skill="Streamlit" data-area="frontend" tabindex="0">
             <title>Streamlit</title>
+            <circle cx="52.20112177865217" cy="552.144810476787" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="52.20112177865217" cy="552.144810476787" r="16.997560380435395" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="52.20112177865217" y="552.144810476787" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Streamlit
             </text>
           </g><g class="skill-bubble" data-skill="Vector Search/Embeddings" data-area="ai-ml" tabindex="0">
             <title>Vector Search/Embeddings</title>
+            <circle cx="43.38548419002811" cy="118.61428793542794" r="16.997560380435395" fill="hsl(var(--b1))"></circle>
             <circle cx="43.38548419002811" cy="118.61428793542794" r="16.997560380435395" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="43.38548419002811" y="118.61428793542794" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Vec DB
             </text>
           </g><g class="skill-bubble" data-skill="Unsupervised ML" data-area="ai-ml" tabindex="0">
             <title>Unsupervised ML</title>
+            <circle cx="187.77473118266633" cy="137.08829138127717" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="187.77473118266633" cy="137.08829138127717" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="187.77473118266633" y="137.08829138127717" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Unsup ML
             </text>
           </g><g class="skill-bubble" data-skill="visx" data-area="data-viz" tabindex="0">
             <title>visx</title>
+            <circle cx="377.4789018989908" cy="154.0105887776202" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="377.4789018989908" cy="154.0105887776202" r="16.328014246403676" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="377.4789018989908" y="154.0105887776202" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               visx
             </text>
           </g><g class="skill-bubble" data-skill="CLI/Packaging" data-area="backend" tabindex="0">
             <title>CLI/Packaging</title>
+            <circle cx="238.83011031819603" cy="328.85996362364153" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="238.83011031819603" cy="328.85996362364153" r="16.328014246403676" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="238.83011031819603" y="328.85996362364153" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               CLI
             </text>
           </g><g class="skill-bubble" data-skill="GCP" data-area="backend" tabindex="0">
             <title>GCP</title>
+            <circle cx="361.9357215220813" cy="257.6239044776907" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="361.9357215220813" cy="257.6239044776907" r="16.328014246403676" fill="#0d9488" fill-opacity="0.6"></circle>
             <text x="361.9357215220813" y="257.6239044776907" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               GCP
             </text>
           </g><g class="skill-bubble" data-skill="MCP" data-area="ai-ml" tabindex="0">
             <title>MCP</title>
+            <circle cx="54.07546677125482" cy="156.45884462769376" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="54.07546677125482" cy="156.45884462769376" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="54.07546677125482" y="156.45884462769376" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               MCP
             </text>
           </g><g class="skill-bubble" data-skill="Electron" data-area="frontend" tabindex="0">
             <title>Electron</title>
+            <circle cx="57.351892350128914" cy="513.1580282291276" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="57.351892350128914" cy="513.1580282291276" r="16.328014246403676" fill="#3b82f6" fill-opacity="0.6"></circle>
             <text x="57.351892350128914" y="513.1580282291276" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Electron
             </text>
           </g><g class="skill-bubble" data-skill="GPU" data-area="systems" tabindex="0">
             <title>GPU</title>
+            <circle cx="69.19229189566887" cy="293.37892178853843" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="69.19229189566887" cy="293.37892178853843" r="16.328014246403676" fill="#f43f5e" fill-opacity="0.6"></circle>
             <text x="69.19229189566887" y="293.37892178853843" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               GPU
             </text>
           </g><g class="skill-bubble" data-skill="Computer Vision" data-area="ai-ml" tabindex="0">
             <title>Computer Vision</title>
+            <circle cx="56.64435583483437" cy="81.59146706061011" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="56.64435583483437" cy="81.59146706061011" r="16.328014246403676" fill="#8b5cf6" fill-opacity="0.6"></circle>
             <text x="56.64435583483437" y="81.59146706061011" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               CV
             </text>
           </g><g class="skill-bubble" data-skill="p5.js" data-area="data-viz" tabindex="0">
             <title>p5.js</title>
+            <circle cx="387.4502878650949" cy="116.66277962127852" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="387.4502878650949" cy="116.66277962127852" r="16.328014246403676" fill="#f59e0b" fill-opacity="0.6"></circle>
             <text x="387.4502878650949" y="116.66277962127852" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               p5.js
             </text>
           </g><g class="skill-bubble" data-skill="Client Communication" data-area="practices" tabindex="0">
             <title>Client Communication</title>
+            <circle cx="339.23829509856324" cy="599.9496515140778" r="16.328014246403676" fill="hsl(var(--b1))"></circle>
             <circle cx="339.23829509856324" cy="599.9496515140778" r="16.328014246403676" fill="#64748b" fill-opacity="0.6"></circle>
             <text x="339.23829509856324" y="599.9496515140778" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Comm
             </text>
           </g><g class="skill-bubble" data-skill="Agile/Scrum" data-area="practices" tabindex="0">
             <title>Agile/Scrum</title>
+            <circle cx="295.3077281250848" cy="600.2199839273582" r="15.533808834395089" fill="hsl(var(--b1))"></circle>
             <circle cx="295.3077281250848" cy="600.2199839273582" r="15.533808834395089" fill="#64748b" fill-opacity="0.6"></circle>
             <text x="295.3077281250848" y="600.2199839273582" text-anchor="middle" dominant-baseline="central" class="pointer-events-none" style="paint-order: stroke; stroke: rgba(0,0,0,0.35); stroke-width: 2px; fill: #fff; font-weight: 600; font-weight: 500; font-size: 8px">
               Agile
