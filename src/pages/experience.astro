@@ -46,6 +46,17 @@ import { experienceEntries } from "../data/experience";
   const graphSection = document.querySelector<HTMLElement>(".skill-graph-section");
   const showsTendrils = () => window.matchMedia("(min-width: 1024px)").matches;
 
+  // Shared tendril tuning, referenced by both rendering engines so the curve
+  // (and its colors) can only ever be defined in one place.
+  const TENDRIL_COLORS = { work: "#0d9488", project: "#64748b" } as const;
+  const CARD_X_INSET = 6; // how far inside the card's right edge the line starts
+  const CURVE_DX_RATIO = 0.45; // control points pulled this fraction of the span out
+  const CURVE_MIN_DX = 60; // ...but never closer than this, so short spans still bow
+  const curveDx = (x1: number, x2: number) =>
+    Math.max(Math.abs(x2 - x1) * CURVE_DX_RATIO, CURVE_MIN_DX);
+  const tendrilColor = (card: HTMLElement) =>
+    TENDRIL_COLORS[card.dataset.type === "project" ? "project" : "work"];
+
   // Prefer letting the compositor draw the connectors: CSS scroll-driven
   // animations (animation-timeline: scroll()) plus trig functions (hypot,
   // atan2) can position a line between a normally-scrolling card and the
@@ -238,31 +249,60 @@ import { experienceEntries } from "../data/experience";
     });
   }
 
-  function bezier(x1: number, y1: number, x2: number, y2: number) {
-    const dx = Math.max(Math.abs(x2 - x1) * 0.45, 60);
+  function bezier(x1: number, y1: number, x2: number, y2: number, dx: number) {
     return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+  }
+
+  // Single source of truth for the card-side geometry both engines need: the
+  // start point, the type color, and one control-point-carrying endpoint per
+  // bubble the active card connects to. Only the y basis differs downstream —
+  // the fixed SVG overlay works in viewport space (viewportY1), the CSS
+  // scroll-driven path in document space (docY1) — so both are provided here.
+  interface TendrilItem {
+    x2: number;
+    relY: number; // bubble center y, relative to the graph panel's own top
+    dx: number;
+  }
+  interface TendrilLayout {
+    x1: number;
+    color: string;
+    viewportY1: number;
+    docY1: number;
+    items: TendrilItem[];
+  }
+  function tendrilLayout(card: HTMLElement, skills: string[]): TendrilLayout {
+    const rect = card.getBoundingClientRect();
+    const x1 = rect.right - CARD_X_INSET;
+    const midY = rect.top + rect.height / 2;
+    const skillSet = new Set(skills);
+    const points = bubblePoints();
+    const items: TendrilItem[] = [];
+    bubbles.forEach((b, idx) => {
+      if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
+      const { x: x2, relY } = points[idx];
+      items.push({ x2, relY, dx: curveDx(x1, x2) });
+    });
+    return {
+      x1,
+      color: tendrilColor(card),
+      viewportY1: midY,
+      docY1: window.scrollY + midY,
+      items,
+    };
   }
 
   // JS-measured fallback: coordinates are plain viewport pixels (the overlay
   // is position:fixed), recomputed on scroll via the rAF loop below.
   function drawTendrilsJs(card: HTMLElement, skills: string[]) {
     if (!overlay) return;
-    const rect = card.getBoundingClientRect();
-    const x1 = rect.right - 6;
-    const y1 = rect.top + rect.height / 2;
-    const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
-    const skillSet = new Set(skills);
-    const points = bubblePoints();
-    let i = 0;
-    bubbles.forEach((b, idx) => {
-      if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
-      const { x: x2, relY } = points[idx];
+    const { x1, color, viewportY1: y1, items } = tendrilLayout(card, skills);
+    items.forEach(({ x2, relY, dx }, i) => {
       const y2 = lastMeasuredGraphTop + relY;
-      const p = tendrilPath(i++);
-      p.setAttribute("d", bezier(x1, y1, x2, y2));
+      const p = tendrilPath(i);
+      p.setAttribute("d", bezier(x1, y1, x2, y2, dx));
       p.setAttribute("stroke", color);
     });
-    for (; i < tendrilPool.length; i++) tendrilPool[i].setAttribute("d", "");
+    for (let i = items.length; i < tendrilPool.length; i++) tendrilPool[i].setAttribute("d", "");
   }
 
   // CSS-driven path: set the endpoints as custom properties once (on card
@@ -271,27 +311,18 @@ import { experienceEntries } from "../data/experience";
   // so it can never fall a frame behind the compositor's scroll.
   function drawTendrilsCss(card: HTMLElement, skills: string[]) {
     if (!cssLayer) return;
-    const rect = card.getBoundingClientRect();
-    const x1 = rect.right - 6;
-    const cardTop = window.scrollY + rect.top + rect.height / 2;
+    const { x1, color, docY1, items } = tendrilLayout(card, skills);
     cssLayer.style.setProperty("--x1", `${x1}px`);
-    cssLayer.style.setProperty("--card-top", `${cardTop}px`);
-    const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
+    cssLayer.style.setProperty("--card-top", `${docY1}px`);
     cssLayer.style.setProperty("--tendril-color", color);
-    const skillSet = new Set(skills);
-    const points = bubblePoints();
-    let i = 0;
-    bubbles.forEach((b, idx) => {
-      if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
-      const { x: x2, relY } = points[idx];
-      const dx = Math.max(Math.abs(x2 - x1) * 0.45, 60);
-      const line = cssLine(i++);
+    items.forEach(({ x2, relY, dx }, i) => {
+      const line = cssLine(i);
       line.style.setProperty("--x2", `${x2}px`);
       line.style.setProperty("--bubble-rel-y", `${relY}px`);
       line.style.setProperty("--dx", `${dx}px`);
       line.classList.add("on");
     });
-    for (; i < cssLinePool.length; i++) cssLinePool[i].classList.remove("on");
+    for (let i = items.length; i < cssLinePool.length; i++) cssLinePool[i].classList.remove("on");
   }
 
   function drawTendrils(card: HTMLElement | null, skills: string[]) {
@@ -484,6 +515,11 @@ import { experienceEntries } from "../data/experience";
     --scroll-max: 0px;
     --sticky-top: 32px;
     --graph-natural-top: 0px;
+    /* Per-type accent colors, kept in sync with TENDRIL_COLORS in the script
+       and skillAreas in experience.ts. Reused by the active-card ring and the
+       filter buttons below so the teal/slate literals live in one place. */
+    --type-work: #0d9488;
+    --type-project: #64748b;
   }
   @supports (animation-timeline: scroll()) {
     @keyframes tendril-scroll-progress {
@@ -535,7 +571,7 @@ import { experienceEntries } from "../data/experience";
   .tendril-line {
     position: absolute;
     inset: 0;
-    background: var(--tendril-color, #0d9488);
+    background: var(--tendril-color, var(--type-work));
     opacity: 0;
     pointer-events: none;
   }
@@ -581,10 +617,10 @@ import { experienceEntries } from "../data/experience";
   /* Active card emphasis: a type-colored ring on top of the persistent
      left accent bar (teal for work, slate for projects). */
   #experience-timeline [data-type="work"].skill-active .experience__data {
-    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.5);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--type-work) 50%, transparent);
   }
   #experience-timeline [data-type="project"].skill-active .experience__data {
-    box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.55);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--type-project) 55%, transparent);
   }
   #experience-timeline [data-type] {
     transition: opacity 0.2s ease;
@@ -603,11 +639,11 @@ import { experienceEntries } from "../data/experience";
     color: #1f2937 !important;
   }
   .filter-bar [data-filter="work"] {
-    background-color: #0d9488 !important;
+    background-color: var(--type-work) !important;
     color: #fff !important;
   }
   .filter-bar [data-filter="project"] {
-    background-color: #64748b !important;
+    background-color: var(--type-project) !important;
     color: #fff !important;
   }
   .filter-bar .btn:not(.btn-active) {
