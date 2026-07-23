@@ -55,8 +55,7 @@ import { experienceEntries } from "../data/experience";
   const supportsCssTendrils =
     typeof CSS !== "undefined" &&
     CSS.supports("animation-timeline: scroll()") &&
-    CSS.supports("width: hypot(1px, 1px)") &&
-    CSS.supports("transform: rotate(atan2(1px, 1px))");
+    CSS.supports("clip-path: shape(from 0px 0px, line to 1px 1px, close)");
 
   if (overlay) overlay.classList.toggle("hidden", supportsCssTendrils);
   if (cssLayer) cssLayer.classList.toggle("hidden", !supportsCssTendrils);
@@ -135,6 +134,12 @@ import { experienceEntries } from "../data/experience";
     return tendrilPool[i];
   }
 
+  // The CSS connector is a single element per bubble, clipped to a thin
+  // cubic-bezier band via clip-path: shape() — the same S-curve the JS
+  // fallback strokes (control points pulled horizontally from each
+  // endpoint). Only the y endpoints move during scroll; the shape's
+  // coordinates reference those scroll-linked custom properties, so the
+  // browser re-solves the curve every frame with no per-frame JS.
   const cssLinePool: HTMLDivElement[] = [];
   function cssLine(i: number) {
     if (!cssLinePool[i]) {
@@ -272,16 +277,18 @@ import { experienceEntries } from "../data/experience";
     cssLayer.style.setProperty("--x1", `${x1}px`);
     cssLayer.style.setProperty("--card-top", `${cardTop}px`);
     const color = card.dataset.type === "project" ? "#64748b" : "#0d9488";
+    cssLayer.style.setProperty("--tendril-color", color);
     const skillSet = new Set(skills);
     const points = bubblePoints();
     let i = 0;
     bubbles.forEach((b, idx) => {
       if (!b.dataset.skill || !skillSet.has(b.dataset.skill)) return;
       const { x: x2, relY } = points[idx];
+      const dx = Math.max(Math.abs(x2 - x1) * 0.45, 60);
       const line = cssLine(i++);
       line.style.setProperty("--x2", `${x2}px`);
       line.style.setProperty("--bubble-rel-y", `${relY}px`);
-      line.style.setProperty("--tendril-color", color);
+      line.style.setProperty("--dx", `${dx}px`);
       line.classList.add("on");
     });
     for (; i < cssLinePool.length; i++) cssLinePool[i].classList.remove("on");
@@ -521,19 +528,15 @@ import { experienceEntries } from "../data/experience";
     z-index: 1;
   }
 
-  /* Each connector's card-side endpoint is expressed as a document-space
-     y (--card-top) minus the live scroll offset (--scroll-px), so its
-     on-screen position tracks the compositor's scroll directly instead of
-     being recomputed by JS every frame. */
+  /* Each connector fills the fixed overlay and is clipped to a thin band
+     tracing a cubic bezier. Its endpoints are viewport-space pixels: the
+     card side is a document-space y (--card-top) minus the live scroll
+     offset (--scroll-px), so the shape tracks the scroll directly. */
   .tendril-line {
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 1.75px;
-    border-radius: 1px;
+    inset: 0;
     background: var(--tendril-color, #0d9488);
     opacity: 0;
-    transform-origin: 0 50%;
     pointer-events: none;
   }
   .tendril-line.on {
@@ -546,12 +549,23 @@ import { experienceEntries } from "../data/experience";
        bubble endpoint stays correct through the stuck/unstuck transition,
        not just once already pinned. */
     --graph-viewport-top: max(var(--sticky-top), var(--graph-natural-top) - var(--scroll-px));
+    --y1: calc(var(--card-top) - var(--scroll-px));
     --y2: calc(var(--graph-viewport-top) + var(--bubble-rel-y));
-    --dx: calc(var(--x2) - var(--x1));
-    --dy: calc(var(--y2) - (var(--card-top) - var(--scroll-px)));
-    width: hypot(var(--dx), var(--dy));
-    transform: translate(var(--x1), calc(var(--card-top) - var(--scroll-px)))
-      rotate(atan2(var(--dy), var(--dx)));
+    --w: 1.75px;
+    /* Trace the curve along its top edge, drop the stroke width, and trace
+       back along the bottom edge to close a thin band. Control points sit
+       horizontally out from each endpoint (x1+dx, x2-dx), giving the same
+       S-shape the JS bezier() fallback draws. */
+    clip-path: shape(
+      from var(--x1) var(--y1),
+      curve to var(--x2) var(--y2)
+        with calc(var(--x1) + var(--dx)) var(--y1) / calc(var(--x2) - var(--dx)) var(--y2),
+      line to var(--x2) calc(var(--y2) + var(--w)),
+      curve to var(--x1) calc(var(--y1) + var(--w))
+        with calc(var(--x2) - var(--dx)) calc(var(--y2) + var(--w)) /
+          calc(var(--x1) + var(--dx)) calc(var(--y1) + var(--w)),
+      close
+    );
   }
 
   /* Graph highlight states (applied to SVG groups from the script). */
