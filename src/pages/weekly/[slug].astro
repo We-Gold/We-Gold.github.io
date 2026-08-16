@@ -1,0 +1,33 @@
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+import { WeeklySchema } from '../../content/config';
+import WeeklyLayout from '../../layouts/WeeklyLayout.astro';
+import { assertWeekMatchesSlug } from '../../utils/weeklyEntry';
+
+export async function getStaticPaths() {
+    const entries = await getCollection('weekly');
+    entries.forEach(assertWeekMatchesSlug);
+    return entries.map(entry => ({
+        params: { slug: entry.slug }, props: { entry },
+    }));
+}
+
+interface Props {
+    entry: CollectionEntry<"weekly">;
+}
+
+const { entry } = Astro.props;
+const problem: WeeklySchema = entry.data;
+const { Content } = await entry.render();
+
+// Read off the body rather than a frontmatter flag, which could disagree with
+// reality — set on a week with nothing behind it, or unset on one that has a
+// solution.
+const hasSolution = entry.body.includes("<SolutionSection");
+---
+
+{/* Spread rather than listed field by field: `Props extends WeeklySchema`,
+    so enumerating them here is just a second place to forget one. */}
+<WeeklyLayout {...problem} hasSolution={hasSolution}>
+    <Content />
+</WeeklyLayout>

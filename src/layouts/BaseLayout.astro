@@ -6,7 +6,13 @@ import SideBar from "../components/SideBar.astro";
 
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 
-const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSidebar = true, sideBarActiveItemID, wide = false } = Astro.props;
+// `main` below is a flex item (its wrapper is `md:flex`), so by default it is
+// shrink-to-fit: it sizes to its content's max-content width and only then gets
+// clamped by max-w. Pages with long prose hit the clamp and look full-width;
+// pages whose content is short — a list of titles and badges — end up visibly
+// narrower than the rest of the site. `fillWidth` opts a page into filling the
+// column regardless of how much content it has.
+const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSidebar = true, sideBarActiveItemID, wide = false, fillWidth = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -20,7 +26,7 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSideba
       <div class="drawer-content bg-base-100">
         <Header title={SITE_TITLE} />
         <div class="md:flex md:justify-center">
-          <main class={`p-6 pt-10 ${wide ? "max-w-[1200px]" : "max-w-[900px]"}`}>
+          <main class={`p-6 pt-10 ${fillWidth ? "w-full" : ""} ${wide ? "max-w-[1200px]" : "max-w-[900px]"}`}>
             <slot />
           </main>
         </div>

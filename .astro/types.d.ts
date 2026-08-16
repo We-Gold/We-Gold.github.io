@@ -227,6 +227,15 @@ declare module 'astro:content' {
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
 };
+"weekly": {
+"001-easy-win/index.mdx": {
+	id: "001-easy-win/index.mdx";
+  slug: "001-easy-win";
+  body: string;
+  collection: "weekly";
+  data: InferEntrySchema<"weekly">
+} & { render(): Render[".mdx"] };
+};
 
 	};
 

@@ -1,6 +1,6 @@
 ---
 title: "Using Spaced Repetition Techniques to Elevate College Studying"
-pubDate: "Oct 23 2023"
+pubDate: 2023-10-23
 description: "A personal guide on college studying from personal experimentation with spaced repetition and retrospective revision timetables."
 heroImage: "/content/blog/data-studying/data-studying-hero.png"
 ---

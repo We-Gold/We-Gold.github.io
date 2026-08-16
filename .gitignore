@@ -2,3 +2,7 @@ node_modules
 .cache
 dist
 .DS_Store
+plans/
+
+__marimo__
+__pycache__

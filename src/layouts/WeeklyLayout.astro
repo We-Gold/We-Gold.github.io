@@ -1,0 +1,79 @@
+---
+import { WeeklySchema } from "../content/config";
+import BaseLayout from "./BaseLayout.astro";
+import { formatDate } from "../utils/formatDate";
+import { weekLabel, typeLabel, titleCase } from "../utils/weeklyLabels";
+
+export interface Props extends WeeklySchema {
+  // Derived in [slug].astro from the body, not frontmatter.
+  hasSolution: boolean;
+}
+
+const {
+  title,
+  week,
+  type,
+  pubDate,
+  tags,
+  difficulty,
+  hasSolution,
+  linkedinProblemUrl,
+  linkedinSolutionUrl,
+} = Astro.props;
+const displayDate = formatDate(pubDate);
+
+// Both are backfilled by hand after posting, and the solution goes up days
+// later, so each renders only once its URL exists.
+const discussion = [
+  { url: linkedinProblemUrl, label: "the problem post" },
+  { url: linkedinSolutionUrl, label: "the solution post" },
+].filter((l): l is { url: string; label: string } => Boolean(l.url));
+---
+
+<BaseLayout title={title} sideBarActiveItemID="weekly">
+  <main class="md:flex md:justify-center">
+    <article class="prose prose-lg max-w-[750px]">
+      <h1 class="title my-2 text-4xl font-bold">{title}</h1>
+      <time>{displayDate}</time>
+      <br />
+      <div class="flex flex-wrap items-center gap-2 my-1">
+        <div class="badge badge-secondary">{weekLabel(week)}</div>
+        <div class="badge badge-outline">{typeLabel(type)}</div>
+        <div class="badge badge-outline">{titleCase(difficulty)}</div>
+        {tags?.map((tag) => <div class="badge badge-outline">{titleCase(tag)}</div>)}
+      </div>
+      <div class="divider my-2"></div>
+      <slot />
+      {
+        !hasSolution && (
+          <div class="not-prose my-8 rounded-lg border border-dashed border-base-300 px-5 py-4">
+            <p class="font-bold text-xl">Solution not posted yet</p>
+            <p class="mt-1 opacity-70">
+              It goes up a few days after the problem. Check back later this week.
+            </p>
+          </div>
+        )
+      }
+      {
+        discussion.length > 0 && (
+          <div class="not-prose mt-10 border-t border-base-300 pt-6">
+            <span class="opacity-70">Discuss on LinkedIn: </span>
+            {discussion.map((link, i) => (
+              <>
+                {i > 0 && <span class="opacity-70"> · </span>}
+                <a
+                  class="link link-primary"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              </>
+            ))}
+          </div>
+        )
+      }
+    </article>
+  </main>
+</BaseLayout>

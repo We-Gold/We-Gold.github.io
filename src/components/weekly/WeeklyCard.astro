@@ -1,0 +1,34 @@
+---
+// The /weekly gallery tile: preview on top, title and badges below. Its width
+// comes entirely from the grid track it sits in (see pages/weekly/index.astro),
+// so the component itself never sets one.
+//
+// It can't reuse HorizontalCard.astro (the blog/projects card) for two reasons:
+// that component is a horizontal row, and its image slot is hardcoded to
+// <Image>, while a weekly's preview is a live React island.
+//
+// The preview slot only needs a width — WeeklyPreview's ScaleToFit sets its own
+// aspect ratio and caps at the canvas's native 1080px, so the 4:5 portrait shape
+// is preserved at any tile size.
+const { title, url, badge, tags = [] } = Astro.props;
+---
+
+<div
+  class="h-full rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+>
+  <a href={url} class="flex h-full flex-col gap-3 p-4">
+    <div class="w-full rounded-lg overflow-hidden border border-base-300">
+      <slot name="preview" />
+    </div>
+    <div class="flex grow min-w-0 flex-col">
+      <h1 class="text-lg font-bold">{title}</h1>
+      {/* The week badge leads the same wrapping row as the tags, so a tile
+          carries one badge block rather than two. `mt-auto` pins that row to
+          the bottom, keeping it level across a row of uneven-length titles. */}
+      <div class="flex flex-wrap gap-2 mt-auto pt-2">
+        {badge && <div class="badge badge-secondary">{badge}</div>}
+        {tags.map((tag: string) => <div class="badge badge-outline">{tag}</div>)}
+      </div>
+    </div>
+  </a>
+</div>

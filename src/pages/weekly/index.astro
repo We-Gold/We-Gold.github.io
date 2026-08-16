@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WeeklyCard from "../../components/weekly/WeeklyCard.astro";
+import { WeeklyPreview } from "../../components/weekly/WeeklyPreview";
+import { getCollection } from "astro:content";
+import { weekLabel, typeLabel, titleCase } from "../../utils/weeklyLabels";
+
+// The gallery grid's `auto-fill` picks the column count from the available
+// width, so no breakpoint has to name a column count. The 260px track floor is
+// set by the widest layout we want to reach: this page uses BaseLayout's default
+// 900px body (matching /blog), leaving an 852px content box, and three columns
+// only fit there at 268px or less.
+//
+// The one breakpoint that remains guards that floor: a track can't shrink past
+// 260px, which would overflow a phone whose content box is narrower, so below
+// `sm` the grid drops to a single freely-shrinking column. Writing the floor as
+// `minmax(min(260px, 100%), 1fr)` instead — the usual breakpoint-free fix — does
+// not work here: `min()` makes the track floor intrinsic, and each tile's
+// min-content is the preview's native 1080px canvas (ScaleToFit renders at full
+// size and CSS-scales down), so every track would demand 1080px.
+const problems = (await getCollection("weekly")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Weaver's Weekly" sideBarActiveItemID="weekly">
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Weaver's Weekly</div>
+    <p class="py-2">A recurring data science and ML problem series.</p>
+  </div>
+
+  {
+    problems.length === 0 ? (
+      <div class="bg-base-200 border-l-4 border-secondary w-full p-4 min-w-full">
+        <p class="font-bold">Sorry!</p>
+        <p>There are no problems posted yet. Check back later!</p>
+      </div>
+    ) : (
+      <ul class="grid gap-6 list-none p-0 grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
+        {problems.map((problem) => (
+          <li>
+            <WeeklyCard
+              title={problem.data.title}
+              url={"/weekly/" + problem.slug}
+              badge={weekLabel(problem.data.week)}
+              tags={[
+                typeLabel(problem.data.type),
+                titleCase(problem.data.difficulty),
+                ...problem.data.tags.map(titleCase),
+              ]}
+            >
+              <WeeklyPreview
+                slot="preview"
+                client:visible
+                slug={problem.slug}
+                week={problem.data.week}
+                title={problem.data.title}
+              />
+            </WeeklyCard>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>

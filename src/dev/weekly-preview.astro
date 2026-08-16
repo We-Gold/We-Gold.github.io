@@ -1,0 +1,19 @@
+---
+// Component sandbox for the weekly image DSL. Deliberately lives outside
+// src/pages so it is never a real route: astro.config.mjs injects it at
+// /weekly/preview during `astro dev` only, so it never ships to production.
+// Fonts come from the DSL's theme module, not from here.
+import { PreviewExample } from "../components/weekly/PreviewExample";
+import { AtomsGallery } from "../components/weekly/AtomsGallery";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Weaver's Weekly — Frame Preview</title>
+  </head>
+  <body style="background:#e5e7eb; margin:0; padding:48px; display:flex; flex-direction:column; align-items:center; gap:64px;">
+    <PreviewExample client:load />
+    <AtomsGallery client:load />
+  </body>
+</html>

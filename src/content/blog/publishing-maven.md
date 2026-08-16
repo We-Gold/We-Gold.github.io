@@ -1,6 +1,6 @@
 ---
 title: "Publishing Java Packages to Maven Central Repository"
-pubDate: "Jun 28 2022"
+pubDate: 2022-06-28
 description: "How to successfully navigate the surprisingly tedious process of sharing java packages (using GitHub actions)."
 heroImage: "/content/blog/publishing-maven/hero.jpeg"
 ---

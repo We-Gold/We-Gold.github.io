@@ -1,6 +1,6 @@
 ---
 title: "How I Read 19 Books This Year, and Why You Should Try Too"
-pubDate: "Jun 3 2024"
+pubDate: 2024-06-03
 description: "A breakdown of my motivation, process, and future plans."
 heroImage: "/content/blog/reading-19-books/hero.png"
 ---

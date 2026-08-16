@@ -1,6 +1,6 @@
 ---
 title: "Synchronized Widgets Without A Server"
-pubDate: "June 22 2022"
+pubDate: 2022-06-22
 description: "Using web technologies and math to synchronize widgets without the need for a server."
 heroImage: "/content/blog/synchronized-randomness/hero.webp"
 ---
