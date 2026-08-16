@@ -52,6 +52,12 @@ export function ScaleToFit({
             style={{
                 width: "100%",
                 maxWidth: width,
+                // The child is laid out at its full `width` and only shrunk by
+                // a transform, so without this the frame's intrinsic width
+                // propagates up as a min-content floor and widens every
+                // ancestor — on a phone that pushes the whole page sideways
+                // rather than scaling the frame down.
+                minWidth: 0,
                 aspectRatio: `${width} / ${height}`,
                 overflow: "hidden",
             }}

@@ -23,7 +23,10 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSideba
   <body>
     <div class="bg-base-100 drawer lg:drawer-open">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content bg-base-100">
+      {/* `min-w-0`: the drawer content is a grid item, so its default
+          `min-width: auto` lets any wide descendant — a fixed-size figure, a
+          long code line — widen the whole page instead of being clamped. */}
+      <div class="drawer-content bg-base-100 min-w-0">
         <Header title={SITE_TITLE} />
         <div class="md:flex md:justify-center">
           <main class={`p-6 pt-10 ${fillWidth ? "w-full" : ""} ${wide ? "max-w-[1200px]" : "max-w-[900px]"}`}>

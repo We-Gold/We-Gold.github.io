@@ -155,6 +155,32 @@ If it's overflowing, something is rendering `ImageFrame` outside an
 `overflow-x-auto` — that hides the problem behind a scrollbar and leaves the
 real cause in place.
 
+## The whole *page* is wider than a phone, and the image didn't scale down
+
+Different failure from the one above, and it looks like the image ignoring
+`ScaleToFit` when it isn't: the frame did scale — to a column that had already
+been widened past the viewport by the frame itself.
+
+`ScaleToFit` lays its children out at true canvas size and only shrinks them
+with a `transform`, which doesn't affect layout, so the subtree's intrinsic
+width is still 1080. That width propagates up as a **min-content floor**:
+`max-width` on an ancestor caps how wide it draws but not how wide it demands,
+and daisyUI's `.drawer-content` is a grid item, whose default `min-width: auto`
+resolves to exactly that floor. The article settles at its `max-w-[750px]`, the
+page grows to hold it, and every element on it — header included — is laid out
+against a 798px page on a 390px phone.
+
+Two places break the chain, and both are in place:
+
+- `minWidth: 0` on `ScaleToFit`'s own container, so a frame never exports its
+  intrinsic width to its ancestors.
+- `min-w-0` on `.drawer-content` in `BaseLayout.astro`, which stops *any* wide
+  descendant — a fixed-size figure, a long unbroken code line — from widening
+  the page instead of being clamped.
+
+If a new page does this again, look for a fixed-size subtree that isn't behind
+either guard rather than reaching for `overflow-x` on the article.
+
 ## Export buttons don't appear
 
 - Production build — they're stripped by `import.meta.env.DEV` on purpose.

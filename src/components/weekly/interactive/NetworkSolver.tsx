@@ -32,7 +32,12 @@ export interface NetworkSolverProps {
     // "horizontal": panels in a column, fan running right to the output.
     // "vertical": panels in a row, fan running down to the output beneath —
     // which is what fills a portrait canvas, where height is the spare axis.
-    orientation?: "horizontal" | "vertical";
+    // "stacked": panels in a column with the output directly beneath and no
+    // fan at all, for a container too narrow to hold two columns side by side.
+    // The fan is the one part that can't survive the narrowing — it needs
+    // horizontal room to be a fan — but in the editable variant its labels are
+    // only v_i, and those sliders are in the output box anyway.
+    orientation?: "horizontal" | "vertical" | "stacked";
     domain?: readonly [number, number];
     showInputNode?: boolean;
     panelWidth?: number;
@@ -133,6 +138,7 @@ export function NetworkSolver({
     textScale = 1,
 }: NetworkSolverProps) {
     const isVertical = orientation === "vertical";
+    const isStacked = orientation === "stacked";
     // The gaps travel with the type: at 2x, gaps sized for 13px labels read as
     // the lines having been jammed together.
     const columnGap = outputColumnGap * textScale;
@@ -159,6 +165,9 @@ export function NetworkSolver({
         const output = outputRef.current;
         const panelsGroup = panelsGroupRef.current;
         if (!container || !output || !panelsGroup) return;
+        // Nothing to measure without a fan to aim, and the offsets it would
+        // compute are for a two-column layout this one doesn't have.
+        if (isStacked) return;
 
         const measure = () => {
             const containerRect = container.getBoundingClientRect();
@@ -216,7 +225,7 @@ export function NetworkSolver({
         if (outputColumnRef.current) observer.observe(outputColumnRef.current);
         if (outputControlsRef.current) observer.observe(outputControlsRef.current);
         return () => observer.disconnect();
-    }, [hiddenUnits.length, readOnly, isVertical, columnGap, showOutputBias]);
+    }, [hiddenUnits.length, readOnly, isVertical, isStacked, columnGap, showOutputBias]);
 
     const weightLabels = hiddenUnits.map((_, i) =>
         readOnly ? `v_{${i + 1}} = ${outputWeights[i]}` : `v_{${i + 1}}`
@@ -229,13 +238,16 @@ export function NetworkSolver({
             ref={containerRef}
             style={{
                 display: "flex",
-                flexDirection: isVertical ? "column" : "row",
-                alignItems: isVertical ? "center" : "flex-start",
+                flexDirection: isVertical || isStacked ? "column" : "row",
+                alignItems: isVertical || isStacked ? "center" : "flex-start",
                 gap: stackGap,
             }}
         >
             {showInputNode && (
-                <div ref={inputNodeRef} style={{ marginTop: isVertical ? 0 : sideOffsets.input }}>
+                <div
+                    ref={inputNodeRef}
+                    style={{ marginTop: isVertical || isStacked ? 0 : sideOffsets.input }}
+                >
                     <InputNode domain={domain} />
                 </div>
             )}
@@ -246,6 +258,7 @@ export function NetworkSolver({
                     flexDirection: isVertical ? "row" : "column",
                     alignItems: isVertical ? "flex-start" : "stretch",
                     gap: panelGap,
+                    alignSelf: isStacked ? "stretch" : undefined,
                 }}
             >
                 {hiddenUnits.map((unit, i) => (
@@ -254,7 +267,10 @@ export function NetworkSolver({
                         ref={(el) => {
                             rowRefs.current[i] = el;
                         }}
-                        style={{ width: panelWidth }}
+                        // Stacked, a panel has the whole column to itself, and
+                        // its sliders are the better use of that width than
+                        // the empty margin a fixed 220 would leave.
+                        style={{ width: isStacked ? "100%" : panelWidth }}
                     >
                         <PerceptronPanel
                             index={i + 1}
@@ -273,7 +289,7 @@ export function NetworkSolver({
                     </div>
                 ))}
             </div>
-            {connectors && (
+            {connectors && !isStacked && (
                 <ConnectorLines
                     centers={connectors.centers}
                     outputCenter={connectors.outputCenter}
@@ -292,8 +308,12 @@ export function NetworkSolver({
                     display: "flex",
                     flexDirection: "column",
                     gap: columnGap,
-                    alignItems: isVertical ? "center" : "flex-end",
-                    marginTop: isVertical ? 0 : sideOffsets.output,
+                    alignItems: isVertical || isStacked ? "center" : "flex-end",
+                    marginTop: isVertical || isStacked ? 0 : sideOffsets.output,
+                    // Stacked, the output box is the width of the panels above
+                    // it rather than of its own longest slider row, so the two
+                    // halves of the network read as one column.
+                    alignSelf: isStacked ? "stretch" : undefined,
                 }}
             >
                 {/* Omitted entirely rather than left empty: an empty child
@@ -301,7 +321,10 @@ export function NetworkSolver({
                     leave its spacing behind. `controlsHeight` in the
                     measurement pass already tolerates a null ref. */}
                 {(!readOnly || showOutputBias) && (
-                    <div ref={outputControlsRef}>
+                    <div
+                        ref={outputControlsRef}
+                        style={{ alignSelf: isStacked ? "stretch" : undefined }}
+                    >
                         {readOnly ? (
                             <KaTeXMath fontSize={13 * textScale} color={theme.color.muted}>
                                 {`c = ${outputBias}`}
