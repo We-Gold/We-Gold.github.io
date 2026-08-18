@@ -73,6 +73,60 @@ buttons stay disabled until the fonts have actually loaded, so the window where
 that can happen is closed — but only for frames going through
 `ExportableImage`.
 
+## Math labels sit off their anchors in Safari, but are correct in Chrome
+
+The labels are drawn up and to the left of the nodes they belong to (or down
+and right, depending on the scale) while every line, circle and box is fine.
+Chrome and Firefox render it correctly, so it only shows up on WebKit.
+
+It is a **paint** bug, not a layout one, which is what makes it confusing to
+chase: Safari's own inspector reports the right box for every label. Measuring
+`getBoundingClientRect()` in both browsers gives matching numbers to a fraction
+of a pixel. Only the glyphs land somewhere else.
+
+The trigger is the svg's internal **viewBox scale**. WebKit mis-paints HTML
+inside a `<foreignObject>` whenever the rendered size of the svg differs from
+its viewBox — the content is offset toward the origin in proportion to the
+error. A CSS `transform` on an ancestor is *not* the problem and scales
+correctly; it is specifically viewBox scaling that WebKit gets wrong.
+
+So the usual recipe for a fluid drawing is exactly what breaks it:
+
+```jsx
+<svg viewBox="0 0 460 251" style={{ width: "100%", height: "100%" }}>
+```
+
+The rendered width almost never equals 460, so the scale almost never equals 1.
+The two network diagrams in `001-easy-win` ran at 1.0565 — a 460-unit viewBox
+stretched into a 486px panel — which was enough to pull every KaTeX label off
+its node.
+
+Use [`ScaledSvg`](reference.md#structural-components) instead of a hand-rolled
+`<svg viewBox=… width="100%">` for any drawing that labels itself with `Math`.
+It renders the svg at its exact viewBox size, where the scale is 1 by
+construction, and fits with a CSS transform instead.
+
+A drawing with **no** `viewBox` at all is unaffected — content is in user units
+and never scales — which is why `ConnectorLines` never had the problem.
+
+`KatexSvgStyle` audits its own svg for all of this on mount in dev and
+`console.error`s a diagnosis naming the offending element. That check lives
+there rather than in `ScaledSvg` on purpose: every svg hosting math already has
+to render `<KatexSvgStyle />` or its export comes out doubled and in body type,
+so a diagram cannot opt out of the check without already being broken — whereas
+a hand-rolled `<svg viewBox=… width="100%">` would never reach `ScaledSvg` at
+all. It is dev-only; it costs nothing in a build.
+
+To check a page by hand, in either browser's console:
+
+```js
+[...document.querySelectorAll('svg')]
+  .filter(s => s.querySelector('foreignObject') && s.viewBox.baseVal.width)
+  .map(s => parseFloat(getComputedStyle(s).width) / s.viewBox.baseVal.width)
+```
+
+Anything that isn't exactly `1` will be mispainted in Safari.
+
 ## Exported math is doubled (`n?n?`) and set in body type
 
 Only ever happens to math *inside an `<svg>`* — a `<foreignObject>` label in a

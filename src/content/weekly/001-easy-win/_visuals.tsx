@@ -2,6 +2,7 @@ import { FunctionPlot } from "../../../components/weekly/interactive/FunctionPlo
 import { theme } from "../../../components/weekly/dsl/theme";
 import { KatexSvgStyle } from "../../../components/weekly/dsl/KatexSvgStyle";
 import { Math } from "../../../components/weekly/dsl/Math";
+import { ScaledSvg } from "../../../components/weekly/dsl/ScaledSvg";
 import { targetW } from "./_solution";
 
 // One-off visuals for this week's Problem image, kept local per
@@ -105,6 +106,22 @@ const netMarginTop = networkTop - (countLabelY - countLabelHeight / 2) + overhan
 // deepest label, the lower unit's `b=?`, bottoms out at 205 against its 217.
 const netMarginBottom = bracketBottom - networkBottom + overhangPad;
 
+// Applied by *both* diagrams, so their networks land identically: it drops the
+// network below the top margin. The x counterpart is per-diagram and lives in
+// `unlabelledOffsetX` below.
+//
+// Baked into the coordinates below rather than applied as a `<g transform>`,
+// which is what it used to be. WebKit ignores every SVG coordinate-system
+// transform between the <svg> root and a <foreignObject> when it *paints* the
+// HTML inside — an ancestor <g transform>, a non-zero viewBox origin, and a
+// transform on the foreignObject itself all fail the same way. Layout is
+// unaffected, so Safari's inspector reports the right box and only the glyphs
+// land somewhere else: here, up and to the left by exactly this offset. The
+// constants above stay unshifted because the margin arithmetic is expressed in
+// the network's own space; `net` below is the drawn space.
+// See docs/weekly/troubleshooting.md.
+const contentOffsetY = netMarginTop - networkTop;
+
 const net = {
     // Coordinate space and aspect, not size — both svgs fill their slot.
     width: 460,
@@ -118,21 +135,16 @@ const net = {
     // dashed box, the ellipsis and the `n=?` label all hang off this, so they
     // move with it.
     hiddenX: (inputX + outputX) / 2,
-    midY: 108,
+    midY: 108 + contentOffsetY,
     // The two drawn hidden units, and the ellipsis below them.
-    hiddenYs,
-    ellipsisY,
+    hiddenYs: hiddenYs.map((y) => y + contentOffsetY) as unknown as typeof hiddenYs,
+    ellipsisY: ellipsisY + contentOffsetY,
     ellipsisSpread,
     ellipsisDotRadius,
     // Big enough that the node labels can be set at reading size rather than
     // shrunk to fit the circle.
     radius,
 } as const;
-
-// Applied by *both* diagrams, so their networks land identically. The y term
-// drops the network below the top margin; the x term is per-diagram and stays
-// in `unlabelledOffsetX` below.
-const contentOffsetY = netMarginTop - networkTop;
 
 // SVG `<text>` can't lay out KaTeX's HTML output, so math labels in these
 // diagrams go through a `foreignObject` instead. Every svg using this must
@@ -209,13 +221,13 @@ function Edge({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: numb
 // three circles rather than set as "⋮": the glyph comes out small and faint
 // at any font-size that doesn't also overshoot the layout, and drawing it
 // keeps its weight tied to the nodes it stands in for.
-function HiddenEllipsis() {
+function HiddenEllipsis({ offsetX = 0 }: { offsetX?: number }) {
     return (
         <g fill={theme.color.muted}>
             {[-net.ellipsisSpread, 0, net.ellipsisSpread].map((dy) => (
                 <circle
                     key={dy}
-                    cx={net.hiddenX}
+                    cx={net.hiddenX + offsetX}
                     cy={net.ellipsisY + dy}
                     r={net.ellipsisDotRadius}
                 />
@@ -226,27 +238,45 @@ function HiddenEllipsis() {
 
 // The edges and nodes both diagrams share. The per-question labels are drawn
 // by the callers on top of this.
-function NetworkSkeleton({ outputLabel = "y" }: { outputLabel?: string }) {
+// `offsetX` is added to every coordinate rather than wrapped around them in a
+// <g transform>, so the `foreignObject` node labels stay in the root
+// coordinate system — see `contentOffsetY`.
+function NetworkSkeleton({
+    outputLabel = "y",
+    offsetX = 0,
+}: {
+    outputLabel?: string;
+    offsetX?: number;
+}) {
     return (
         <>
             {net.hiddenYs.map((y, i) => (
-                <Edge key={`in-${i}`} x1={net.inputX} y1={net.midY} x2={net.hiddenX} y2={y} />
+                <Edge
+                    key={`in-${i}`}
+                    x1={net.inputX + offsetX}
+                    y1={net.midY}
+                    x2={net.hiddenX + offsetX}
+                    y2={y}
+                />
             ))}
             {net.hiddenYs.map((y, i) => (
-                <Edge key={`out-${i}`} x1={net.hiddenX} y1={y} x2={net.outputX} y2={net.midY} />
+                <Edge
+                    key={`out-${i}`}
+                    x1={net.hiddenX + offsetX}
+                    y1={y}
+                    x2={net.outputX + offsetX}
+                    y2={net.midY}
+                />
             ))}
-            <Node cx={net.inputX} cy={net.midY} label="x" />
+            <Node cx={net.inputX + offsetX} cy={net.midY} label="x" />
             {net.hiddenYs.map((y, i) => (
-                <Node key={i} cx={net.hiddenX} cy={y} />
+                <Node key={i} cx={net.hiddenX + offsetX} cy={y} />
             ))}
-            <HiddenEllipsis />
-            <Node cx={net.outputX} cy={net.midY} label={outputLabel} />
+            <HiddenEllipsis offsetX={offsetX} />
+            <Node cx={net.outputX + offsetX} cy={net.midY} label={outputLabel} />
         </>
     );
 }
-
-const viewBox = `0 0 ${net.width} ${net.height}`;
-const svgStyle = { width: "100%", height: "100%", display: "block" } as const;
 
 // `net.outputX` reserves space to the right of the output node for the second
 // diagram's v/c labels. A diagram that draws no labels there inherits that
@@ -267,35 +297,33 @@ const unlabelledOffsetX =
 // drawing an "n?" node, so the drawn network stays the same network the
 // second diagram draws.
 export function NetworkDiagram() {
-    const boxX = net.hiddenX - 54;
+    const boxX = net.hiddenX + unlabelledOffsetX - 54;
     const boxW = 108;
 
     return (
-        <svg viewBox={viewBox} style={svgStyle}>
+        <ScaledSvg width={net.width} height={net.height}>
             <KatexSvgStyle />
-            <g transform={`translate(${unlabelledOffsetX}, ${contentOffsetY})`}>
-                <rect
-                    x={boxX}
-                    y={bracketTop}
-                    width={boxW}
-                    height={bracketBottom - bracketTop}
-                    rx={12}
-                    fill="none"
-                    stroke={theme.color.ink}
-                    strokeWidth={2.5}
-                    strokeDasharray="7 6"
-                />
-                <NetworkSkeleton />
-                <SvgMath
-                    x={net.hiddenX}
-                    y={countLabelY}
-                    height={countLabelHeight}
-                    tex="n=?"
-                    fontSize={30}
-                    color={theme.color.ink}
-                />
-            </g>
-        </svg>
+            <rect
+                x={boxX}
+                y={bracketTop + contentOffsetY}
+                width={boxW}
+                height={bracketBottom - bracketTop}
+                rx={12}
+                fill="none"
+                stroke={theme.color.ink}
+                strokeWidth={2.5}
+                strokeDasharray="7 6"
+            />
+            <NetworkSkeleton offsetX={unlabelledOffsetX} />
+            <SvgMath
+                x={net.hiddenX + unlabelledOffsetX}
+                y={countLabelY + contentOffsetY}
+                height={countLabelHeight}
+                tex="n=?"
+                fontSize={30}
+                color={theme.color.ink}
+            />
+        </ScaledSvg>
     );
 }
 
@@ -306,56 +334,56 @@ export function NetworkDiagram() {
 // size and bolded, not in `muted`.
 export function WeightsNetworkDiagram() {
     return (
-        <svg viewBox={viewBox} style={svgStyle}>
+        <ScaledSvg width={net.width} height={net.height}>
             <KatexSvgStyle />
-            {/* Same y offset as the first diagram, and no x offset — this is
-                the diagram `outputX`'s right-hand margin was reserved for, so
-                its contents already sit centred horizontally. */}
-            <g transform={`translate(0, ${contentOffsetY})`}>
-                <NetworkSkeleton />
-                {net.hiddenYs.map((y, i) => {
-                    // Stacked clear of the node's own outgoing edge rather than
-                    // centred on it: the edge to the output leaves the top unit
-                    // downwards and the bottom unit upwards, so each unit's pair
-                    // of labels sits on its outward side and nothing is drawn
-                    // through. `w` stays above `b` either way.
-                    const outward = i === 0 ? -1 : 1;
-                    const near = y + outward * 14;
-                    const far = y + outward * 46;
-                    return (
-                        <g key={i}>
-                            <SvgMath
-                                x={net.hiddenX + 38}
-                                y={outward === -1 ? far : near}
-                                tex="\boldsymbol{w=?}"
-                                fontSize={26}
-                                align="start"
-                            />
-                            <SvgMath
-                                x={net.hiddenX + 38}
-                                y={outward === -1 ? near : far}
-                                tex="\boldsymbol{b=?}"
-                                fontSize={26}
-                                align="start"
-                            />
-                        </g>
-                    );
-                })}
-                <SvgMath
-                    x={net.outputX + 14}
-                    y={net.midY - 38}
-                    tex="\boldsymbol{v=?}"
-                    fontSize={26}
-                    align="start"
-                />
-                <SvgMath
-                    x={net.outputX + 14}
-                    y={net.midY + 42}
-                    tex="\boldsymbol{c=?}"
-                    fontSize={26}
-                    align="start"
-                />
-            </g>
-        </svg>
+            {/* No wrapping <g transform>: the y offset is baked into `net`'s
+                coordinates instead, because WebKit paints foreignObject
+                content as if ancestor transforms were not there. There is no x
+                offset — this is the diagram `outputX`'s right-hand margin was
+                reserved for, so its contents already sit centred. */}
+            <NetworkSkeleton />
+            {net.hiddenYs.map((y, i) => {
+                // Stacked clear of the node's own outgoing edge rather than
+                // centred on it: the edge to the output leaves the top unit
+                // downwards and the bottom unit upwards, so each unit's pair
+                // of labels sits on its outward side and nothing is drawn
+                // through. `w` stays above `b` either way.
+                const outward = i === 0 ? -1 : 1;
+                const near = y + outward * 14;
+                const far = y + outward * 46;
+                return (
+                    <g key={i}>
+                        <SvgMath
+                            x={net.hiddenX + 38}
+                            y={outward === -1 ? far : near}
+                            tex="\boldsymbol{w=?}"
+                            fontSize={26}
+                            align="start"
+                        />
+                        <SvgMath
+                            x={net.hiddenX + 38}
+                            y={outward === -1 ? near : far}
+                            tex="\boldsymbol{b=?}"
+                            fontSize={26}
+                            align="start"
+                        />
+                    </g>
+                );
+            })}
+            <SvgMath
+                x={net.outputX + 14}
+                y={net.midY - 38}
+                tex="\boldsymbol{v=?}"
+                fontSize={26}
+                align="start"
+            />
+            <SvgMath
+                x={net.outputX + 14}
+                y={net.midY + 42}
+                tex="\boldsymbol{c=?}"
+                fontSize={26}
+                align="start"
+            />
+        </ScaledSvg>
     );
 }

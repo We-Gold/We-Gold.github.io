@@ -132,6 +132,15 @@ out, so the label goes in a `<foreignObject>` — and then the svg must also
 render `<KatexSvgStyle />` once as its first child. Export copies an svg
 subtree verbatim without inlining computed styles, and KaTeX's appearance is
 entirely classes; skip it and the PNG shows every label twice, in body type.
+
+A `foreignObject` also constrains how the drawing is allowed to be fluid:
+build it with **`ScaledSvg`**, not `<svg viewBox=… style={{ width: "100%" }}>`.
+WebKit paints foreignObject content in the wrong place whenever the svg's
+viewBox scale isn't exactly 1, and stretching a viewBox to fill a container is
+precisely how that scale stops being 1. `ScaledSvg` keeps it at 1 and fits with
+a CSS transform instead — see
+[troubleshooting](troubleshooting.md#math-labels-sit-off-their-anchors-in-safari-but-are-correct-in-chrome).
+
 Worked example: `NetworkDiagram` in `001-easy-win/_visuals.tsx`.
 
 ## Level 3: a new layout
