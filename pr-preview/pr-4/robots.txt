@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://weavergoldman.com/sitemap-index.xml
