@@ -53,7 +53,14 @@ details in the hero; the cards and the experience page carry them.
   hover tooltips and an `sr-only` data table), `MedtronicCard` (a generic
   SVG system diagram plus a "details withheld" notice), and `RegeneronCard`
   (two synthetic-data illustrations: question grids and drifting
-  distributions). Copy whichever is closest.
+  distributions), and `PlasmaCard` (two side-by-side screenshots of the live
+  app plus a grid of the whole dataset with the downloaded block highlighted). Copy whichever is closest.
+- To show a small share of a whole, draw the whole (every block, sized by
+  its data) and highlight the part. A lone 4% bar gives no sense of what
+  100% is.
+- Screenshots of a live web app: if the browser window is too small, load the
+  app in a same-origin iframe (e.g. 1400px wide, scaled down with a CSS
+  `transform`) and capture that. CSS `zoom` breaks canvas and WebGL charts.
 - Synthetic-data illustrations must say so on the card (the notice covers
   it), and any randomness is seeded so every build renders the same picture.
 - Charts: keep the SVG `viewBox` near the panel's real width (~440 units) so
