@@ -4,6 +4,12 @@ The "What I Build" section on the homepage (`src/pages/index.astro`) is a
 scroll-stacked deck: each card pins near the top of the viewport and the next
 one slides up over it. Each card argues for one skill, with evidence.
 
+The homepage is deliberately short: a one-paragraph hero with the LinkedIn
+button, the deck, then a "Learn More" row of three link cards (Experience,
+Resume, GitHub), each with a one-line reason to click. Those links live in
+the `nextSteps` array at the top of `index.astro`. Don't restate resume
+details in the hero; the cards and the experience page carry them.
+
 ## Files
 
 | File | What it does |
@@ -36,9 +42,12 @@ one slides up over it. Each card argues for one skill, with evidence.
   (a four-step strip whose grid columns are sized by image aspect ratio, plus
   a to-scale size bar chart), and `DiffusionCard` (an SVG line chart computed
   in the frontmatter from the report's tables, with direct labels, `<title>`
-  hover tooltips and an `sr-only` data table), and `MedtronicCard` (a generic
-  SVG system diagram plus a "details withheld" notice). Copy whichever is
-  closest.
+  hover tooltips and an `sr-only` data table), `MedtronicCard` (a generic
+  SVG system diagram plus a "details withheld" notice), and `RegeneronCard`
+  (two synthetic-data illustrations: question grids and drifting
+  distributions). Copy whichever is closest.
+- Synthetic-data illustrations must say so on the card (the notice covers
+  it), and any randomness is seeded so every build renders the same picture.
 - Charts: keep the SVG `viewBox` near the panel's real width (~440 units) so
   11–12 unit text renders at a readable size, and keep labels inside the plot
   so nothing clips at the panel edge.
