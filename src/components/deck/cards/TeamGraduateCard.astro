@@ -1,0 +1,128 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Screenshots are cropped from the public IQP presentation and documentation
+// (github.com/We-Gold/teamgraduateai-supporting-materials).
+const shots = [
+  { src: "/content/deck/teamgraduate/upload.webp", step: 1, label: "Upload a lesson plan", alt: "The Generate Flash Cards tool, prompting the teacher to upload a PDF lesson plan", pos: "shot-left" },
+  { src: "/content/deck/teamgraduate/curriculum.webp", step: 2, label: "Align to curriculum", alt: "A searchable tree of Namibian curriculum subjects and chapter sections", pos: "shot-center" },
+  { src: "/content/deck/teamgraduate/flashcard.webp", step: 3, label: "Generate content", alt: "A generated flashcard asking the student to correct a comma splice", pos: "shot-right" },
+];
+
+const pipeline = ["WordPress plugin", "FastAPI on Cloud Run", "Gemini + Pydantic AI"];
+---
+
+<DeckCard
+  eyebrow="LLM products"
+  title="Building AI tools for teachers in Namibia"
+  context="#TeamGraduate AI · Technical lead, WPI IQP · Jan – May 2026"
+  summary="I led the development of AI tools that turn teachers' lessons into flashcards, diagrams, and quizzes aligned to Namibia's national curriculum. The tools run inside #TeamGraduate's existing e-learning system, next to the lessons teachers already edit."
+  metric={{ value: "50 → 6 min", label: "to create a lesson's flashcards, diagram, and quiz (87.7% faster) with comparable quality" }}
+  bullets={[
+    "Built a WordPress/LearnDash plugin with Gutenberg blocks for adding AI-generated content to lessons.",
+    "Built a FastAPI service on Cloud Run that turns PDFs, slides, and YouTube transcripts into structured content with Gemini.",
+    "Used an LLM pipeline to organize the national syllabus into a curriculum tree and match textbook chapters to it.",
+    "Wrote teaching best practices into each content type's prompts and refined the UI in design sessions with teachers.",
+  ]}
+  stack={["Python", "FastAPI", "Pydantic AI", "Gemini", "Cloud Run", "Docker", "WordPress/PHP", "React", "GitHub Actions"]}
+  links={[
+    { label: "Final report", href: "https://digital.wpi.edu/concern/student_works/dr26z2537" },
+    { label: "Supporting materials", href: "https://github.com/We-Gold/teamgraduateai-supporting-materials" },
+  ]}
+  accent="#1b1958"
+>
+  <div slot="visual" class="tg-visual h-full flex flex-col p-5 gap-3 text-white overflow-hidden">
+    <div class="tg-fan relative flex-1 min-h-[220px] sm:min-h-[270px]">
+      {
+        shots.map((shot) => (
+          <figure class={`tg-shot ${shot.pos}`} tabindex="0">
+            <img src={shot.src} alt={shot.alt} loading="lazy" decoding="async" />
+            <figcaption>
+              <span class="tg-step">{shot.step}</span>
+              {shot.label}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs">
+      {
+        pipeline.map((stage, i) => (
+          <>
+            {i > 0 && <span class="text-[#f5e11b]" aria-hidden="true">&rarr;</span>}
+            <span class="rounded-full border border-white/30 px-2.5 py-1">{stage}</span>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</DeckCard>
+
+<style>
+  .tg-shot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32%;
+    margin: 0;
+    /* Undealt: all three sit in a neat pile in the middle. */
+    transform: translate(-50%, -50%) rotate(0deg);
+    transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0s;
+    cursor: default;
+  }
+
+  .tg-shot img {
+    width: 100%;
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.45);
+    background: #fff;
+  }
+
+  .tg-shot figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    opacity: 0;
+    transition: opacity 400ms ease 500ms;
+  }
+
+  .tg-step {
+    display: inline-grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background: #f5e11b;
+    color: #1b1958;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .shot-left { z-index: 1; }
+  .shot-center { z-index: 2; }
+  .shot-right { z-index: 3; }
+
+  /* Dealt: fan out into the three steps, left to right. */
+  :global(.is-dealt) .shot-left { transform: translate(-132%, -50%) rotate(-5deg); }
+  :global(.is-dealt) .shot-center { transform: translate(-50%, -53%) rotate(0deg); transition-delay: 80ms; }
+  :global(.is-dealt) .shot-right { transform: translate(32%, -50%) rotate(5deg); transition-delay: 160ms; }
+  :global(.is-dealt) .tg-shot figcaption { opacity: 1; }
+
+  .tg-shot:hover,
+  .tg-shot:focus-visible {
+    z-index: 4;
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tg-shot,
+    .tg-shot figcaption {
+      transition: none;
+    }
+  }
+</style>

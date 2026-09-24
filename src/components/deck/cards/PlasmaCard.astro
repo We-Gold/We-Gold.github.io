@@ -1,0 +1,202 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Screenshots are from the public app at trajectoryv2.wpi.edu: a Jupiter search
+// (launch window 2030 to 2034, high resolution, 57,516 trajectories) and the 3D
+// view of one EVEEEJ trajectory from it.
+
+// Size of the app's Parquet data (MB, all three resolution tiers) for each
+// planet and five-year launch window, from the planet=/before_year= partition
+// folders. The search above reads only Jupiter, 2030-2034.
+const windows = ["2030", "2035", "2040", "2045", "2050", "2055"];
+const planets = [
+  { name: "Venus", mb: [7.0, 6.8, 6.8, 7.0, 7.1, 7.1] },
+  { name: "Mars", mb: [4.1, 4.6, 4.4, 4.2, 4.7, 4.3] },
+  { name: "Jupiter", mb: [21.0, 21.5, 22.2, 21.8, 22.6, 20.6] },
+  { name: "Saturn", mb: [22.4, 25.0, 26.1, 23.3, 21.3, 24.6] },
+  { name: "Uranus", mb: [20.3, 22.8, 22.1, 20.2, 23.1, 20.6] },
+  { name: "Neptune", mb: [17.5, 18.2, 14.9, 18.5, 15.8, 16.6] },
+];
+const searched = { planet: "Jupiter", window: 0 };
+const totalMb = 571;
+const searchMb = planets.find((p) => p.name === searched.planet)!.mb[searched.window];
+const maxMb = Math.max(...planets.flatMap((p) => p.mb));
+
+// Grid geometry (SVG units). Each block's area is proportional to its size.
+const W = 440;
+const labelW = 58;
+const headerH = 14;
+const rowH = 17;
+const colW = (W - labelW) / windows.length;
+const cellMax = rowH - 2;
+const H = headerH + planets.length * rowH;
+const side = (mb: number) => cellMax * Math.sqrt(mb / maxMb);
+const year = (c: number) => `${windows[c]}–${Number(windows[c]) + 4}`;
+---
+
+<DeckCard
+  eyebrow="Data engineering & visualization"
+  title="Building a mission planning tool for interplanetary trajectories"
+  context="PLASMA · WPI Laboratory of Spaceflight and Planetary Exploration · Under contract with NASA JPL · 2024 – present"
+  summary="I built PLASMA, a web app that enables users to search millions of precomputed interplanetary trajectories. Users can visualize each trajectory in 3D, as well as options for launch vehicles and planetary approach."
+  metric={{ value: "6.5M trajectories", label: "available for interactive visualization." }}
+  bullets={[
+    "Made repeat searches load without waiting on the server by caching the data in the browser and querying it with DuckDB WASM.",
+    "Organized the cached files with hive partitioning by planet, launch year, and resolution, to avoid fetching unneeded data.",
+    "Kept panning and zooming smooth across 325,000 points by drawing plots with WebGL (about 1 ms per pan or zoom, down from 300 ms).",
+    "Built an animated 3D view with Three.js, showing planet orbits, flybys, and arrival.",
+  ]}
+  stack={["Python", "FastAPI", "DuckDB", "Parquet", "React/TypeScript", "WebGL / three.js", "Docker", "GitHub Actions"]}
+  links={[{ label: "Live app", href: "https://trajectoryv2.wpi.edu" }]}
+  accent="#000000"
+>
+  <div slot="visual" class="h-full flex flex-col justify-center p-5 gap-3 text-white">
+    {/* Side by side, with columns sized by each image's aspect ratio
+        (width / height) so both render at the same height. */}
+    <div class="grid grid-cols-[1.121fr_1.204fr] gap-2.5">
+      <figure class="pl-scatter m-0 min-w-0">
+        <img
+          src="/content/deck/plasma/scatter.webp"
+          alt="A scatter plot of 57,516 trajectories to Jupiter, launch energy against launch date, colored by flyby sequence"
+          loading="lazy"
+          decoding="async"
+          class="w-full rounded-lg bg-white"
+        />
+        <figcaption class="pl-caption"><span class="pl-step">1</span>Filter trajectories</figcaption>
+      </figure>
+      <figure class="pl-orbit m-0 min-w-0">
+        <img
+          src="/content/deck/plasma/orbit.webp"
+          alt="The 3D view of one trajectory to Jupiter, looping past Venus and Earth before reaching Jupiter's orbit"
+          loading="lazy"
+          decoding="async"
+          class="w-full rounded-lg ring-1 ring-white/15"
+        />
+        <figcaption class="pl-caption"><span class="pl-step">2</span>Visualize in 3D</figcaption>
+      </figure>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold text-white/80">The full {totalMb} MB dataset, by launch window</p>
+      <svg viewBox={`0 0 ${W} ${H}`} class="w-full h-auto mt-1" role="img" aria-labelledby="pl-grid-desc">
+        <desc id="pl-grid-desc">
+          The {totalMb} MB trajectory dataset split into blocks by target planet and five-year launch window, each block
+          sized by its data. The Jupiter search for 2030 to 2034 downloads only its own {searchMb} MB block.
+        </desc>
+        {
+          windows.map((year, c) => (
+            <text x={labelW + c * colW + colW / 2} y={headerH - 5} text-anchor="middle" class="pl-axis">{`${year}–${String(Number(year) + 4).slice(2)}`}</text>
+          ))
+        }
+        {
+          planets.map((planet, r) => (
+            <g>
+              <text x={labelW - 8} y={headerH + r * rowH + rowH / 2} dy="0.35em" text-anchor="end" class="pl-axis">{planet.name}</text>
+              {planet.mb.map((mb, c) => {
+                const s = side(mb);
+                const hit = planet.name === searched.planet && c === searched.window;
+                return (
+                  <rect
+                    x={labelW + c * colW + (colW - s) / 2}
+                    y={headerH + r * rowH + (rowH - s) / 2}
+                    width={s}
+                    height={s}
+                    rx="2"
+                    class={hit ? "pl-cell pl-hit" : "pl-cell"}
+                  >
+                    <title>{`${planet.name}, ${year(c)} · ${mb.toFixed(1)} MB`}</title>
+                  </rect>
+                );
+              })}
+            </g>
+          ))
+        }
+      </svg>
+      <p class="pl-note mt-1 text-xs text-white/70">
+        The search above downloads only the highlighted {searchMb} MB ({Math.round((searchMb / totalMb) * 100)}%).
+      </p>
+    </div>
+  </div>
+</DeckCard>
+
+<style>
+  .pl-caption {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .pl-step {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background: #2dd4bf;
+    color: #000;
+    font-size: 0.7rem;
+  }
+
+  .pl-scatter img {
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.6);
+  }
+
+  .pl-axis {
+    fill: rgb(255 255 255 / 0.55);
+    font-size: 11px;
+  }
+
+  .pl-cell {
+    fill: rgb(255 255 255 / 0.28);
+  }
+
+  .pl-hit {
+    transition: fill 500ms ease 1000ms;
+  }
+
+  .pl-note {
+    opacity: 0;
+    transition: opacity 400ms ease 1200ms;
+  }
+
+  /* Undealt: both screenshots are hidden and every block is gray. Dealt: the
+     plot and then the orbit slide up, then the searched block lights up. */
+  .pl-scatter,
+  .pl-orbit {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .pl-orbit {
+    transition-delay: 150ms;
+  }
+
+  :global(.is-dealt) .pl-orbit,
+  :global(.is-dealt) .pl-scatter {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(.is-dealt) .pl-hit {
+    fill: #2dd4bf;
+  }
+
+  :global(.is-dealt) .pl-note {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pl-orbit,
+    .pl-scatter,
+    .pl-hit,
+    .pl-note {
+      transition: none;
+    }
+  }
+</style>

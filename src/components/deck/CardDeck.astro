@@ -1,0 +1,118 @@
+---
+// A scroll-stacked "card deck". Each child <DeckCard> pins near the top of the
+// viewport while the next one slides up over it, so scrolling reads like
+// dealing cards off a deck. Covered cards shrink and dim slightly.
+//
+// Stacking only kicks in when every card fits in the viewport below its pin
+// offset (checked in the script below, and re-checked on resize). Otherwise
+// the cards are a plain vertical list, because a sticky card taller than the
+// viewport would hide its own bottom.
+---
+
+<div class="card-deck" data-card-deck>
+  <slot />
+</div>
+
+<style is:global>
+  .card-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .deck-card {
+    --cover: 0;
+    transform-origin: top center;
+  }
+
+  @media (min-width: 768px) {
+    .card-deck[data-stack="on"] {
+      /* Space below the last card so it can settle before the page moves on. */
+      padding-bottom: 2rem;
+    }
+
+    .card-deck[data-stack="on"] .deck-card {
+      position: sticky;
+      /* 5rem clears the mobile header (h-16), which shows below lg. */
+      top: calc(5rem + var(--deck-i, 0) * 0.875rem);
+      transform: scale(calc(1 - var(--cover) * 0.05));
+      filter: brightness(calc(1 - var(--cover) * 0.12));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .card-deck[data-stack="on"] .deck-card {
+      top: calc(2rem + var(--deck-i, 0) * 0.875rem);
+    }
+  }
+</style>
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (const deck of document.querySelectorAll<HTMLElement>("[data-card-deck]")) {
+    const cards = Array.from(deck.querySelectorAll<HTMLElement>(".deck-card"));
+    cards.forEach((card, i) => card.style.setProperty("--deck-i", String(i)));
+
+    // Visuals animate in ("deal") the first time their card is mostly on screen.
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      cards.forEach((card) => card.classList.add("is-dealt"));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("is-dealt");
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.35 }
+      );
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    // Pin cards only if the tallest one fits below its sticky offset.
+    const fits = () => {
+      const offset = parseFloat(getComputedStyle(cards[cards.length - 1]).top) || 0;
+      const tallest = Math.max(...cards.map((card) => card.offsetHeight));
+      return tallest + offset + 16 <= window.innerHeight;
+    };
+    const setStacking = () => {
+      deck.dataset.stack = "on";
+      if (!fits()) delete deck.dataset.stack;
+    };
+    setStacking();
+    // Watch the cards, not the deck: toggling stacking changes the deck's own padding.
+    const resizeObserver = new ResizeObserver(setStacking);
+    cards.forEach((card) => resizeObserver.observe(card));
+    window.addEventListener("resize", setStacking, { passive: true });
+
+    // --cover: how much of each card the next card is overlapping (0..1).
+    if (cards.length > 1 && !reduceMotion) {
+      let queued = false;
+      const update = () => {
+        queued = false;
+        const stacking = deck.dataset.stack === "on";
+        for (let i = 0; i < cards.length - 1; i++) {
+          if (!stacking) {
+            cards[i].style.setProperty("--cover", "0");
+            continue;
+          }
+          const rect = cards[i].getBoundingClientRect();
+          const nextTop = cards[i + 1].getBoundingClientRect().top;
+          const cover = Math.min(1, Math.max(0, (rect.bottom - nextTop) / rect.height));
+          cards[i].style.setProperty("--cover", cover.toFixed(3));
+        }
+      };
+      const onScroll = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(update);
+      };
+      // Capture, so this also hears scrolls on the drawer container, not just the window.
+      document.addEventListener("scroll", onScroll, { capture: true, passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      update();
+    }
+  }
+</script>

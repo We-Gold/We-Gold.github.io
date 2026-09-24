@@ -1,18 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HorizontalCard from "../components/HorizontalCard.astro";
-import ExperienceTimeLine from "../components/experience/ExperienceTimeLine.astro";
-import { experienceEntries } from "../data/experience";
-import { getCollection } from "astro:content";
+import CardDeck from "../components/deck/CardDeck.astro";
+import TeamGraduateCard from "../components/deck/cards/TeamGraduateCard.astro";
+import OuroborosCard from "../components/deck/cards/OuroborosCard.astro";
+import DiffusionCard from "../components/deck/cards/DiffusionCard.astro";
+import MedtronicCard from "../components/deck/cards/MedtronicCard.astro";
+import RegeneronCard from "../components/deck/cards/RegeneronCard.astro";
+import PlasmaCard from "../components/deck/cards/PlasmaCard.astro";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const last_posts = posts.slice(0, 3);
-const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
+// Where to go after the deck: each link says why a visitor would click it.
+const nextSteps = [
+  { title: "Experience", desc: "See all of my roles and research projects.", href: "/experience", external: false },
+  { title: "Resume", desc: "View or download my resume.", href: "/cv", external: false },
+  { title: "GitHub", desc: "Explore all of my public projects.", href: "https://github.com/We-Gold", external: true },
+];
 ---
 
-<BaseLayout sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
+<BaseLayout sideBarActiveItemID="home" fillWidth={true}>
+  <div class="pb-6 mt-5">
     <div class="text-5xl font-bold">Weaver Goldman</div>
     <div class="text-3xl py-3 font-bold">AI/ML Engineer &amp; Data Science Master's Student @ WPI</div>
     <div class="py-2">
@@ -20,72 +25,44 @@ const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
         I'm Weaver, a Computer Science (BS) and Data Science (MS) student at Worcester Polytechnic Institute, building applied AI/ML systems across pharma, medtech, and space research.
       </text>
     </div>
-
-    <div class="py-2">
-      <text class="text-lg">
-        This summer I'm an AI Engineering Intern at Regeneron Pharmaceuticals, building an auditable AI/ML observability platform on AWS that monitors 30+ models across 3 pilot teams, along with an adaptive LLM benchmarking system that cuts API costs by more than 60%.
-      </text>
-    </div>
-
-    <div class="py-2">
-      <text class="text-lg">
-        Previously, I built agentic AI-powered tools at Medtronic for automatically analyzing HUGO Surgical robot logs, and I've worked with the Laboratory of Spaceflight and Planetary Exploration (LSPE) at WPI since 2024, developing a NASA-contracted, data-driven space mission planning web application.
-      </text>
-    </div>
-    <div class="my-8">
+    <div class="py-2 text-lg opacity-80">Graduating May 2027.</div>
+    <div class="mt-6 flex flex-wrap gap-3">
       <a class="btn hover:bg-teal-600 hover:border-teal-600 hover:text-white transition-colors duration-300" href="https://www.linkedin.com/in/weaver-goldman/" target="_blank">CONNECT ON LINKEDIN</a>
+      <a class="btn btn-outline hover:bg-teal-600 hover:border-teal-600 hover:text-white transition-colors duration-300" href="/cv">VIEW RESUME</a>
     </div>
   </div>
 
-  <div class="py-2 mb-10">
-    <div class="text-3xl w-full font-bold mb-4">Recent Experience</div>
-    <div class="time-line-container grid gap-2">
-      <ExperienceTimeLine entries={workOnly} compact={true} />
+  <section class="mb-16">
+    <div class="text-3xl w-full font-bold mb-5">Recent Experience</div>
+    <CardDeck>
+      <RegeneronCard />
+      <MedtronicCard />
+      <OuroborosCard />
+      <DiffusionCard />
+      <TeamGraduateCard />
+      <PlasmaCard />
+    </CardDeck>
+  </section>
+
+  <section class="mb-16">
+    <div class="text-3xl w-full font-bold mb-6">Learn More</div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {
+        nextSteps.map((step) => (
+          <a
+            href={step.href}
+            target={step.external ? "_blank" : "_self"}
+            rel={step.external ? "noopener noreferrer" : undefined}
+            class="group flex flex-col gap-2 rounded-2xl border-2 border-base-300 p-6 transition-colors duration-300 hover:border-teal-600"
+          >
+            <span class="flex items-center justify-between text-xl font-bold group-hover:text-teal-700">
+              {step.title}
+              <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">{step.external ? "↗" : "→"}</span>
+            </span>
+            <span class="opacity-80">{step.desc}</span>
+          </a>
+        ))
+      }
     </div>
-    <a href="/experience" class="link link-hover text-teal-700 inline-block mt-2">View full experience &rarr;</a>
-  </div>
-
-  <div>
-    <div class="text-3xl w-full font-bold mb-2">Latest Projects</div>
-  </div>
-
-  <HorizontalCard
-    title="Scaling Diffusion Models to Large Sparse Graphs"
-    img="/content/projects/diffusion-graphs.png"
-    desc="4-person senior project (MQP) introducing Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear memory complexity for large graphs, plus RedditWalk, a new benchmark dataset, for molecule and protein generation in drug discovery."
-    url="https://digital.wpi.edu/concern/student_works/kh04dv11x"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="#TeamGraduate AI"
-    img="/content/projects/teamgraduate-ai.png"
-    desc="A cloud-hosted LLM platform generating curriculum-aligned educational content for secondary e-learning in Namibia, with AI authoring tools embedded in WordPress that cut lesson creation time by 87.7%."
-    url="https://github.com/We-Gold/teamgraduateai-supporting-materials"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="ankirai"
-    desc="A CLI published to PyPI that transforms notes (PDFs and more) into Anki flashcards at lightning speed using any LLM provider."
-    url="https://pypi.org/project/ankirai/"
-  />
-
-  <div>
-    <div class="text-3xl w-full font-bold mb-5 mt-10">Recent Blog Posts</div>
-  </div>
-
-  {
-    last_posts.map((post) => (
-      <>
-        <HorizontalCard
-          title={post.data.title}
-          img={post.data.heroImage}
-          desc={post.data.description}
-          url={"/blog/" + post.slug}
-          target="_self"
-          badge={post.data.badge}
-        />
-        <div class="divider my-0" />
-      </>
-    ))
-  }
+  </section>
 </BaseLayout>

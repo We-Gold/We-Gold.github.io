@@ -1,0 +1,219 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Training-step GPU memory (GB) on synthetic graphs, from the MQP report's
+// Tables 3–6 (A100, 80 GB). Baselines have no N = 200 value: they ran out of
+// memory. SparserDiff is left out because its training memory matches SparseDiff
+// (it changes edge sampling, which the metric below covers).
+const nodes = [20, 50, 100, 200];
+const series = [
+  { name: "MG-Diff", gb: [2.18, 12.84, 50.44], color: "#cbd5e1" },
+  { name: "DiGress", gb: [2.0, 11.86, 46.02], color: "#94a3b8" },
+  { name: "SparseDiff", gb: [1.34, 7.77, 31.16], color: "#64748b" },
+  { name: "Scale-MGD (ours)", gb: [1.73, 4.2, 8.51, 17.25], color: "#2dd4bf", ours: true },
+];
+const gpuLimit = 80;
+
+// Chart geometry (SVG user units; the SVG scales to its container).
+const W = 440;
+const H = 260;
+const m = { top: 16, right: 14, bottom: 34, left: 34 };
+const x = (n: number) => m.left + (n / 200) * (W - m.left - m.right);
+const y = (gb: number) => H - m.bottom - (gb / 85) * (H - m.top - m.bottom);
+const yTicks = [0, 20, 40, 60, 80];
+
+const lines = series.map((s) => ({
+  ...s,
+  points: s.gb.map((gb, i) => ({ n: nodes[i], gb, cx: x(nodes[i]), cy: y(gb) })),
+}));
+for (const line of lines) {
+  (line as any).d = line.points.map((p, i) => `${i ? "L" : "M"}${p.cx.toFixed(1)},${p.cy.toFixed(1)}`).join(" ");
+}
+
+// End-of-line labels. Baselines end at 100 nodes, so their labels sit to the
+// right inside the plot; ours ends at the right edge, so its label sits above
+// the endpoint, right-aligned. Labels are nudged apart so the close
+// MG-Diff/DiGress pair doesn't collide.
+const labels = lines
+  .map((line) => {
+    const last = line.points[line.points.length - 1];
+    return line.ours
+      ? { name: line.name, gb: last.gb, ours: true, lx: last.cx, ly: last.cy - 14, anchor: "end" }
+      : { name: line.name, gb: last.gb, ours: false, lx: last.cx + 8, ly: last.cy, anchor: "start" };
+  })
+  .sort((a, b) => a.ly - b.ly);
+for (let i = 1; i < labels.length; i++) {
+  if (labels[i].lx === labels[i - 1].lx && labels[i].ly - labels[i - 1].ly < 13) labels[i].ly = labels[i - 1].ly + 13;
+}
+
+---
+
+<DeckCard
+  eyebrow="Deep learning research"
+  title="Scaling diffusion models to large graphs"
+  context="WPI MQP · Team of 4 · Advised by Profs. Murai & Mangoubi · 2025 – 2026"
+  summary="Graph diffusion models generate molecules and networks for drug discovery, but their memory grows with the square of the number of nodes. I led development of two models that reduce this cost. Scale-MGD trains with near-linear memory, and SparserDiff makes an existing model's edge sampling much faster and lighter."
+  metric={{ value: "Up to 116× faster", label: "and up to 89× less memory in SparserDiff's edge sampling, compared with SparseDiff on the Ego dataset" }}
+  bullets={[
+    "Designed Scale-MGD as masked diffusion over a noisy edge list. It was the only model to train on 200-node graphs.",
+    "Replaced SparseDiff's quadratic edge sampling with an O(n + m + k) algorithm in SparserDiff.",
+    "Profiled five diffusion models at each stage (noising, model pass, training, sampling) to find where the memory goes.",
+    "Built RedditWalk, a benchmark sampled from a network of 46,668 subreddits, which revealed accuracy problems in existing models.",
+  ]}
+  stack={["Python", "PyTorch", "Graph neural networks", "Diffusion models", "CUDA / A100", "Profiling"]}
+  links={[{ label: "Final report", href: "https://digital.wpi.edu/concern/student_works/kh04dv11x" }]}
+  accent="#0f172a"
+>
+  <div slot="visual" class="h-full flex flex-col justify-center p-5 gap-2 text-white">
+    <p class="text-xs font-semibold text-white/80">GPU memory per training step</p>
+
+    <svg viewBox={`0 0 ${W} ${H}`} class="df-chart w-full h-auto" role="img" aria-labelledby="df-chart-desc">
+      <desc id="df-chart-desc">
+        Line chart of training-step GPU memory against graph size. At 100 nodes, MG-Diff uses 50.4 GB, DiGress 46.0 GB,
+        SparseDiff 31.2 GB, and Scale-MGD 8.5 GB. At 200 nodes every baseline runs out of an 80 GB GPU, while Scale-MGD
+        uses 17.3 GB.
+      </desc>
+
+      {/* Recessive grid and y-axis labels */}
+      {
+        yTicks.map((t) => (
+          <g>
+            <line x1={m.left} x2={W - m.right} y1={y(t)} y2={y(t)} stroke="white" stroke-opacity={t === 0 ? 0.35 : 0.08} />
+            <text x={m.left - 8} y={y(t)} dy="0.32em" text-anchor="end" class="df-tick">{t}</text>
+          </g>
+        ))
+      }
+      <text x={m.left - 8} y={m.top - 4} text-anchor="end" class="df-tick">GB</text>
+      {
+        nodes.map((n) => (
+          <text x={x(n)} y={H - m.bottom + 16} text-anchor="middle" class="df-tick">{n}</text>
+        ))
+      }
+      <text x={(m.left + W - m.right) / 2} y={H - 2} text-anchor="middle" class="df-tick">Nodes per graph</text>
+
+      {/* The 80 GB GPU ceiling */}
+      <line x1={m.left} x2={W - m.right} y1={y(gpuLimit)} y2={y(gpuLimit)} stroke="#f87171" stroke-width="1.5" stroke-dasharray="5 4" />
+      <text x={m.left + 6} y={y(gpuLimit) - 6} class="df-limit">80 GB GPU limit</text>
+
+      {/* Out-of-memory markers for the baselines at N = 200 */}
+      <g class="df-oom">
+        <path d={`M${x(200) - 6},${y(gpuLimit) - 6} l12,12 m0,-12 l-12,12`} stroke="#f87171" stroke-width="2.5" stroke-linecap="round">
+          <title>MG-Diff, DiGress, SparseDiff · 200 nodes · out of memory</title>
+        </path>
+        <text x={x(200) - 12} y={y(gpuLimit) + 16} text-anchor="end" class="df-limit">Baselines: out of memory</text>
+      </g>
+
+      {/* Lines, baselines first so ours draws on top */}
+      {
+        lines.map((line, i) => (
+          <g class={line.ours ? "df-ours" : "df-base"} style={`--delay: ${line.ours ? 900 : i * 150}ms`}>
+            <path d={(line as any).d} fill="none" stroke={line.color} stroke-width={line.ours ? 3 : 2} stroke-linejoin="round" stroke-linecap="round" pathLength="1" class="df-line" />
+            {line.points.map((p) => (
+              <circle cx={p.cx} cy={p.cy} r={line.ours ? 4.5 : 3.5} fill={line.color} stroke="#0f172a" stroke-width="2" class="df-dot">
+                <title>{`${line.name} · ${p.n} nodes · ${p.gb.toFixed(1)} GB`}</title>
+              </circle>
+            ))}
+          </g>
+        ))
+      }
+
+      {/* Direct labels (text stays in text ink; the dot beside it carries identity) */}
+      {
+        labels.map((label) => (
+          <text x={label.lx} y={label.ly} dy="0.32em" text-anchor={label.anchor} class={label.ours ? "df-label df-label-ours" : "df-label"}>
+            {label.name}
+            <tspan class="df-label-value">{` ${label.gb.toFixed(1)} GB`}</tspan>
+          </text>
+        ))
+      }
+    </svg>
+
+    <table class="sr-only">
+      <caption>Training-step GPU memory (GB) by graph size</caption>
+      <thead>
+        <tr><th>Model</th>{nodes.map((n) => <th>{n} nodes</th>)}</tr>
+      </thead>
+      <tbody>
+        {
+          series.map((s) => (
+            <tr><th>{s.name}</th>{nodes.map((_, i) => <td>{s.gb[i] !== undefined ? s.gb[i] : "Out of memory"}</td>)}</tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <p class="text-[0.65rem] text-white/45">
+      Measured on synthetic graphs with an 80 GB A100 GPU.
+    </p>
+  </div>
+</DeckCard>
+
+<style>
+  .df-tick {
+    fill: rgb(255 255 255 / 0.5);
+    font-size: 11px;
+  }
+
+  .df-limit {
+    fill: #fca5a5;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .df-label {
+    fill: rgb(255 255 255 / 0.75);
+    font-size: 12px;
+  }
+
+  .df-label-ours {
+    fill: #fff;
+    font-weight: 700;
+  }
+
+  .df-label-value {
+    fill: rgb(255 255 255 / 0.5);
+    font-weight: 400;
+  }
+
+  .df-dot title {
+    pointer-events: none;
+  }
+
+  /* Undealt: lines undrawn, dots and out-of-memory mark hidden. */
+  .df-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1100ms cubic-bezier(0.4, 0, 0.2, 1) var(--delay);
+  }
+
+  .df-dot,
+  .df-oom,
+  .df-label {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  :global(.is-dealt) .df-line {
+    stroke-dashoffset: 0;
+  }
+
+  :global(.is-dealt) .df-dot,
+  :global(.is-dealt) .df-label {
+    opacity: 1;
+    transition-delay: 1400ms;
+  }
+
+  :global(.is-dealt) .df-oom {
+    opacity: 1;
+    transition-delay: 1200ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .df-line,
+    .df-dot,
+    .df-oom,
+    .df-label {
+      transition: none;
+    }
+  }
+</style>

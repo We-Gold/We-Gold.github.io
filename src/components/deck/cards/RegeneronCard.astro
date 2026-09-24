@@ -1,0 +1,203 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Internal work: both visuals are illustrations with synthetic data, built
+// only from what the resume and experience page already say publicly.
+
+// --- Adaptive evaluation: which questions each strategy asks --------------
+const COLS = 20;
+const ROWS = 3;
+const CELLS = COLS * ROWS;
+const ADAPTIVE_SHARE = 0.38; // "over 60% lower API costs" → under 40% of calls
+
+// Deterministic pseudo-random pick (so the build is stable), in a shuffled
+// order, to suggest questions chosen from past answers rather than in sequence.
+let seed = 7;
+const rand = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+const order = Array.from({ length: CELLS }, (_, i) => i).sort(() => rand() - 0.5);
+const adaptivePicks = order.slice(0, Math.round(CELLS * ADAPTIVE_SHARE));
+const adaptiveRank = new Map(adaptivePicks.map((cell, rank) => [cell, rank]));
+
+const cell = 13;
+const gap = 4;
+const gridW = COLS * (cell + gap) - gap;
+const blockH = ROWS * (cell + gap) - gap;
+const gridX = 0;
+const evalW = 440;
+const blocks = [
+  { label: "Naive: every question asked", y: 14, asked: (i: number) => i, count: CELLS },
+  { label: "Adaptive: most informative questions selected", y: 14 + blockH + 30, asked: (i: number) => adaptiveRank.get(i), count: adaptivePicks.length },
+];
+const evalH = blocks[1].y + blockH + 4;
+
+// --- Drift: training baseline vs. live data (synthetic normals) ----------
+const driftW = 440;
+const driftH = 92;
+const xMin = -3.5;
+const xMax = 6;
+const px = (v: number) => ((v - xMin) / (xMax - xMin)) * driftW;
+const baseY = driftH - 14;
+const curve = (mean: number, sd: number, peak: number) => {
+  const pts: string[] = [];
+  for (let v = xMin; v <= xMax + 1e-9; v += 0.1) {
+    const yv = Math.exp(-0.5 * ((v - mean) / sd) ** 2);
+    pts.push(`${px(v).toFixed(1)},${(baseY - yv * peak).toFixed(1)}`);
+  }
+  return `M${px(xMin)},${baseY} L${pts.join(" L")} L${px(xMax)},${baseY} Z`;
+};
+const baseline = curve(0, 1, 58);
+const live = curve(2.2, 1.15, 52);
+const driftShift = px(2.2) - px(0);
+---
+
+<DeckCard
+  eyebrow="MLOps & LLM evaluation"
+  title="Building a scalable monitoring platform for AI/ML models"
+  context="Regeneron Pharmaceuticals · AI/ML Engineering Intern · Summer 2026"
+  summary="I built a platform that monitors 30+ production AI models and evaluates LLMs. It detects when live data drifts from training data distributions or when model performance unexpectedly degrades, and helps teams drill down to find the cause. Its LLM benchmarks help AI engineers make informed decisions about the best models for their use case."
+  metric={{ value: "60%+ lower LLM evaluation cost", label: "at equal confidence, by choosing each question based on the model's past answers" }}
+  bullets={[
+    "Built the platform on AWS with a React dashboard, designed from 13 stakeholder interviews and adopted by 3 pilot teams.",
+    "Built drift detection that alerts teams when live data changes, using a Random Forest two-sample test alongside metrics like PSI and Jensen-Shannon divergence.",
+    "Tracked how data subgroups shift over time using Gaussian mixture models, BIC selection, and cost matching.",
+    "Developed a Python SDK that lets teams send data and run model analysis from any environment.",
+  ]}
+  stack={["Python", "AWS", "FastAPI", "React", "visx", "scikit-learn", "PostgreSQL", "Docker"]}
+  accent="#062c30"
+>
+  <div slot="visual" class="h-full flex flex-col justify-center p-5 gap-3 text-white">
+    <div>
+      <p class="text-xs font-semibold text-white/80">Adaptive LLM evaluation</p>
+      <svg viewBox={`0 0 ${evalW} ${evalH}`} class="w-full h-auto mt-1" role="img" aria-labelledby="rg-eval-desc">
+        <desc id="rg-eval-desc">
+          Illustration with synthetic data. Naive evaluation asks all {CELLS} questions. Adaptive evaluation asks
+          {adaptivePicks.length} of them, chosen from the model's earlier answers, and reaches the same confidence.
+        </desc>
+        {
+          blocks.map((block, b) => (
+            <g>
+              <text x={gridX} y={block.y - 5} class="rg-label">{block.label}</text>
+              {Array.from({ length: CELLS }, (_, i) => {
+                const rank = block.asked(i);
+                const col = i % COLS;
+                const row = Math.floor(i / COLS);
+                return (
+                  <rect
+                    x={gridX + col * (cell + gap)}
+                    y={block.y + row * (cell + gap)}
+                    width={cell}
+                    height={cell}
+                    rx="3"
+                    class={rank === undefined ? "rg-cell" : "rg-cell rg-asked"}
+                    style={rank === undefined ? undefined : `--delay: ${(b === 0 ? rank * 28 : rank * 48) + 200}ms`}
+                  />
+                );
+              })}
+              <text x={gridW + 12} y={block.y + blockH / 2 - 6} class="rg-count">{`${block.count} / ${CELLS}`}</text>
+              <text x={gridW + 12} y={block.y + blockH / 2 + 9} class="rg-count-sub">{b === 0 ? "questions" : "same confidence"}</text>
+            </g>
+          ))
+        }
+      </svg>
+    </div>
+
+    <div>
+      <p class="text-xs font-semibold text-white/80">Drift detection</p>
+      <svg viewBox={`0 0 ${driftW} ${driftH}`} class="w-full h-auto mt-1" role="img" aria-labelledby="rg-drift-desc">
+        <desc id="rg-drift-desc">
+          Illustration with synthetic data. The live data's distribution shifts away from the training baseline, and a
+          drift alert fires.
+        </desc>
+        <line x1="0" x2={driftW} y1={baseY} y2={baseY} stroke="white" stroke-opacity="0.3" />
+        <path d={baseline} fill="rgb(255 255 255 / 0.14)" stroke="rgb(255 255 255 / 0.5)" stroke-width="1.5" />
+        <path d={live} fill="rgb(251 191 36 / 0.12)" stroke="#fbbf24" stroke-width="2" class="rg-live" style={`--shift: ${-driftShift}px`} />
+        <text x={px(0)} y={baseY + 12} text-anchor="middle" class="rg-axis">Training baseline</text>
+        <text x={px(2.2)} y={baseY + 12} text-anchor="middle" class="rg-axis rg-live-label" style={`--shift: ${-driftShift}px`}>Live data</text>
+        <g class="rg-alert">
+          <rect x={driftW - 118} y="4" width="114" height="22" rx="11" fill="#7f1d1d" stroke="#f87171" />
+          <text x={driftW - 61} y="15" dy="0.35em" text-anchor="middle" class="rg-alert-text">Drift detected</text>
+        </g>
+      </svg>
+    </div>
+
+    <p class="flex items-start gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-[0.7rem] leading-snug text-white/70">
+      <svg viewBox="0 0 16 16" class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
+        <path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1.5 1.5 0 0 0-1.5 1.5v6A1.5 1.5 0 0 0 4 15h8a1.5 1.5 0 0 0 1.5-1.5v-6A1.5 1.5 0 0 0 12 6h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z" />
+      </svg>
+      <span>Internal Regeneron project. The illustrations use synthetic data, and many technical details are withheld.</span>
+    </p>
+  </div>
+</DeckCard>
+
+<style>
+  .rg-label {
+    fill: rgb(255 255 255 / 0.7);
+    font-size: 12px;
+  }
+
+  .rg-count {
+    fill: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .rg-count-sub,
+  .rg-axis {
+    fill: rgb(255 255 255 / 0.55);
+    font-size: 11px;
+  }
+
+  .rg-live-label {
+    fill: #fcd34d;
+  }
+
+  .rg-alert-text {
+    fill: #fecaca;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .rg-cell {
+    fill: rgb(255 255 255 / 0.1);
+  }
+
+  /* Undealt: no questions asked, live data sits on the baseline, no alert.
+     Dealt: cells light up as questions are asked (in shuffled order for the
+     adaptive strategy), the live curve drifts right, then the alert fires. */
+  .rg-asked {
+    transition: fill 250ms ease var(--delay);
+  }
+
+  :global(.is-dealt) .rg-asked {
+    fill: #fbbf24;
+  }
+
+  .rg-live,
+  .rg-live-label {
+    transform: translateX(var(--shift, 0));
+    transition: transform 1400ms cubic-bezier(0.4, 0, 0.2, 1) 600ms;
+  }
+
+  :global(.is-dealt) .rg-live,
+  :global(.is-dealt) .rg-live-label {
+    transform: none;
+  }
+
+  .rg-alert {
+    opacity: 0;
+    transition: opacity 400ms ease 2000ms;
+  }
+
+  :global(.is-dealt) .rg-alert {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rg-asked,
+    .rg-live,
+    .rg-live-label,
+    .rg-alert {
+      transition: none;
+    }
+  }
+</style>

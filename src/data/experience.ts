@@ -20,17 +20,18 @@ export interface ExperienceEntry {
 export const experienceEntries: ExperienceEntry[] = [
   {
     id: "regeneron",
-    title: "AI Engineering Intern",
+    title: "AI/ML Engineering Intern",
     org: "Regeneron Pharmaceuticals, Inc.",
     type: "work",
     startDate: "2026-05",
     endDate: "2026-08",
     bullets: [
-      "Built an auditable AI/ML observability platform on AWS monitoring 30+ models, adopted by 3 pilot teams and informed by 13 stakeholder interviews.",
+      "Built a platform on AWS to monitor the health of 30+ production AI models in one place, adopted by 3 pilot teams and shaped by 13 stakeholder interviews.",
+      "Built ML-based drift detection that alerts teams when live data diverges from what a model was trained on, using a Random Forest classifier two-sample test.",
+      "Tracked how data subgroups shift over time to help pinpoint the cause, using Gaussian mixture models, BIC model selection, and cost matching.",
+      "Created a dashboard giving teams a single view of model performance, data drift, and benchmark results, built with React, visx, and FastAPI.",
+      "Cut LLM evaluation costs by over 60% at equal confidence by tailoring questions to each model's past answers.",
       "Developed an environment-agnostic Python SDK for scalable data ingestion and model analysis.",
-      "Tracked data subpopulations with an unsupervised machine learning approach (Gaussian mixture models, BIC model selection, and cost matching).",
-      "Built a React dashboard with visx and a FastAPI backend to visualize model performance, data drift, and benchmarking results.",
-      "Implemented an adaptive LLM benchmarking system with over 60% lower API costs than a naive evaluation strategy.",
     ],
     skills: [
       { skill: "AWS", intensity: 5 },
@@ -38,7 +39,7 @@ export const experienceEntries: ExperienceEntry[] = [
       { skill: "MLOps", intensity: 4 },
       { skill: "LLM Evaluation", intensity: 5 },
       { skill: "Unsupervised ML", intensity: 3 },
-      { skill: "ML/scikit-learn", intensity: 3 },
+      { skill: "ML/scikit-learn", intensity: 4 },
       { skill: "Pandas", intensity: 3 },
       { skill: "SQL", intensity: 3 },
       { skill: "PostgreSQL", intensity: 3 },
@@ -59,8 +60,8 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2024-08",
     endDate: "present",
     bullets: [
-      "Developing a data-driven space mission planning web application under contract with NASA.",
-      "Optimized the database and graphing system to render millions of data points interactively, migrating from SQLite to DuckDB over hive-partitioned Parquet with client-side OPFS caching.",
+      "Under contract with NASA JPL, built a mission planning web app for exploring interplanetary trajectories.",
+      "Let mission planners filter millions of trajectories interactively by optimizing the database and graphs, migrating from SQLite to DuckDB over hive-partitioned Parquet with client-side OPFS caching.",
       "Led development of an interactive, 3D Mars lander simulation with Three.js.",
       "Built a robust CI/CD pipeline for the lab with Docker, unit testing, linting, and GitHub Actions.",
     ],
@@ -80,15 +81,15 @@ export const experienceEntries: ExperienceEntry[] = [
   },
   {
     id: "medtronic",
-    title: "Software Engineering Intern",
+    title: "AI Engineering Intern",
     org: "Medtronic (Minimally Invasive Therapies Group)",
     type: "work",
     startDate: "2025-06",
     endDate: "2025-08",
     bullets: [
-      "Saved 400+ hours of manual work annually by automating surgical robot log analysis tasks with AI (LLMs).",
-      "Developed an AI tool with RAG and MCP to analyze HUGO robot logs, performing expert-level analysis in minutes.",
-      "Built the RAG retrieval layer with Chroma and a custom SQLite-based vector search.",
+      "Saved 400+ hours of manual work annually by automating surgical robot log analysis tasks with AI.",
+      "Built an AI assistant that analyzes HUGO surgical robot logs at an expert level in minutes instead of tens of hours.",
+      "Connected the assistant to internal data sources with MCP and hybrid RAG to answer multi-step questions.",
       "Coordinated numerous AI agents and data sources with LangChain/LangGraph to perform complex tasks.",
       "Worked in an Agile environment (Scrum and Kanban via Jira) to manage timelines and deliverables.",
     ],
@@ -102,7 +103,6 @@ export const experienceEntries: ExperienceEntry[] = [
       { skill: "FastAPI", intensity: 3 },
       { skill: "Docker", intensity: 3 },
       { skill: "SQL", intensity: 3 },
-      { skill: "SQLite", intensity: 3 },
       { skill: "Agile/Scrum", intensity: 2 },
     ],
   },
@@ -114,9 +114,9 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2024-05",
     endDate: "2024-08",
     bullets: [
-      "Built an Electron desktop application for extracting nerves and blood vessels from cloud-hosted medical scans, reducing file sizes by up to 69,355% (from 132.08 GB to 190.44 MB).",
-      "Achieved an approx. 4,000% computation speed improvement with multithreading and multiprocessing.",
-      "Used Docker to create a cross-platform Python backend and an extensible plugin system.",
+      "Built a desktop app that lets researchers analyze large 3D medical scans on a laptop by extracting key structures, reducing file sizes by up to 693× (from 132.08 GB to 190.44 MB).",
+      "Designed a Docker-based plugin system so other labs can add their own segmentation methods to the tool.",
+      "Achieved approx. 40× faster computation with multithreading and multiprocessing.",
       "Built a React/TypeScript UI with Three.js and Neuroglancer for 3D visualization of segmented scans.",
     ],
     skills: [
@@ -169,12 +169,13 @@ export const experienceEntries: ExperienceEntry[] = [
   {
     id: "diffusion-graphs",
     title: "Scaling Diffusion Models to Large Sparse Graphs",
-    org: "WPI Major Qualifying Project (MQP)",
+    org: "WPI Major Qualifying Project (MQP), advised by F. Murai & O. Mangoubi",
     type: "project",
     startDate: "2025-08",
     endDate: "2026-05",
     bullets: [
-      "4-person senior project introducing Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear space complexity for large graphs.",
+      "Led development of two AI models, Scale-MGD and SparserDiff, that generate realistic networks at scales existing methods can't handle.",
+      "Trained on networks where all prior methods ran out of memory, and made an existing model's generation step up to 116× faster with 89× less memory.",
       "Built RedditWalk, a new benchmark dataset, and targeted molecule and protein generation for drug discovery.",
     ],
     skills: [
@@ -191,8 +192,9 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2026-01",
     endDate: "2026-05",
     bullets: [
-      "A cloud-hosted LLM platform (Google Cloud Run) generating curriculum-aligned educational content for secondary e-learning in Namibia.",
-      "Built a custom WordPress PHP plugin, backed by a Python service (FastAPI + Pydantic AI), that cut lesson creation time by 87.7%.",
+      "Built AI tools that turn teachers' lessons into flashcards and study guides aligned to Namibia's curriculum.",
+      "Reduced lesson creation time by 87.7% with AI authoring tools built into the existing website.",
+      "Built a custom WordPress plugin, backed by a Python service (FastAPI + Pydantic AI) on Google Cloud Run.",
       "Implemented a RAG system stored in WordPress's own database tables, populated and queried by the plugin.",
     ],
     skills: [
@@ -211,11 +213,13 @@ export const experienceEntries: ExperienceEntry[] = [
   {
     id: "ouroboros",
     title: "Ouroboros",
+    org: "Penn State College of Medicine (manuscript in preparation)",
     type: "project",
     startDate: "2024-05",
-    endDate: "2024-08",
+    endDate: "present",
     bullets: [
-      "A platform for extracting ROIs (e.g. nerves, blood vessels) from multi-terabyte cloud-hosted medical scans.",
+      "Created the core algorithms for a tool that isolates and segments nerves and vessels in terabyte-scale 3D scans.",
+      "Shrank the data researchers handle by over 99%, processing a 2.8 TB scan in 6 minutes on a laptop.",
       "Ships as an Electron app with a React/TypeScript UI, a plugin system, and a Neuroglancer-based 3D viewer.",
     ],
     skills: [
@@ -311,9 +315,9 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2025-03",
     endDate: "2025-04",
     bullets: [
-      "Identified NYC areas underserved by the subway, using distance to the nearest station (from GTFS data) as a proxy for accessibility.",
-      "Predicted weekly ridership revenue per location with a Random Forest Regressor (R² = 0.675) over 6 years of data, surfacing candidate stops projected to produce over $4 million in annual revenue.",
-      "Visualized results with interactive geospatial maps highlighting areas of opportunity.",
+      "Found underserved NYC neighborhoods, using distance to the nearest subway station (from GTFS data) as a proxy for accessibility.",
+      "Forecast revenue for potential new stations with a Random Forest Regressor (R² = 0.675) over 6 years of data.",
+      "Pinpointed potential stops predicted to earn over $4 million annually, using interactive opportunity maps.",
     ],
     skills: [
       { skill: "Python", intensity: 4 },
