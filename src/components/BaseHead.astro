@@ -9,7 +9,10 @@ export interface Props {
 	image?: string;
 }
 
-const { title, description } = Astro.props;
+// Pages without their own image (e.g. blog posts without a hero) share the
+// site-wide link preview card in public/og-image.png.
+const { title, description, image = "/og-image.png" } = Astro.props;
+const imageUrl = new URL(image, Astro.site ?? Astro.url);
 ---
 
 <!-- Global Metadata -->
@@ -34,11 +37,11 @@ const { title, description } = Astro.props;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<!-- <meta property="og:image" content={new URL(image, Astro.url)} /> -->
+<meta property="og:image" content={imageUrl} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<!-- <meta property="twitter:image" content={new URL(image, Astro.url)} /> -->
+<meta property="twitter:image" content={imageUrl} />

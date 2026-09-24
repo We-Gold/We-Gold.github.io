@@ -8,8 +8,8 @@ questions live in `plans/`.
 
 ## Homepage
 
-- **[Card deck](homepage/card-deck.md)**: the scroll-stacked "What I Build"
-  section. How to add a card, visual rules, and stacking behavior.
+- **[Card deck](homepage/card-deck.md)**: the scroll-stacked "Recent Experience"
+  section. How to add a card, visual rules, stacking behavior, and link previews.
 
 ## Weaver's Weekly
 

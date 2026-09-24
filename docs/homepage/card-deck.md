@@ -4,8 +4,8 @@ The "Recent Experience" section on the homepage (`src/pages/index.astro`) is a
 scroll-stacked deck: each card pins near the top of the viewport and the next
 one slides up over it. Each card argues for one skill, with evidence.
 
-The homepage is deliberately short: a one-paragraph hero with the LinkedIn
-button, the deck, then a "Learn More" row of three link cards (Experience,
+The homepage is deliberately short: a one-paragraph hero, a graduation line,
+LinkedIn and Resume buttons, the deck, then a "Learn More" row of three link cards (Experience,
 Resume, GitHub), each with a one-line reason to click. Those links live in
 the `nextSteps` array at the top of `index.astro`. Don't restate resume
 details in the hero; the cards and the experience page carry them.
@@ -24,7 +24,7 @@ details in the hero; the cards and the experience page carry them.
 1. Copy `cards/TeamGraduateCard.astro` to `cards/<Name>Card.astro`.
 2. Fill in the props. Keep to the lengths in `DeckCard.astro`'s `Props`
    comments (title ~40 chars, summary ~220, four bullets ~130 each). The card
-   must stay around **620px tall at 1440×900**. Anything taller can't show
+   must stay under about **690px tall at the 900px page width**. Anything taller can't show
    fully while pinned, so trim the copy, not the check.
    - `eyebrow` is the skill ("LLM products"), not the job title.
    - `title` is a plain gerund phrase saying what was built ("Building an
@@ -81,11 +81,13 @@ details in the hero; the cards and the experience page carry them.
   `data-stack="on"`, and re-checks on resize. Otherwise the deck is a plain
   list, since a pinned card taller than the viewport would hide its own
   bottom. Around 1050×770 (a small laptop) the cards are ~740px tall and fall
-  back to the list. At 1440 wide the TeamGraduate card measured ~520px and stacks.
+  back to the list. At the full 900px page width the tallest card
+  (Regeneron) measured ~690px, so the deck stacks on screens ~800px tall or more.
 - The pin offset is `5rem` below `lg` (clears the mobile header), and `2rem` at
   `lg` and up. Each later card sits `0.875rem` lower so the deck's edges show.
-- The homepage uses `BaseLayout wide fillWidth` so cards get ~1100px. The hero
-  is capped at 900px separately to keep its lines readable.
+- The homepage uses `BaseLayout fillWidth` (not `wide`), so it has the same
+  fixed 900px max width as the blog. Cards split visual and text 50/50 at
+  every width from `md` up.
 
 ## Checking a change
 
@@ -93,7 +95,20 @@ Automated or background browser tabs throttle `IntersectionObserver`, so a
 card can look "undealt" in a test tab even though it works for real
 visitors. Bring the tab to the front before judging the animation.
 
-In the dev server, check 1440×900 (card height ≤ ~620px, fan inside its
+In the dev server, check a desktop width where the page hits its 900px cap
+(card height ≤ ~690px, fan inside its
 panel), a phone width (no horizontal scroll, captions not colliding), and,
 with more than one card, that scrolling stacks and dims the covered card. To
 test stacking with only one card written, temporarily render it three times.
+
+`npx astro build` always writes to `dist/` (gitignored); this Astro version
+ignores `--outDir`.
+
+## Link previews
+
+`BaseHead.astro` sets `og:image`/`twitter:image` from the page's `image`
+prop (blog posts pass their hero), falling back to `public/og-image.png`, a
+1200×630 card with the profile photo, name, and title. If the title changes,
+regenerate it: it was drawn as an SVG with the photo embedded, then
+`rsvg-convert -w 1200 -h 630 og.svg -o og-image.png`. The shared description
+text is `SITE_DESCRIPTION` in `src/config.ts`.
