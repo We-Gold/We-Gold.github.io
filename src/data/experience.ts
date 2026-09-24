@@ -20,7 +20,7 @@ export interface ExperienceEntry {
 export const experienceEntries: ExperienceEntry[] = [
   {
     id: "regeneron",
-    title: "AI Engineering Intern",
+    title: "AI/ML Engineering Intern",
     org: "Regeneron Pharmaceuticals, Inc.",
     type: "work",
     startDate: "2026-05",
@@ -28,9 +28,10 @@ export const experienceEntries: ExperienceEntry[] = [
     bullets: [
       "Built an auditable AI/ML observability platform on AWS monitoring 30+ models, adopted by 3 pilot teams and informed by 13 stakeholder interviews.",
       "Developed an environment-agnostic Python SDK for scalable data ingestion and model analysis.",
+      "Built a Random Forest drift detector using a classifier two-sample test to flag distribution shift against a baseline.",
       "Tracked data subpopulations with an unsupervised machine learning approach (Gaussian mixture models, BIC model selection, and cost matching).",
       "Built a React dashboard with visx and a FastAPI backend to visualize model performance, data drift, and benchmarking results.",
-      "Implemented an adaptive LLM benchmarking system with over 60% lower API costs than a naive evaluation strategy.",
+      "Implemented an adaptive LLM benchmarking system that cut evaluation costs by over 60% at equal confidence by tailoring questions to each model's past answers.",
     ],
     skills: [
       { skill: "AWS", intensity: 5 },
@@ -38,7 +39,7 @@ export const experienceEntries: ExperienceEntry[] = [
       { skill: "MLOps", intensity: 4 },
       { skill: "LLM Evaluation", intensity: 5 },
       { skill: "Unsupervised ML", intensity: 3 },
-      { skill: "ML/scikit-learn", intensity: 3 },
+      { skill: "ML/scikit-learn", intensity: 4 },
       { skill: "Pandas", intensity: 3 },
       { skill: "SQL", intensity: 3 },
       { skill: "PostgreSQL", intensity: 3 },
@@ -59,8 +60,8 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2024-08",
     endDate: "present",
     bullets: [
-      "Developing a data-driven space mission planning web application under contract with NASA.",
-      "Optimized the database and graphing system to render millions of data points interactively, migrating from SQLite to DuckDB over hive-partitioned Parquet with client-side OPFS caching.",
+      "Under contract with NASA JPL, building a mission planning web app for exploring candidate trajectories to planets across the solar system.",
+      "Optimized the database and graphing system so users can interactively filter millions of trajectories, migrating from SQLite to DuckDB over hive-partitioned Parquet with client-side OPFS caching.",
       "Led development of an interactive, 3D Mars lander simulation with Three.js.",
       "Built a robust CI/CD pipeline for the lab with Docker, unit testing, linting, and GitHub Actions.",
     ],
@@ -80,14 +81,14 @@ export const experienceEntries: ExperienceEntry[] = [
   },
   {
     id: "medtronic",
-    title: "Software Engineering Intern",
+    title: "AI Engineering Intern",
     org: "Medtronic (Minimally Invasive Therapies Group)",
     type: "work",
     startDate: "2025-06",
     endDate: "2025-08",
     bullets: [
       "Saved 400+ hours of manual work annually by automating surgical robot log analysis tasks with AI (LLMs).",
-      "Developed an AI tool with RAG and MCP to analyze HUGO robot logs, performing expert-level analysis in minutes.",
+      "Developed an AI assistant with hybrid RAG and MCP that analyzes HUGO robot logs at an expert level in minutes instead of tens of hours.",
       "Built the RAG retrieval layer with Chroma and a custom SQLite-based vector search.",
       "Coordinated numerous AI agents and data sources with LangChain/LangGraph to perform complex tasks.",
       "Worked in an Agile environment (Scrum and Kanban via Jira) to manage timelines and deliverables.",
@@ -114,9 +115,9 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2024-05",
     endDate: "2024-08",
     bullets: [
-      "Built an Electron desktop application for extracting nerves and blood vessels from cloud-hosted medical scans, reducing file sizes by up to 69,355% (from 132.08 GB to 190.44 MB).",
-      "Achieved an approx. 4,000% computation speed improvement with multithreading and multiprocessing.",
-      "Used Docker to create a cross-platform Python backend and an extensible plugin system.",
+      "Built an Electron desktop application for extracting nerves and blood vessels from cloud-hosted medical scans, reducing file sizes by up to 693× (from 132.08 GB to 190.44 MB).",
+      "Achieved approx. 40× faster computation with multithreading and multiprocessing.",
+      "Used Docker to create a cross-platform Python backend and a plugin system so other labs can add their own segmentation methods.",
       "Built a React/TypeScript UI with Three.js and Neuroglancer for 3D visualization of segmented scans.",
     ],
     skills: [
@@ -169,12 +170,13 @@ export const experienceEntries: ExperienceEntry[] = [
   {
     id: "diffusion-graphs",
     title: "Scaling Diffusion Models to Large Sparse Graphs",
-    org: "WPI Major Qualifying Project (MQP)",
+    org: "WPI Major Qualifying Project (MQP), advised by F. Murai & O. Mangoubi",
     type: "project",
     startDate: "2025-08",
     endDate: "2026-05",
     bullets: [
-      "4-person senior project introducing Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear space complexity for large graphs.",
+      "4-person senior project; led development of both of its models, Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear space complexity for large graphs.",
+      "Trained on networks where all prior methods ran out of memory, and made an existing model's generation step up to 116× faster with 89× less memory.",
       "Built RedditWalk, a new benchmark dataset, and targeted molecule and protein generation for drug discovery.",
     ],
     skills: [
@@ -211,11 +213,13 @@ export const experienceEntries: ExperienceEntry[] = [
   {
     id: "ouroboros",
     title: "Ouroboros",
+    org: "Penn State College of Medicine (manuscript in preparation)",
     type: "project",
     startDate: "2024-05",
-    endDate: "2024-08",
+    endDate: "present",
     bullets: [
-      "A platform for extracting ROIs (e.g. nerves, blood vessels) from multi-terabyte cloud-hosted medical scans.",
+      "Created the core algorithms for a tool that isolates and segments nerves and vessels in terabyte-scale 3D scans.",
+      "Shrank the data researchers handle by over 99%, processing a 2.8 TB scan in 6 minutes on a laptop.",
       "Ships as an Electron app with a React/TypeScript UI, a plugin system, and a Neuroglancer-based 3D viewer.",
     ],
     skills: [

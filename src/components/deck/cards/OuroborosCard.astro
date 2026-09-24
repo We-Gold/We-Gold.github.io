@@ -1,0 +1,136 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Figures are from the public Ouroboros manuscript sources (den-sq/ouroboros_pub),
+// figure 1 (SegmentationStepPaperFull.png);
+// sizes are the octopus nerve-cord row of its performance table.
+const sizes = [
+  { label: "Full micro-CT scan", gb: 2783.0 },
+  { label: "Single bounding box", gb: 108.1 },
+  { label: "Ouroboros extraction", gb: 3.2 },
+];
+const maxGb = sizes[0].gb;
+
+// The four stages of the workflow, cropped from the manuscript's pipeline
+// figure. `aspect` (width / height) sizes each grid column so all four panels
+// render at the same height.
+const steps = [
+  { src: "/content/deck/ouroboros/step-trace.webp", aspect: 1.389, label: "Trace a path through the scan", alt: "A nerve path traced point by point through a micro-CT scan of an octopus" },
+  { src: "/content/deck/ouroboros/step-slice.webp", aspect: 0.359, label: "Slice along it", alt: "Perpendicular slices along the traced path, each in a tight bounding box" },
+  { src: "/content/deck/ouroboros/step-segment.webp", aspect: 0.107, label: "Segment the straightened volume", alt: "The straightened volume, with the nerve segmented in blue down its length" },
+  { src: "/content/deck/ouroboros/step-mapback.webp", aspect: 0.886, label: "Map it back", alt: "The segmented nerve placed back into the full octopus scan" },
+];
+const formatGb = (gb: number) => (gb >= 1000 ? `${(gb / 1000).toFixed(2)} TB` : `${gb} GB`);
+---
+
+<DeckCard
+  eyebrow="Data at scale"
+  title="Terabyte scans, segmented on a laptop"
+  context="Ouroboros · Penn State College of Medicine · Created the core algorithms · Co-author, manuscript in preparation · 2024 – present"
+  summary="Nerves and ducts wind through micro-CT scans measured in terabytes, far too large to load, let alone segment. Ouroboros follows a path traced in Neuroglancer and extracts only a thin, straightened volume around it."
+  metric={{ value: "2.8 TB → 3.2 GB", label: "octopus nerve cords extracted in 6 minutes on a laptop, using under 3 GB of RAM" }}
+  bullets={[
+    "Built the original slicing pipeline: a B-spline fit to Neuroglancer annotations, sampled into perpendicular slices along the path.",
+    "Binary space partitioning into tight bounding boxes, streamed through parallel download, slice, and write queues (~40× faster).",
+    "Back projection that maps segmentations of the straightened volume into the original scan at full resolution.",
+    "Shipped as an Electron/React app with a Dockerized Python backend, a Neuroglancer viewer, and a plugin system for auto-segmentation.",
+  ]}
+  stack={["Python", "NumPy/SciPy", "CloudVolume", "Multiprocessing", "Docker", "Electron", "React/TypeScript", "Neuroglancer"]}
+  links={[
+    { label: "Code", href: "https://github.com/ChengLabResearch/ouroboros" },
+    { label: "Docs", href: "https://chenglabresearch.github.io/ouroboros/" },
+  ]}
+  accent="#000000"
+>
+  <div slot="visual" class="h-full flex flex-col p-5 gap-4 text-white">
+    <div class="w-full flex-1 flex flex-col justify-center gap-2">
+      <div class="ob-grid grid gap-2.5" style={`--cols: ${steps.map((step) => `${step.aspect}fr`).join(" ")}`}>
+        {
+          steps.map((step, i) => (
+            <figure class="ob-fig relative m-0 min-w-0" style={`transition-delay: ${i * 150}ms`}>
+              <img src={step.src} alt={step.alt} loading="lazy" decoding="async" class="w-full rounded" />
+              <span class="ob-step absolute top-1 left-1/2 -translate-x-1/2" aria-hidden="true">{i + 1}</span>
+            </figure>
+          ))
+        }
+      </div>
+      <ol class="flex flex-wrap gap-x-3 gap-y-1 text-xs font-semibold">
+        {
+          steps.map((step, i) => (
+            <li class="flex items-center gap-1.5">
+              <span class="ob-step">{i + 1}</span>
+              {step.label}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="space-y-1.5 text-xs" aria-label="Data size comparison, drawn to scale">
+      {
+        sizes.map((size) => (
+          <div class="grid grid-cols-[8.5rem_1fr_4rem] items-center gap-2">
+            <span class="text-white/70">{size.label}</span>
+            <div class="h-2.5 rounded-full bg-white/10">
+              <div class="ob-bar" style={`--w: ${(size.gb / maxGb) * 100}%`} />
+            </div>
+            <span class="font-semibold whitespace-nowrap text-right">{formatGb(size.gb)}</span>
+          </div>
+        ))
+      }
+      <p class="text-[0.65rem] text-white/40 pt-0.5">Bars drawn to scale.</p>
+    </div>
+  </div>
+</DeckCard>
+
+<style>
+  .ob-fig {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* One left-to-right row; columns are sized by each panel's aspect ratio so
+     all four render at the same height. */
+  .ob-grid {
+    grid-template-columns: var(--cols);
+  }
+
+  .ob-step {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background: #2dd4bf;
+    color: #000;
+    font-size: 0.7rem;
+  }
+
+  .ob-bar {
+    height: 100%;
+    /* Never narrower than a visible sliver, so 3.2 GB still shows up next to 2.8 TB. */
+    min-width: 3px;
+    width: 0;
+    border-radius: 9999px;
+    background: #2dd4bf;
+    transition: width 1100ms cubic-bezier(0.2, 0.8, 0.2, 1) 400ms;
+  }
+
+  :global(.is-dealt) .ob-bar {
+    width: var(--w);
+  }
+
+  :global(.is-dealt) .ob-fig {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ob-fig,
+    .ob-bar {
+      transition: none;
+    }
+  }
+</style>

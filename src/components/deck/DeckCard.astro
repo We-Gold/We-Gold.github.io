@@ -1,0 +1,79 @@
+---
+// One card in the homepage <CardDeck>. The text is standardized so every card
+// reads the same way (skill -> context -> why it mattered -> proof -> what I
+// did); the visual is a named slot so each card can bring its own illustration.
+//
+// Layout (md+): [ visual | story + metric ] on top, then the bullets in a 2x2
+// grid and the stack/links footer. Keep cards around 620px tall so they fit a
+// laptop viewport while pinned; that is what the length limits below are for.
+export interface Props {
+  eyebrow: string; // the skill this card argues for, e.g. "LLM products"
+  title: string; // ~40 chars
+  context: string; // project/org, role, dates
+  summary: string; // the "why it mattered", ~220 chars
+  bullets: string[]; // what I did: 4 bullets, ~130 chars each
+  metric?: { value: string; label: string };
+  stack: string[];
+  links?: { label: string; href: string }[];
+  accent?: string; // background of the visual panel
+}
+
+const { eyebrow, title, context, summary, bullets, metric, stack, links = [], accent = "#0f766e" } = Astro.props;
+---
+
+<article class="deck-card rounded-2xl border border-base-300 bg-base-100 shadow-xl overflow-hidden" style={`--accent: ${accent}`}>
+  <div class="grid md:grid-cols-12">
+    <div class="md:col-span-6 xl:col-span-7 deck-visual" style="background: var(--accent)">
+      <slot name="visual" />
+    </div>
+
+    <div class="md:col-span-6 xl:col-span-5 p-6 flex flex-col gap-3">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-teal-700">{eyebrow}</p>
+        <h3 class="text-2xl font-bold leading-tight mt-1">{title}</h3>
+        <p class="text-sm opacity-70 mt-1">{context}</p>
+      </div>
+
+      <p class="text-[0.95rem]">{summary}</p>
+
+      {
+        metric && (
+          <div class="border-l-4 border-teal-600 pl-3 mt-auto">
+            <div class="text-2xl font-bold">{metric.value}</div>
+            <div class="text-sm opacity-70">{metric.label}</div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="border-t border-base-300 px-6 py-5">
+    <ul class="grid md:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+      {
+        bullets.map((bullet) => (
+          <li class="flex gap-2">
+            <span class="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" aria-hidden="true" />
+            <span>{bullet}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 mt-4">
+      <div class="flex flex-wrap gap-1">
+        {stack.map((tech) => <span class="badge badge-outline badge-sm">{tech}</span>)}
+      </div>
+      {
+        links.length > 0 && (
+          <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            {links.map((link) => (
+              <a href={link.href} target="_blank" class="link link-hover text-teal-700">
+                {link.label} &rarr;
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</article>

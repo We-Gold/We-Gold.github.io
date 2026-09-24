@@ -4,6 +4,11 @@ import HorizontalCard from "../components/HorizontalCard.astro";
 import ExperienceTimeLine from "../components/experience/ExperienceTimeLine.astro";
 import { experienceEntries } from "../data/experience";
 import { getCollection } from "astro:content";
+import CardDeck from "../components/deck/CardDeck.astro";
+import TeamGraduateCard from "../components/deck/cards/TeamGraduateCard.astro";
+import OuroborosCard from "../components/deck/cards/OuroborosCard.astro";
+import DiffusionCard from "../components/deck/cards/DiffusionCard.astro";
+import MedtronicCard from "../components/deck/cards/MedtronicCard.astro";
 
 const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
@@ -11,8 +16,8 @@ const last_posts = posts.slice(0, 3);
 const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
 ---
 
-<BaseLayout sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
+<BaseLayout sideBarActiveItemID="home" wide={true} fillWidth={true}>
+  <div class="pb-6 mt-5 max-w-[900px]">
     <div class="text-5xl font-bold">Weaver Goldman</div>
     <div class="text-3xl py-3 font-bold">AI/ML Engineer &amp; Data Science Master's Student @ WPI</div>
     <div class="py-2">
@@ -23,19 +28,30 @@ const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
 
     <div class="py-2">
       <text class="text-lg">
-        This summer I'm an AI Engineering Intern at Regeneron Pharmaceuticals, building an auditable AI/ML observability platform on AWS that monitors 30+ models across 3 pilot teams, along with an adaptive LLM benchmarking system that cuts API costs by more than 60%.
+        This summer I was an AI/ML Engineering Intern at Regeneron Pharmaceuticals, where I built an auditable AI/ML observability platform on AWS that monitors 30+ models across 3 pilot teams, along with an adaptive LLM benchmarking system that cuts API costs by more than 60%.
       </text>
     </div>
 
     <div class="py-2">
       <text class="text-lg">
-        Previously, I built agentic AI-powered tools at Medtronic for automatically analyzing HUGO Surgical robot logs, and I've worked with the Laboratory of Spaceflight and Planetary Exploration (LSPE) at WPI since 2024, developing a NASA-contracted, data-driven space mission planning web application.
+        Previously, I built agentic AI-powered tools at Medtronic for automatically analyzing HUGO Surgical robot logs, and I've worked with the Laboratory of Spaceflight and Planetary Exploration (LSPE) at WPI since 2024, building a mission planning web app under contract with NASA JPL.
       </text>
     </div>
-    <div class="my-8">
+    <div class="mt-6">
       <a class="btn hover:bg-teal-600 hover:border-teal-600 hover:text-white transition-colors duration-300" href="https://www.linkedin.com/in/weaver-goldman/" target="_blank">CONNECT ON LINKEDIN</a>
     </div>
   </div>
+
+  <section class="mb-16">
+    <div class="text-3xl w-full font-bold">What I Build</div>
+    <p class="text-lg opacity-80 mt-2 mb-6">A few projects that show how I work, from research models to LLM tools in production.</p>
+    <CardDeck>
+      <MedtronicCard />
+      <OuroborosCard />
+      <DiffusionCard />
+      <TeamGraduateCard />
+    </CardDeck>
+  </section>
 
   <div class="py-2 mb-10">
     <div class="text-3xl w-full font-bold mb-4">Recent Experience</div>
@@ -54,13 +70,6 @@ const workOnly = experienceEntries.filter((e) => e.type === "work").slice(0, 3);
     img="/content/projects/diffusion-graphs.png"
     desc="4-person senior project (MQP) introducing Scale-MGD and SparserDiff, sparse discrete diffusion architectures with linear memory complexity for large graphs, plus RedditWalk, a new benchmark dataset, for molecule and protein generation in drug discovery."
     url="https://digital.wpi.edu/concern/student_works/kh04dv11x"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="#TeamGraduate AI"
-    img="/content/projects/teamgraduate-ai.png"
-    desc="A cloud-hosted LLM platform generating curriculum-aligned educational content for secondary e-learning in Namibia, with AI authoring tools embedded in WordPress that cut lesson creation time by 87.7%."
-    url="https://github.com/We-Gold/teamgraduateai-supporting-materials"
   />
   <div class="divider my-0"></div>
   <HorizontalCard

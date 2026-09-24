@@ -6,6 +6,11 @@ for future-me who has forgotten the details.
 These are **not** planning docs. Design rationale, build status, and open
 questions live in `plans/`.
 
+## Homepage
+
+- **[Card deck](homepage/card-deck.md)**: the scroll-stacked "What I Build"
+  section. How to add a card, visual rules, and stacking behavior.
+
 ## Weaver's Weekly
 
 The weekly data science / ML problem series at `/weekly`.

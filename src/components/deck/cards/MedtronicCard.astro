@@ -1,0 +1,165 @@
+---
+import DeckCard from "../DeckCard.astro";
+
+// Internal work: the diagram is a deliberately generic architecture built only
+// from what the resume and experience page already say publicly. No
+// screenshots, names of internal systems, or data.
+const W = 440;
+const H = 250;
+
+// Layout leaves a ~50-unit gap between the assistant and the tools on the
+// right, so the two-way arrows have room for both arrowheads.
+const nodes = [
+  { id: "question", x: 4, y: 98, w: 86, h: 48, title: "Engineer's", sub: "question", kind: "io" },
+  { id: "agent", x: 110, y: 86, w: 152, h: 72, title: "AI assistant", sub: ["Multi-agent orchestration", "LangChain / LangGraph"], kind: "core" },
+  { id: "mcp", x: 312, y: 30, w: 124, h: 60, title: "MCP", sub: ["Internal data", "sources & log tools"], kind: "tool" },
+  { id: "rag", x: 312, y: 154, w: 124, h: 60, title: "Hybrid RAG", sub: ["Semantic + keyword", "retrieval"], kind: "tool" },
+  { id: "answer", x: 125, y: 196, w: 122, h: 46, title: "Expert-level", sub: "analysis in minutes", kind: "io" },
+];
+
+const edges = [
+  { d: "M90,122 L110,122", both: false },
+  // Straight stubs at both ends so each arrowhead sits flat against its box;
+  // the S-curve happens in the middle of the gap.
+  { d: "M262,106 H274 C287,106 287,60 300,60 H312", both: true },
+  { d: "M262,138 H274 C287,138 287,184 300,184 H312", both: true },
+  { d: "M186,158 L186,196", both: false },
+];
+---
+
+<DeckCard
+  eyebrow="Agentic AI"
+  title="An AI assistant for surgical robot logs"
+  context="Medtronic · AI Engineering Intern, Minimally Invasive Therapies Group · Summer 2025"
+  summary="Analyzing surgical robot logs by hand could take an expert tens of hours. I built an AI assistant that reaches expert-level analysis in minutes, so engineers get answers while the question still matters."
+  metric={{ value: "Tens of hours → minutes", label: "for expert-level robot log analysis, saving 400+ hours of manual work a year" }}
+  bullets={[
+    "Automated recurring log-analysis tasks with LLMs, saving the team 400+ hours of manual work a year.",
+    "Coordinated multiple AI agents and data sources with LangChain/LangGraph to answer multi-step questions.",
+    "Connected the assistant to internal data sources through MCP, so it can pull the logs and context it needs itself.",
+    "Built the retrieval layer: hybrid RAG over Chroma and a custom SQLite vector search, combined with keyword search.",
+  ]}
+  stack={["Python", "LangChain/LangGraph", "MCP", "RAG", "Chroma", "SQLite", "FastAPI", "Docker"]}
+  accent="#0a1f44"
+>
+  <div slot="visual" class="h-full flex flex-col justify-center p-5 gap-3 text-white">
+    <p class="text-xs font-semibold text-white/80">System overview</p>
+
+    <svg viewBox={`0 0 ${W} ${H}`} class="mt-diagram w-full h-auto" role="img" aria-labelledby="mt-diagram-desc">
+      <desc id="mt-diagram-desc">
+        Simplified architecture. An engineer's question goes to an AI assistant that orchestrates multiple agents with
+        LangChain and LangGraph. The assistant exchanges requests with internal data sources and log tools over MCP, and
+        with a hybrid retrieval system combining semantic and keyword search. It returns an expert-level analysis in minutes.
+      </desc>
+      <defs>
+        <marker id="mt-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#7dd3fc" />
+        </marker>
+      </defs>
+
+      {
+        edges.map((edge, i) => (
+          <g class="mt-edge" style={`--delay: ${300 + i * 150}ms`}>
+            <path d={edge.d} fill="none" stroke="#7dd3fc" stroke-opacity="0.35" stroke-width="2" marker-end="url(#mt-arrow)" marker-start={edge.both ? "url(#mt-arrow)" : undefined} />
+            <path d={edge.d} fill="none" stroke="#7dd3fc" stroke-width="2" class="mt-flow" />
+          </g>
+        ))
+      }
+
+      {
+        nodes.map((node, i) => {
+          const subs = Array.isArray(node.sub) ? node.sub : [node.sub];
+          const lineH = 13;
+          const top = node.y + node.h / 2 - ((subs.length + 1) * lineH) / 2 + lineH / 2;
+          return (
+            <g class={`mt-node mt-${node.kind}`} style={`--delay: ${i * 120}ms`}>
+              <rect x={node.x} y={node.y} width={node.w} height={node.h} rx="10" />
+              <text x={node.x + node.w / 2} y={top} dy="0.35em" text-anchor="middle" class="mt-title">{node.title}</text>
+              {subs.map((line, j) => (
+                <text x={node.x + node.w / 2} y={top + (j + 1) * lineH} dy="0.35em" text-anchor="middle" class="mt-sub">{line}</text>
+              ))}
+            </g>
+          );
+        })
+      }
+    </svg>
+
+    <p class="flex items-start gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-[0.7rem] leading-snug text-white/70">
+      <svg viewBox="0 0 16 16" class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
+        <path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1.5 1.5 0 0 0-1.5 1.5v6A1.5 1.5 0 0 0 4 15h8a1.5 1.5 0 0 0 1.5-1.5v-6A1.5 1.5 0 0 0 12 6h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z" />
+      </svg>
+      <span>Internal Medtronic project. This is a simplified, generic view; many technical details are withheld.</span>
+    </p>
+  </div>
+</DeckCard>
+
+<style>
+  .mt-node rect {
+    stroke-width: 1.5;
+  }
+
+  .mt-core rect {
+    fill: #0e7490;
+    stroke: #7dd3fc;
+  }
+
+  .mt-tool rect {
+    fill: rgb(255 255 255 / 0.06);
+    stroke: rgb(255 255 255 / 0.35);
+  }
+
+  .mt-io rect {
+    fill: rgb(255 255 255 / 0.12);
+    stroke: rgb(255 255 255 / 0.2);
+  }
+
+  .mt-title {
+    fill: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .mt-sub {
+    fill: rgb(255 255 255 / 0.75);
+    font-size: 11px;
+  }
+
+  /* Undealt: nothing drawn. Dealt: nodes fade in, then edges appear and a
+     subtle dash pattern flows along them to show requests moving. */
+  .mt-node,
+  .mt-edge {
+    opacity: 0;
+    transition: opacity 500ms ease var(--delay);
+  }
+
+  :global(.is-dealt) .mt-node,
+  :global(.is-dealt) .mt-edge {
+    opacity: 1;
+  }
+
+  .mt-flow {
+    stroke-dasharray: 3 9;
+    stroke-linecap: round;
+  }
+
+  :global(.is-dealt) .mt-flow {
+    animation: mt-flow 1.4s linear infinite;
+  }
+
+  @keyframes mt-flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mt-node,
+    .mt-edge {
+      transition: none;
+    }
+
+    :global(.is-dealt) .mt-flow {
+      animation: none;
+    }
+  }
+</style>
