@@ -24,16 +24,16 @@ const formatGb = (gb: number) => (gb >= 1000 ? `${(gb / 1000).toFixed(2)} TB` : 
 ---
 
 <DeckCard
-  eyebrow="Data at scale"
-  title="Terabyte scans, segmented on a laptop"
-  context="Ouroboros · Penn State College of Medicine · Created the core algorithms · Co-author, manuscript in preparation · 2024 – present"
-  summary="Nerves and ducts wind through micro-CT scans measured in terabytes, far too large to load, let alone segment. Ouroboros follows a path traced in Neuroglancer and extracts only a thin, straightened volume around it."
-  metric={{ value: "2.8 TB → 3.2 GB", label: "octopus nerve cords extracted in 6 minutes on a laptop, using under 3 GB of RAM" }}
+  eyebrow="Large-scale 3D data"
+  title="Segmenting terabyte-scale 3D scans on a laptop"
+  context="Ouroboros · Penn State College of Medicine · Co-author, manuscript in preparation · 2024 – present"
+  summary="I created the core algorithms for Ouroboros, a tool that segments nerves and vessels in 3D scans too large to load into memory. It extracts only a thin, straightened volume along a traced path, segments it, and maps the result back into the original scan."
+  metric={{ value: "2.8 TB → 3.2 GB", label: "for an octopus nerve cord, processed in 6 minutes on a laptop" }}
   bullets={[
-    "Built the original slicing pipeline: a B-spline fit to Neuroglancer annotations, sampled into perpendicular slices along the path.",
-    "Binary space partitioning into tight bounding boxes, streamed through parallel download, slice, and write queues (~40× faster).",
-    "Back projection that maps segmentations of the straightened volume into the original scan at full resolution.",
-    "Shipped as an Electron/React app with a Dockerized Python backend, a Neuroglancer viewer, and a plugin system for auto-segmentation.",
+    "Built the original slicing pipeline, which fits a B-spline to Neuroglancer annotations and samples slices along the path.",
+    "Split the path into tight bounding boxes and processed them in parallel download, slice, and write queues, making it ~40× faster.",
+    "Mapped segmentations of the straightened volume back into the original scan at full resolution.",
+    "Released it as a desktop app (Electron and React) with a Dockerized Python backend and a plugin system for segmentation methods.",
   ]}
   stack={["Python", "NumPy/SciPy", "CloudVolume", "Multiprocessing", "Docker", "Electron", "React/TypeScript", "Neuroglancer"]}
   links={[

@@ -46,20 +46,19 @@ for (let i = 1; i < labels.length; i++) {
   if (labels[i].lx === labels[i - 1].lx && labels[i].ly - labels[i - 1].ly < 13) labels[i].ly = labels[i - 1].ly + 13;
 }
 
-const baselines = lines.filter((line) => !line.ours);
 ---
 
 <DeckCard
   eyebrow="Deep learning research"
-  title="Graph generation past the memory wall"
-  context="WPI MQP, team of 4 · Led development of both models · Advised by Profs. Murai & Mangoubi · 2025 – 2026"
-  summary="Graph diffusion can generate molecules and networks for drug discovery, but its memory grows with the square of the graph's size. I led development of two models that remove that bottleneck."
-  metric={{ value: "Up to 116× faster", label: "and up to 89× less memory: SparserDiff's edge sampling vs. SparseDiff on the Ego dataset" }}
+  title="Scaling diffusion models to large graphs"
+  context="WPI MQP · Team of 4 · Advised by Profs. Murai & Mangoubi · 2025 – 2026"
+  summary="Graph diffusion models generate molecules and networks for drug discovery, but their memory grows with the square of the number of nodes. I led development of two models that reduce this cost. Scale-MGD trains with near-linear memory, and SparserDiff makes an existing model's edge sampling much faster and lighter."
+  metric={{ value: "Up to 116× faster", label: "and up to 89× less memory in SparserDiff's edge sampling, compared with SparseDiff on the Ego dataset" }}
   bullets={[
-    "Scale-MGD: masked diffusion over a noisy edge list, the only model with roughly linear memory growth and the only one to train on 200-node graphs.",
-    "SparserDiff: replaced SparseDiff's quadratic edge-sampling step with an O(n + m + k) algorithm that processes each graph on its own.",
-    "Profiled five diffusion models stage by stage (noising, model pass, training, sampling) to find exactly where memory goes.",
-    "Built RedditWalk, a benchmark sampled from a 46,668-subreddit network, which exposed accuracy issues in existing models.",
+    "Designed Scale-MGD as masked diffusion over a noisy edge list. It was the only model to train on 200-node graphs.",
+    "Replaced SparseDiff's quadratic edge sampling with an O(n + m + k) algorithm in SparserDiff.",
+    "Profiled five diffusion models at each stage (noising, model pass, training, sampling) to find where the memory goes.",
+    "Built RedditWalk, a benchmark sampled from a network of 46,668 subreddits, which revealed accuracy problems in existing models.",
   ]}
   stack={["Python", "PyTorch", "Graph neural networks", "Diffusion models", "CUDA / A100", "Profiling"]}
   links={[{ label: "Final report", href: "https://digital.wpi.edu/concern/student_works/kh04dv11x" }]}
@@ -144,7 +143,7 @@ const baselines = lines.filter((line) => !line.ours);
     </table>
 
     <p class="text-[0.65rem] text-white/45">
-      Synthetic graphs on an 80 GB A100. {baselines.map((b) => b.name).join(", ")} have no 200-node result because they ran out of memory.
+      Measured on synthetic graphs with an 80 GB A100 GPU.
     </p>
   </div>
 </DeckCard>

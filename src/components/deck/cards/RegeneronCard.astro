@@ -52,15 +52,15 @@ const driftShift = px(2.2) - px(0);
 
 <DeckCard
   eyebrow="MLOps & LLM evaluation"
-  title="Keeping 30+ production AI models trustworthy"
+  title="Building a scalable monitoring platform for AI/ML models"
   context="Regeneron Pharmaceuticals · AI/ML Engineering Intern · Summer 2026"
-  summary="Once a model ships, the data it sees keeps changing, and problems can go unnoticed until results go wrong. I built a platform that watches 30+ production models in one place, adopted by 3 pilot teams."
-  metric={{ value: "60%+ lower LLM eval cost", label: "at equal confidence, by tailoring each next question to the model's past answers" }}
+  summary="I built a platform that monitors 30+ production AI models and evaluates LLMs. It detects when live data drifts from training data distributions or when model performance unexpectedly degrades, and helps teams drill down to find the cause. Its LLM benchmarks help AI engineers make informed decisions about the best models for their use case."
+  metric={{ value: "60%+ lower LLM evaluation cost", label: "at equal confidence, by choosing each question based on the model's past answers" }}
   bullets={[
-    "Built an auditable AWS platform and React dashboard for 30+ models, shaped by 13 stakeholder interviews and adopted by 3 pilot teams.",
-    "Drift detection with a Random Forest two-sample test that alerts teams when live data diverges from the training baseline.",
-    "Tracked how data subgroups shift over time (Gaussian mixture models, BIC selection, cost matching) to help pinpoint the cause.",
-    "Wrote an environment-agnostic Python SDK so teams can send data and run model analysis from wherever their models live.",
+    "Built the platform on AWS with a React dashboard, designed from 13 stakeholder interviews and adopted by 3 pilot teams.",
+    "Built drift detection that alerts teams when live data changes, using a Random Forest two-sample test alongside metrics like PSI and Jensen-Shannon divergence.",
+    "Tracked how data subgroups shift over time using Gaussian mixture models, BIC selection, and cost matching.",
+    "Developed a Python SDK that lets teams send data and run model analysis from any environment.",
   ]}
   stack={["Python", "AWS", "FastAPI", "React", "visx", "scikit-learn", "PostgreSQL", "Docker"]}
   accent="#062c30"
@@ -124,7 +124,7 @@ const driftShift = px(2.2) - px(0);
       <svg viewBox="0 0 16 16" class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
         <path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1.5 1.5 0 0 0-1.5 1.5v6A1.5 1.5 0 0 0 4 15h8a1.5 1.5 0 0 0 1.5-1.5v-6A1.5 1.5 0 0 0 12 6h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z" />
       </svg>
-      <span>Internal Regeneron project. These are illustrations with synthetic data; many technical details are withheld.</span>
+      <span>Internal Regeneron project. The illustrations use synthetic data, and many technical details are withheld.</span>
     </p>
   </div>
 </DeckCard>

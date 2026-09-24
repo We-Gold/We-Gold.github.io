@@ -1,6 +1,6 @@
 # Homepage card deck
 
-The "What I Build" section on the homepage (`src/pages/index.astro`) is a
+The "Recent Experience" section on the homepage (`src/pages/index.astro`) is a
 scroll-stacked deck: each card pins near the top of the viewport and the next
 one slides up over it. Each card argues for one skill, with evidence.
 
@@ -27,8 +27,16 @@ details in the hero; the cards and the experience page carry them.
    must stay around **620px tall at 1440×900**. Anything taller can't show
    fully while pinned, so trim the copy, not the check.
    - `eyebrow` is the skill ("LLM products"), not the job title.
-   - `summary` is why it mattered. `metric` is the single strongest number.
-   - Bullets say what *you* did, with verbs and specifics.
+   - `title` is a plain gerund phrase saying what was built ("Building an
+     AI assistant for surgical robot logs"), not a slogan.
+   - `summary` starts with "I built…" and covers everything the card shows
+     (e.g. both monitoring and LLM evaluation), in two or three sentences.
+     Leave numbers and adoption to the metric and bullets, and don't repeat
+     what's already implied. `metric` is the single strongest number.
+   - Bullets start with a verb and say what *you* did, with specifics.
+   - Write in active voice with ordinary sentences. Skip scene-setting,
+     payoff clauses ("so engineers get answers…"), dramatic colons, and
+     anything that repeats the metric.
 3. Build the visual inside `<div slot="visual">`. `accent` sets the panel
    background, so pick the project's own brand color if it has one.
 4. Add `<NameCard />` inside `<CardDeck>` in `index.astro`, in story order.

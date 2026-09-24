@@ -14,15 +14,15 @@ const pipeline = ["WordPress plugin", "FastAPI on Cloud Run", "Gemini + Pydantic
 
 <DeckCard
   eyebrow="LLM products"
-  title="AI tools that teachers actually use"
-  context="#TeamGraduate AI · Namibian e-learning platform · Technical lead, WPI IQP · Jan – May 2026"
-  summary="Namibia's national exam pass rate is 36%. Teachers on #TeamGraduate's e-learning platform needed more practice material but had little time or budget, so I led engineering on AI tools built right into their site."
-  metric={{ value: "50 → 6 min", label: "to create a lesson's flashcards, diagram, and quiz: 87.7% faster, with comparable quality" }}
+  title="Building AI tools for teachers in Namibia"
+  context="#TeamGraduate AI · Technical lead, WPI IQP · Jan – May 2026"
+  summary="I led the development of AI tools that turn teachers' lessons into flashcards, diagrams, and quizzes aligned to Namibia's national curriculum. The tools run inside #TeamGraduate's existing e-learning system, next to the lessons teachers already edit."
+  metric={{ value: "50 → 6 min", label: "to create a lesson's flashcards, diagram, and quiz (87.7% faster) with comparable quality" }}
   bullets={[
-    "WordPress/LearnDash plugin with drag-in Gutenberg blocks, so AI content lives inside the lessons teachers already edit.",
-    "Stateless FastAPI service on Cloud Run that turns PDFs, slides, and YouTube transcripts into schema-validated Gemini output, within free tiers.",
-    "LLM pipeline that structures the national syllabus into a curriculum tree and aligns textbook chapters to it, grounding every generation.",
-    "Evidence-based pedagogy written into each content type's prompts, with the UI refined in participatory design sessions with teachers.",
+    "Built a WordPress/LearnDash plugin with Gutenberg blocks for adding AI-generated content to lessons.",
+    "Built a FastAPI service on Cloud Run that turns PDFs, slides, and YouTube transcripts into structured content with Gemini.",
+    "Used an LLM pipeline to organize the national syllabus into a curriculum tree and match textbook chapters to it.",
+    "Wrote teaching best practices into each content type's prompts and refined the UI in design sessions with teachers.",
   ]}
   stack={["Python", "FastAPI", "Pydantic AI", "Gemini", "Cloud Run", "Docker", "WordPress/PHP", "React", "GitHub Actions"]}
   links={[

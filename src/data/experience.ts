@@ -29,9 +29,9 @@ export const experienceEntries: ExperienceEntry[] = [
       "Built a platform on AWS to monitor the health of 30+ production AI models in one place, adopted by 3 pilot teams and shaped by 13 stakeholder interviews.",
       "Built ML-based drift detection that alerts teams when live data diverges from what a model was trained on, using a Random Forest classifier two-sample test.",
       "Tracked how data subgroups shift over time to help pinpoint the cause, using Gaussian mixture models, BIC model selection, and cost matching.",
-      "Created a dashboard (React, visx, FastAPI) giving teams a single view of model performance, data drift, and benchmark results.",
+      "Created a dashboard giving teams a single view of model performance, data drift, and benchmark results, built with React, visx, and FastAPI.",
       "Cut LLM evaluation costs by over 60% at equal confidence by tailoring questions to each model's past answers.",
-      "Wrote an environment-agnostic Python SDK so teams can send data and run model analysis from wherever their models live.",
+      "Developed an environment-agnostic Python SDK for scalable data ingestion and model analysis.",
     ],
     skills: [
       { skill: "AWS", intensity: 5 },
@@ -90,7 +90,6 @@ export const experienceEntries: ExperienceEntry[] = [
       "Saved 400+ hours of manual work annually by automating surgical robot log analysis tasks with AI.",
       "Built an AI assistant that analyzes HUGO surgical robot logs at an expert level in minutes instead of tens of hours.",
       "Connected the assistant to internal data sources with MCP and hybrid RAG to answer multi-step questions.",
-      "Built the RAG retrieval layer with Chroma and a custom SQLite-based vector search.",
       "Coordinated numerous AI agents and data sources with LangChain/LangGraph to perform complex tasks.",
       "Worked in an Agile environment (Scrum and Kanban via Jira) to manage timelines and deliverables.",
     ],
@@ -104,7 +103,6 @@ export const experienceEntries: ExperienceEntry[] = [
       { skill: "FastAPI", intensity: 3 },
       { skill: "Docker", intensity: 3 },
       { skill: "SQL", intensity: 3 },
-      { skill: "SQLite", intensity: 3 },
       { skill: "Agile/Scrum", intensity: 2 },
     ],
   },
@@ -116,7 +114,7 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2024-05",
     endDate: "2024-08",
     bullets: [
-      "Built a desktop app (Electron) that lets researchers analyze large 3D medical scans on a laptop by extracting key structures, shrinking files by up to 693× (from 132.08 GB to 190.44 MB).",
+      "Built a desktop app that lets researchers analyze large 3D medical scans on a laptop by extracting key structures, reducing file sizes by up to 693× (from 132.08 GB to 190.44 MB).",
       "Designed a Docker-based plugin system so other labs can add their own segmentation methods to the tool.",
       "Achieved approx. 40× faster computation with multithreading and multiprocessing.",
       "Built a React/TypeScript UI with Three.js and Neuroglancer for 3D visualization of segmented scans.",
@@ -176,7 +174,7 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2025-08",
     endDate: "2026-05",
     bullets: [
-      "Led development of two AI models, Scale-MGD and SparserDiff, that generate realistic networks at scales existing methods can't handle (4-person senior project).",
+      "Led development of two AI models, Scale-MGD and SparserDiff, that generate realistic networks at scales existing methods can't handle.",
       "Trained on networks where all prior methods ran out of memory, and made an existing model's generation step up to 116× faster with 89× less memory.",
       "Built RedditWalk, a new benchmark dataset, and targeted molecule and protein generation for drug discovery.",
     ],
@@ -194,8 +192,9 @@ export const experienceEntries: ExperienceEntry[] = [
     startDate: "2026-01",
     endDate: "2026-05",
     bullets: [
-      "Built AI tools that turn teachers' lessons into flashcards and study guides aligned to Namibia's curriculum, hosted on Google Cloud Run.",
-      "Reduced lesson creation time by 87.7% with AI authoring tools built into the existing website: a custom WordPress plugin backed by a Python service (FastAPI + Pydantic AI).",
+      "Built AI tools that turn teachers' lessons into flashcards and study guides aligned to Namibia's curriculum.",
+      "Reduced lesson creation time by 87.7% with AI authoring tools built into the existing website.",
+      "Built a custom WordPress plugin, backed by a Python service (FastAPI + Pydantic AI) on Google Cloud Run.",
       "Implemented a RAG system stored in WordPress's own database tables, populated and queried by the plugin.",
     ],
     skills: [

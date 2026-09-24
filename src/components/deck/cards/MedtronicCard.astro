@@ -29,17 +29,17 @@ const edges = [
 
 <DeckCard
   eyebrow="Agentic AI"
-  title="An AI assistant for surgical robot logs"
+  title="Building an AI assistant for surgical robot logs"
   context="Medtronic · AI Engineering Intern, Minimally Invasive Therapies Group · Summer 2025"
-  summary="Analyzing surgical robot logs by hand could take an expert tens of hours. I built an AI assistant that reaches expert-level analysis in minutes, so engineers get answers while the question still matters."
-  metric={{ value: "Tens of hours → minutes", label: "for expert-level robot log analysis, saving 400+ hours of manual work a year" }}
+  summary="I built an AI assistant that analyzes surgical robot logs and answers engineers' questions at an expert level. It coordinates multiple AI agents that pull the logs and context they need from internal data sources."
+  metric={{ value: "Tens of hours → minutes", label: "for an expert-level analysis of robot logs" }}
   bullets={[
-    "Automated recurring log-analysis tasks with LLMs, saving the team 400+ hours of manual work a year.",
-    "Coordinated multiple AI agents and data sources with LangChain/LangGraph to answer multi-step questions.",
-    "Connected the assistant to internal data sources through MCP, so it can pull the logs and context it needs itself.",
-    "Built the retrieval layer: hybrid RAG over Chroma and a custom SQLite vector search, combined with keyword search.",
+    "Automated recurring log analysis tasks with LLMs, saving the team 400+ hours of manual work a year.",
+    "Built the agent workflows with LangChain and LangGraph to handle multi-step questions.",
+    "Connected the assistant to internal data sources and log tools with MCP.",
+    "Built a hybrid RAG system that combines vector search with keyword search.",
   ]}
-  stack={["Python", "LangChain/LangGraph", "MCP", "RAG", "Chroma", "SQLite", "FastAPI", "Docker"]}
+  stack={["Python", "LangChain/LangGraph", "MCP", "RAG", "FastAPI", "Docker"]}
   accent="#0a1f44"
 >
   <div slot="visual" class="h-full flex flex-col justify-center p-5 gap-3 text-white">
@@ -88,7 +88,7 @@ const edges = [
       <svg viewBox="0 0 16 16" class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="currentColor" aria-hidden="true">
         <path d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1.5 1.5 0 0 0-1.5 1.5v6A1.5 1.5 0 0 0 4 15h8a1.5 1.5 0 0 0 1.5-1.5v-6A1.5 1.5 0 0 0 12 6h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z" />
       </svg>
-      <span>Internal Medtronic project. This is a simplified, generic view; many technical details are withheld.</span>
+      <span>Internal Medtronic project. This is a simplified view, and many technical details are withheld.</span>
     </p>
   </div>
 </DeckCard>
